@@ -1,0 +1,53 @@
+/* ARX V300.304: restore subscription management CTA on installed paid server cards.
+   Safe additive overrides; does not change checkout or Paddle listeners. */
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link {
+  box-sizing:border-box;
+  display:flex!important;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:48px;
+  padding:10px 14px;
+  border:1px solid rgba(244,195,37,.85);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(45,35,8,.92),rgba(26,21,9,.96));
+  color:#ffdc59;
+  text-align:center;
+  text-decoration:none;
+  font-weight:900;
+  font-size:14px;
+  line-height:1.25;
+  box-shadow:inset 0 0 18px rgba(244,197,37,.06),0 0 12px rgba(244,197,37,.1);
+  transition:filter .15s ease, transform .15s ease;
+}
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link:hover,
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link:focus-visible {
+  filter:brightness(1.12);
+  transform:translateY(-1px);
+}
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link:focus-visible {
+  outline:2px solid #f5c518;
+  outline-offset:3px;
+}
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link .arx-sub-icon {
+  flex:0 0 auto;
+  display:inline-block;
+  line-height:1;
+  font-size:17px;
+}
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link.arx-sub-plus {
+  border-color:#49bce9;
+  background:linear-gradient(180deg,#143953,#061c31);
+  color:#dff7ff;
+  box-shadow:0 0 12px rgba(65,187,241,.16),inset 0 0 12px rgba(95,193,239,.07);
+}
+.server-card-actions.server-card-actions-simple .arx-subscription-card-link.arx-sub-lifetime {
+  border-color:#dd795b;
+  background:linear-gradient(180deg,#633028,#3b1718);
+  color:#fff1e4;
+  box-shadow:0 0 12px rgba(241,99,76,.16),inset 0 0 12px rgba(240,103,86,.06);
+}
+@media (max-width:480px){
+ .server-card-actions.server-card-actions-simple .arx-subscription-card-link{gap:8px;min-height:46px;font-size:13px;padding:10px 8px}
+}

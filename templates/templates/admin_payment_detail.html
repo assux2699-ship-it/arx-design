@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX · Ödeme Ayrıntıları</title>
+<link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<style>
+  .arx-receipt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .arx-receipt-grid>div{padding:15px;border-radius:12px;background:rgba(255,255,255,.04);overflow-wrap:anywhere}
+  .arx-receipt-grid small{display:block;opacity:.7;margin-bottom:6px}
+  .arx-receipt-grid strong{font-size:1rem}
+  .arx-ip-form{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .arx-ip-form input{min-width:240px;padding:10px;max-width:100%}
+  @media(max-width:740px){.arx-receipt-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="admin-body">
+<aside class="sidebar admin-sidebar">
+  <div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+  <nav>
+    <a href="/admin"><span>◆</span> Sunucular ve Abonelikler</a>
+    <a class="active" href="/admin/payments"><span>₺</span> Ödeme Geçmişi</a>
+    <a href="/admin/reminders"><span>⏰</span> Hatırlatıcılar</a>
+  </nav>
+</aside>
+<main class="main admin-main">
+  <header class="topbar"><div><p class="eyebrow">ARX / ÖDEMELER</p><h1>Satın Alma Ayrıntıları</h1><p>İşlem referansı: {{ payment.transaction_id }}</p></div></header>
+  <p><a class="ghost link-button" href="/admin/payments">← Tüm ödemeler</a></p>
+  <section class="panel" style="padding:18px">
+    <h2>İşlem kaydı</h2>
+    <div class="arx-receipt-grid">
+      <div><small>Durum</small><strong>{{ status_label(payment.status) }}</strong></div>
+      <div><small>Ürün</small><strong>{{ payment.product or 'Premium' }}</strong></div>
+      <div><small>Ödenen tutar</small><strong>{{ amount_label(payment.amount_minor,payment.currency) }}</strong></div>
+      <div><small>Ödeme tarihi (UTC)</small><strong>{{ payment.provider_occurred_at }}</strong></div>
+      <div><small>Discord kullanıcı ID</small><strong>{{ payment.purchaser_user_id or 'Eşleşmedi' }}</strong>{% if payment.purchaser_user_id %}<small><a href="/admin/payments?q={{ payment.purchaser_user_id|urlencode }}">Bu müşterinin ödemelerini göster</a></small>{% endif %}</div>
+      <div><small>Discord kullanıcı adı {% if payment.purchase_id %}(ilk checkout){% else %}(bilinen satın alma kaydı){% endif %}</small><strong>{{ payment.purchaser_username or 'Bilinmiyor' }}</strong></div>
+      <div><small>Görünen ad (işlem anı)</small><strong>{{ payment.purchaser_display_name or 'Bilinmiyor' }}</strong></div>
+      <div><small>Satın alınan sunucu ID</small><strong>{{ payment.original_guild_id or 'Bilinmiyor' }}</strong></div>
+      <div><small>Satın alınan sunucu adı (işlem anı)</small><strong>{{ payment.original_guild_name or 'Bilinmiyor' }}</strong></div>
+      <div><small>Geçerli hizmet sunucusu ID</small><strong>{{ payment.service_guild_id or 'Eşleşmedi' }}</strong>{% if payment.service_guild_id %}<small><a href="/admin/payments?q={{ payment.service_guild_id|urlencode }}">Bu sunucunun ödemelerini göster</a></small>{% endif %}</div>
+      <div><small>Paddle müşteri ID</small><strong>{{ payment.paddle_customer_id or '—' }}</strong></div>
+      <div><small>Paddle abonelik ID</small><strong>{{ payment.subscription_id or '—' }}</strong></div>
+      <div><small>Fatura numarası</small><strong>{{ payment.invoice_number or '—' }}</strong></div>
+      <div><small>Paddle olay ID</small><strong>{{ payment.provider_event_id }}</strong></div>
+      <div><small>Webhook SHA-256</small><strong>{{ payment.provider_payload_sha256 }}</strong></div>
+      <div><small>Kaydedilme zamanı</small><strong>{{ payment.first_seen_at }}</strong></div>
+      <div><small>Ödeme başlatılma zamanı</small><strong>{{ payment.checkout_started_at or 'İşlem kaydı yok' }}</strong></div>
+      <div><small>Alıcı ağ adresi kaynağı</small><strong>{{ payment.ip_source or 'Bilinmiyor' }}</strong></div>
+    </div>
+    <p style="margin-top:14px">Bu kayıt, imzası doğrulanmış Paddle webhook'una dayanır. SHA-256 tek başına kayıtların sonradan değişmediğini kanıtlamaz; delil için sağlayıcı kayıtlarıyla karşılaştırılmalıdır.</p>
+  </section>
+  <section class="panel" style="padding:18px;margin-top:16px">
+    <h2>Doğrulanabilir ödeme olay geçmişi</h2>
+    {% if evidence_valid is sameas true %}
+      <p><strong>Zincir doğrulandı.</strong> {{ evidence|length }} olayın HMAC bağlantıları mevcut anahtarla eşleşiyor.</p>
+    {% elif evidence_valid is sameas false %}
+      <p><strong>Uyarı:</strong> Olay zinciri doğrulanamadı. Kayıt değişmiş veya imza anahtarı kaybolmuş/değişmiş olabilir; Paddle kayıtlarıyla karşılaştırın.</p>
+    {% else %}
+      <p>Bu işlem için henüz doğrulanabilir olay geçmişi bulunmuyor (eski kayıt olabilir).</p>
+    {% endif %}
+    <div class="table-wrap"><table class="admin-table">
+      <thead><tr><th>Olay zamanı (UTC)</th><th>Bildirim türü</th><th>Durum</th><th>Olay ID</th><th>Doğrulama kodu</th></tr></thead>
+      <tbody>{% for e in evidence|reverse %}
+        <tr><td>{{ e.occurred_at }}</td><td>{{ event_label(e.event_type) }}</td><td>{{ event_label(e.status) }}</td><td>{{ e.event_id }}</td><td style="overflow-wrap:anywhere">{{ e.event_hmac }}</td></tr>
+      {% else %}<tr><td colspan="5">Olay yok.</td></tr>{% endfor %}</tbody>
+    </table></div>
+    <p>Bu zincir veritabanındaki değişiklikleri anahtar olmadan tespit etmeye yardımcı olur. Bağımsız zaman damgası, yedek ve Paddle kayıtlarının yerini tutmaz.</p>
+  </section>
+  <section class="panel" style="padding:18px;margin-top:16px">
+    <h2>Ağ adresi erişimi</h2>
+    <p>IP adresi şifreli saklanır ve ilk açılışta gösterilmez. Görüntüleme işlemi için gerekçe gerekir. Ağ adresi VPN/proxy veya paylaşımlı bağlantıya ait olabilir.</p>
+    {% if ip_reveal_attempted %}<div class="action-message dashboard-message">Sonuç: {{ revealed_ip or 'Bu işlem için kullanılabilir IP kaydı yok.' }}</div>{% endif %}
+    <form class="arx-ip-form" action="/admin/payments/{{ payment.transaction_id|urlencode }}/ip" method="post">
+      <input type="hidden" name="environment" value="{{ payment.environment }}">
+      <input type="text" name="reason" maxlength="250" minlength="8" required placeholder="IP görüntüleme gerekçesi">
+      <button class="primary" type="submit">Gerekçeli IP görüntüle</button>
+    </form>
+  </section>
+  <section class="panel" style="padding:18px;margin-top:16px">
+    <h2>Premium aktivasyon ve sunucular arası aktarım geçmişi</h2>
+    <p>İlgili sunucuların en son 50 Premium olayı gösterilir. Aktarım kayıtları yalnız sunucuya bağlıdır; geçmişteki başka Premium lisanslarını da içerebilir.</p>
+    <div class="table-wrap"><table class="admin-table">
+      <thead><tr><th>Kaydedilme (UTC)</th><th>Sunucu</th><th>İşlem</th><th>Plan</th><th>Durum</th><th>Açıklama</th></tr></thead>
+      <tbody>{% for a in premium_activity %}
+        <tr><td>{{ a.created_at }}</td><td>{{ a.guild_id }}</td><td>{{ event_label(a.action) }}</td><td>{{ event_label(a.old_plan) }} → {{ event_label(a.new_plan) }}</td><td>{{ event_label(a.old_status) }} → {{ event_label(a.new_status) }}</td><td>{{ a.note }}</td></tr>
+      {% else %}<tr><td colspan="6">Bu satın almayla ilişkili sunucularda geçmiş olayı bulunamadı.</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </section>
+  <section class="panel" style="padding:18px;margin-top:16px">
+    <h2>İadeler / İtirazlar / Düzenlemeler</h2>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Tarih (UTC)</th><th>Tür</th><th>Durum</th><th>İşlem referansı</th></tr></thead>
+        <tbody>
+        {% for a in adjustments %}
+          <tr><td>{{ a.provider_occurred_at }}</td><td>{{ event_label(a.action) }}</td><td>{{ event_label(a.status) }}</td><td>{{ a.adjustment_id }}</td></tr>
+        {% else %}
+          <tr><td colspan="4">Bu ödeme için kayıtlı iade/itiraz olayı bulunmuyor.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* ARX V300.171
+   Root fix: base style.css gives sidebar nav `flex:1`, which was consuming the
+   empty vertical space and pushing the ladder mascot downward.
+   The nav is now content-height; the mascot itself owns the remaining gap. */
+
+body.arx-server-picker-page-v300157 > .dashboard-sidebar > nav{
+  flex:0 0 auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+
+/* The ladder area now fills exactly the real space between Overview and the
+   bottom information cards — no guessed px/clamp height. */
+body.arx-server-picker-page-v300157 > .dashboard-sidebar > .sidebar-ladder-mascot-v300168{
+  flex:1 1 0!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  margin:4px 0 2px!important;
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+
+body.arx-server-picker-page-v300157 > .dashboard-sidebar > .sidebar-ladder-mascot-v300168 img{
+  display:block!important;
+  width:auto!important;
+  height:100%!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  transform-origin:center center!important;
+}
+
+/* Bring the first lower card right up to the ladder, matching the reference. */
+body.arx-server-picker-page-v300157 > .dashboard-sidebar > .dashboard-workspace-note{
+  margin-top:2px!important;
+}
+
+/* Keep the two lower cards grouped; don't allow the second card's auto margin
+   to create an artificial gap between them. */
+body.arx-server-picker-page-v300157 > .dashboard-sidebar > .plan{
+  margin-top:0!important;
+}
+
+@media(max-width:1050px) and (min-width:721px){
+  body.arx-server-picker-page-v300157 > .dashboard-sidebar > .sidebar-ladder-mascot-v300168{
+    margin:4px 0 2px!important;
+  }
+}
+
+@media(max-width:720px){
+  body.arx-server-picker-page-v300157 > .dashboard-sidebar > nav{
+    flex:0 0 auto!important;
+  }
+
+  body.arx-server-picker-page-v300157 > .dashboard-sidebar > .sidebar-ladder-mascot-v300168{
+    flex:0 0 560px!important;
+    height:560px!important;
+    margin:4px 0 4px!important;
+  }
+
+  body.arx-server-picker-page-v300157 > .dashboard-sidebar > .dashboard-workspace-note{
+    margin-top:4px!important;
+  }
+}

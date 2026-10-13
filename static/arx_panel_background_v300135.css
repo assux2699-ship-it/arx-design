@@ -1,0 +1,12 @@
+/* ARX V300.135 — Control Center background cache-safe replacement */
+body::before {
+  background-image: url('/static/arx_control_center_bg_v300135.png') !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  filter: none !important;
+  transform: none !important;
+}
+body::after {
+  background: rgba(4,5,7,.18) !important;
+}

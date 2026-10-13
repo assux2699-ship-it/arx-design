@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ARX · Hatırlatıcılar</title>
+  <link rel="stylesheet" href="/static/style.css?v=admin-v90">
+  <link rel="stylesheet" href="/static/locale.css?v=key10-1">
+  {% include "_locale.html" %}
+  <style>
+    .reminder-admin-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:18px}.reminder-admin-grid article{min-height:96px}.reminder-admin-status{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--border,#30343b);border-radius:999px;font-size:12px}.reminder-dot{width:8px;height:8px;border-radius:50%;background:#ef4444}.reminder-dot.on{background:#22c55e}.reminder-settings-grid{display:grid;grid-template-columns:1.1fr repeat(4,minmax(130px,1fr));gap:12px;align-items:end}.reminder-settings-grid label{display:flex;flex-direction:column;gap:6px;font-size:12px}.reminder-settings-grid input[type=number]{width:100%}.reminder-switch-line{display:flex!important;flex-direction:row!important;align-items:center;gap:10px!important;min-height:42px}.reminder-reason{max-width:360px;white-space:normal;word-break:break-word}.reminder-actions{display:flex;gap:6px;flex-wrap:wrap}.reminder-worker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.reminder-worker div{padding:12px;border:1px solid var(--border,#30343b);border-radius:10px}.reminder-worker small{display:block;opacity:.65;margin-bottom:5px}.reminder-error{color:#f87171;word-break:break-word}.reminder-filter-tabs{display:flex;gap:8px;flex-wrap:wrap}.reminder-filter-tabs a{padding:8px 12px;border:1px solid var(--border,#30343b);border-radius:8px;text-decoration:none}.reminder-filter-tabs a.active{border-color:#f2c94c;color:#f2c94c}.reminder-admin-note{font-size:12px;opacity:.68;margin-top:6px}@media(max-width:1100px){.reminder-admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reminder-settings-grid{grid-template-columns:1fr 1fr}.reminder-worker{grid-template-columns:1fr}}@media(max-width:680px){.reminder-admin-grid,.reminder-settings-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="admin-body">
+  <aside class="sidebar admin-sidebar">
+    <div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>{{ tr('admin.console') }}</small></span></div>
+    <nav>
+      <a href="/admin"><span>◆</span> {{ tr('admin.subscriptions') }}</a>
+      <a href="/admin/payments"><span>₺</span> Ödemeler ve Satın Alma Kayıtları</a>
+      <a class="active" href="/admin/reminders"><span>⏰</span> Hatırlatıcılar</a>
+      <a href="/"><span>←</span> {{ tr('admin.back_to_panel') }}</a>
+    </nav>
+    <div class="plan"><span>GLOBAL USER SERVICE</span><strong>REMINDERS</strong><small>Resmi ARX botu</small></div>
+  </aside>
+
+  <main>
+    <header>
+      <div><p class="eyebrow">ARX USER SERVICES</p><h1>Hatırlatıcılar</h1><p>Sunucudan bağımsız kişisel hatırlatıcı servisini yönetin.</p></div>
+      {% if oauth_enabled and panel_user %}<div class="panel-account">{% if panel_user.avatar_url %}<img src="{{ panel_user.avatar_url }}" alt="">{% endif %}<div><strong>{{ panel_user.display_name }}</strong><small>@{{ panel_user.username }}</small></div></div>{% endif %}
+    </header>
+
+    {% if request.query_params.get('updated') %}<p class="action-message dashboard-message">Hatırlatıcı ayarları güncellendi.</p>{% endif %}
+
+    <section class="stats reminder-admin-grid">
+      <article class="accent"><span>Servis</span><strong>{{ 'AÇIK' if stats.enabled else 'KAPALI' }}</strong><small class="reminder-admin-status"><i class="reminder-dot {{ 'on' if stats.enabled else '' }}"></i> /reminder</small></article>
+      <article><span>Aktif</span><strong>{{ stats.active }}</strong><small>Bekleyen + gönderiliyor</small></article>
+      <article><span>Bugün</span><strong>{{ stats.due_today }}</strong><small>Bugün teslim edilecek</small></article>
+      <article><span>Kullanıcı</span><strong>{{ stats.users }}</strong><small>Hatırlatıcı kullanan</small></article>
+      <article><span>Başarısız</span><strong>{{ stats.failed }}</strong><small>DM teslim hatası</small></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title"><div><p class="eyebrow">GLOBAL SETTINGS</p><h2>Hatırlatıcı Servisi</h2><p>Bu ayarlar tüm ARX kullanıcılarını etkiler.</p></div></div>
+      <form method="post" action="/admin/reminders/settings" class="reminder-settings-grid">
+        <label class="reminder-switch-line"><input type="checkbox" name="enabled" value="1" {{ 'checked' if stats.enabled else '' }}> <strong>Global servis açık</strong></label>
+        <label>Maks. aktif / kullanıcı<input type="number" name="max_active_per_user" min="1" max="500" value="{{ stats.max_active_per_user }}"></label>
+        <label>Minimum süre (sn)<input type="number" name="min_delay_seconds" min="5" max="86400" value="{{ stats.min_delay_seconds }}"></label>
+        <label>Maks. ileri tarih (gün)<input type="number" name="max_days_ahead" min="1" max="36500" value="{{ stats.max_days_ahead }}"></label>
+        <label>DM retry sayısı<input type="number" name="max_retries" min="0" max="10" value="{{ stats.max_retries }}"></label>
+        <div><button class="primary" type="submit">Ayarları Kaydet</button></div>
+      </form>
+      <p class="reminder-admin-note">Kullanıcıların varsayılan dili English'tir. Dil tercihi kullanıcı bazlıdır ve herhangi bir sunucuya bağlı değildir.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title"><div><p class="eyebrow">WORKER</p><h2>Teslimat Durumu</h2></div></div>
+      <div class="reminder-worker">
+        <div><small>Son worker turu</small><strong>{{ stats.worker_last_tick_at or 'Henüz yok' }}</strong></div>
+        <div><small>Son başarılı DM</small><strong>{{ stats.last_success_at or 'Henüz yok' }}</strong></div>
+        <div><small>Son hata</small><strong class="{{ 'reminder-error' if stats.last_error else '' }}">{{ stats.last_error or 'Hata yok' }}</strong></div>
+      </div>
+    </section>
+
+    <section class="panel admin-control-panel">
+      <div class="reminder-filter-tabs">
+        {% for key,label in [('all','Tümü'),('active','Aktif'),('sent','Gönderildi'),('failed','Başarısız'),('deleted','Silindi'),('canceled','İptal')] %}
+          <a class="{{ 'active' if reminder_status == key else '' }}" href="{{ status_urls[key] }}">{{ label }}</a>
+        {% endfor %}
+      </div>
+      <form method="get" action="/admin/reminders" class="admin-search-form">
+        <input type="hidden" name="status" value="{{ reminder_status }}">
+        <input type="search" name="q" value="{{ search_query }}" placeholder="Kullanıcı ID, hatırlatıcı ID veya içerik ara">
+        <button class="primary" type="submit">Ara</button>
+        {% if search_query %}<a class="ghost link-button" href="{{ status_urls[reminder_status] }}">Temizle</a>{% endif %}
+      </form>
+    </section>
+
+    <section class="panel admin-guilds-panel">
+      <div class="panel-title admin-list-title"><div><p class="eyebrow">REMINDERS</p><h2>Hatırlatıcı Kayıtları</h2></div><div class="admin-result-count"><strong>{{ total }}</strong><span> kayıt</span></div></div>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>ID</th><th>Kullanıcı</th><th>İçerik</th><th>Teslim zamanı (UTC)</th><th>Durum</th><th>Dil</th><th>İşlemler</th></tr></thead>
+          <tbody>
+          {% for item in reminders %}
+            <tr>
+              <td><strong>#{{ item.id }}</strong></td>
+              <td><strong>{{ item.user_id }}</strong><small>{{ item.created_at }}</small></td>
+              <td class="reminder-reason">{{ item.reason }}</td>
+              <td><strong>{{ item.remind_at }}</strong>{% if item.sent_at %}<small>Gönderildi: {{ item.sent_at }}</small>{% endif %}</td>
+              <td><span class="subscription-badge {{ 'premium' if item.status in ['pending','sending'] else ('expired' if item.status == 'failed' else 'free') }}">{{ item.status }}</span>{% if item.retry_count %}<small>retry {{ item.retry_count }}</small>{% endif %}{% if item.last_error %}<small class="reminder-error">{{ item.last_error }}</small>{% endif %}</td>
+              <td>{{ item.language|upper }}</td>
+              <td>
+                <div class="reminder-actions">
+                  {% if item.status in ['pending','sending','failed'] %}
+                  <form method="post" action="/admin/reminders/{{ item.id }}/action"><input type="hidden" name="action" value="send_now"><input type="hidden" name="return_status" value="{{ reminder_status }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="primary" type="submit">Şimdi Gönder</button></form>
+                  {% endif %}
+                  {% if item.status == 'failed' %}
+                  <form method="post" action="/admin/reminders/{{ item.id }}/action"><input type="hidden" name="action" value="retry"><input type="hidden" name="return_status" value="{{ reminder_status }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="ghost" type="submit">Retry</button></form>
+                  {% endif %}
+                  {% if item.status in ['pending','sending'] %}
+                  <form method="post" action="/admin/reminders/{{ item.id }}/action"><input type="hidden" name="action" value="cancel"><input type="hidden" name="return_status" value="{{ reminder_status }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="ghost" type="submit">İptal</button></form>
+                  {% endif %}
+                  <form method="post" action="/admin/reminders/{{ item.id }}/action" onsubmit="return confirm('Bu hatırlatıcı kaydını silmek istediğinize emin misiniz?')"><input type="hidden" name="action" value="delete"><input type="hidden" name="return_status" value="{{ reminder_status }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="danger" type="submit">Sil</button></form>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="7"><div class="empty"><h3>Kayıt bulunamadı.</h3></div></td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if total %}<div class="admin-pagination">
+        {% if page > 1 %}<a class="ghost link-button" href="{{ prev_url }}">Önceki</a>{% else %}<span class="ghost admin-page-disabled">Önceki</span>{% endif %}
+        <div class="admin-page-numbers">{% for number in page_numbers %}<a class="{{ 'active' if number == page else '' }}" href="{{ page_urls[number] }}">{{ number }}</a>{% endfor %}</div>
+        <span class="admin-page-ratio">{{ page }} / {{ total_pages }}</span>
+        {% if page < total_pages %}<a class="ghost link-button" href="{{ next_url }}">Sonraki</a>{% else %}<span class="ghost admin-page-disabled">Sonraki</span>{% endif %}
+      </div>{% endif %}
+    </section>
+
+    <section class="panel admin-audit-panel">
+      <div class="panel-title"><div><p class="eyebrow">AUDIT</p><h2>Hatırlatıcı Admin Logu</h2></div></div>
+      <div class="table-wrap"><table class="admin-table compact"><thead><tr><th>İşlem</th><th>Admin</th><th>Reminder</th><th>Kullanıcı</th><th>Zaman</th></tr></thead><tbody>
+        {% for event in events %}<tr><td>{{ event.action }}</td><td>{{ event.actor_user_id or 'local' }}</td><td>{{ event.reminder_id or '—' }}</td><td>{{ event.target_user_id or '—' }}</td><td>{{ event.created_at }}</td></tr>{% else %}<tr><td colspan="5">Henüz admin işlemi yok.</td></tr>{% endfor %}
+      </tbody></table></div>
+    </section>
+  </main>
+  <script src="/static/app.js?v=key10-1"></script>
+  {% include "_legal_footer.html" %}
+</body>
+</html>

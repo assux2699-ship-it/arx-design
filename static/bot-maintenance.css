@@ -1,0 +1,65 @@
+/* ARX customer maintenance dialog - independent of module-specific styles */
+.arx-maintenance-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(440px, calc(100vw - 36px));
+  max-width: 440px;
+  max-height: calc(100dvh - 36px);
+  margin: auto;
+  padding: 32px 28px 26px;
+  border: 1px solid rgba(255, 207, 58, .38);
+  border-radius: 20px;
+  background: #111319;
+  color: #f7f7f9;
+  box-shadow: 0 26px 90px rgba(0, 0, 0, .68);
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  text-align: center;
+  z-index: 2147483646;
+}
+.arx-maintenance-dialog::backdrop {
+  background: rgba(2, 4, 8, .79);
+  backdrop-filter: blur(7px);
+}
+.arx-maintenance-symbol {
+  display: block;
+  width: min(176px, 55vw);
+  height: auto;
+  max-height: 172px;
+  object-fit: contain;
+  margin: 0 auto 17px;
+  border: 0;
+  background: transparent;
+}
+.arx-maintenance-dialog h2 {
+  color: #f7f7f9;
+  font-size: 23px;
+  line-height: 1.3;
+  letter-spacing: -.02em;
+  margin: 0 0 10px;
+}
+.arx-maintenance-dialog p {
+  color: #b9bdc8;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 25px;
+}
+.arx-maintenance-accept {
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  border: none;
+  border-radius: 11px;
+  background: #f7c940;
+  color: #17181b;
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.arx-maintenance-accept:focus-visible {
+  outline: 2px solid #f5f5f5;
+  outline-offset: 3px;
+}
+.arx-maintenance-accept:hover { background: #ffdb68; }
+@media (max-width: 480px) {
+  .arx-maintenance-dialog {padding: 26px 19px 20px; }
+}

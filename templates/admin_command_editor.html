@@ -1,0 +1,29 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX · Sistem Komutu Düzenle</title><link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<style>
+.arx-editor{padding:24px;max-width:1050px}.arx-editor label{display:block;font-size:14px;margin-top:15px;color:#d0d3dd}
+.arx-editor input[type=text],.arx-editor input[type=url],.arx-editor textarea{display:block;width:100%;min-height:38px;margin-top:5px;color:#fff;background:#101319;border:1px solid #414550;border-radius:8px;padding:10px;box-sizing:border-box}
+.arx-editor textarea{min-height:100px;resize:vertical}.arx-editor details{border:1px solid #333941;border-radius:10px;padding:14px;margin:12px 0}
+.arx-editor summary{cursor:pointer;font-weight:650}.arx-editor .hint{font-size:13px;color:#abb0b9;line-height:1.5}.arx-editor .controls{display:flex;gap:24px;margin:24px 0;flex-wrap:wrap}
+.arx-editor .controls label{display:inline-flex;gap:7px;align-items:center;margin:0}.arx-editor small{color:#aeb5c1}
+</style></head><body class="admin-body"><aside class="sidebar admin-sidebar"><div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+<nav><a href="/admin">Abonelikler</a><a class="active" href="/admin/system-commands">Sistem Komutları</a><a href="/admin/reports">Discord Bildirimleri</a><a href="/admin/system">Sistem Sağlığı</a></nav></aside>
+<main class="main admin-main"><header class="topbar"><div><p class="eyebrow">ARX INTERNAL / KOMUT EDİTÖRÜ</p><h1>{{ '/' + command.name if command else 'Yeni sistem komutu' }}</h1><p>İçeriği siz belirlersiniz. Müşteri bu komutları silemez veya değiştiremez.</p></div></header>
+<section class="panel arx-editor"><a href="/admin/system-commands">← Sistem komutlarına dön</a>
+<form method="post" action="{{ '/admin/system-commands/' + command.name + '/save' if command else '/admin/system-commands/new' }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Slash komut adı (ör. indirim) <input type="text" name="name" required pattern="[a-z][a-z0-9_-]{1,31}" minlength="2" maxlength="32" value="{{ command.name if command else '' }}" {{ 'readonly' if command else '' }}></label>
+<p class="hint">Adı kayıttan sonra değiştirilemez. Değiştirmek için komutu silip yeniden oluşturun. <code>/error</code> ve mevcut ARX komutları korunur.</p>
+<label>HTTPS bağlantısı (isteğe bağlı) <input type="url" name="button_url" maxlength="500" placeholder="https://arxbot.dev/..." value="{{ command.button_url if command else '' }}"></label>
+<p class="hint">Premium kampanyaları için bağlantı ekleyebilirsiniz. Bu komut ödeme fiyatını, indirimi veya aboneliği otomatik değiştirmez.</p>
+<div class="controls"><label><input type="checkbox" name="enabled" value="1" {% if not command or command.enabled %}checked{% endif %}> Komut açık</label>
+<label><input type="checkbox" name="ephemeral" value="1" {% if not command or command.ephemeral %}checked{% endif %}> Yanıt yalnız komutu kullanan üyeye görünsün</label></div>
+{% for code,label in languages %}
+<details {% if code in ('en','tr') %}open{% endif %}>
+<summary>{{ label }} ({{ code }}) {% if code in ('en','tr') %}— zorunlu{% else %}— isteğe bağlı{% endif %}</summary>
+<label>Discord komut açıklaması <input type="text" name="description_{{ code }}" maxlength="100" {% if code in ('en','tr') %}required{% endif %} value="{{ command.descriptions.get(code,'') if command else '' }}"></label>
+<label>Komut yanıtı <textarea name="response_{{ code }}" maxlength="1800" {% if code in ('en','tr') %}required{% endif %}>{{ command.responses.get(code,'') if command else '' }}</textarea></label>
+<label>Bağlantı düğmesi yazısı <input type="text" name="button_{{ code }}" maxlength="80" value="{{ command.buttons.get(code,'') if command else '' }}"></label>
+</details>{% endfor %}
+<p class="hint">Diğer diller boş kalırsa İngilizce içerik gösterilir. 15 dilin hepsini ayrı ayrı düzenleyebilirsiniz. @everyone ve @here etiketlemeleri kapalıdır.</p>
+<button type="submit" class="primary">Komutu kaydet</button></form></section></main></body></html>

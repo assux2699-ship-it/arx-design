@@ -1,0 +1,39 @@
+/* ARX V300.169 — enlarge the sidebar ladder mascot */
+
+.sidebar-ladder-mascot-v300168{
+  min-height:330px!important;
+  margin:8px 0 14px!important;
+}
+
+.sidebar-ladder-mascot-v300168 img{
+  max-width:292px!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.08)!important;
+  transform-origin:center top!important;
+}
+
+@media(max-width:1050px) and (min-width:721px){
+  .sidebar-ladder-mascot-v300168{
+    min-height:290px!important;
+  }
+
+  .sidebar-ladder-mascot-v300168 img{
+    max-width:238px!important;
+    transform:scale(1.06)!important;
+  }
+}
+
+@media(max-width:720px){
+  .sidebar-ladder-mascot-v300168{
+    min-height:280px!important;
+    margin:6px 0 12px!important;
+  }
+
+  .sidebar-ladder-mascot-v300168 img{
+    max-width:248px!important;
+    transform:scale(1.08)!important;
+  }
+}

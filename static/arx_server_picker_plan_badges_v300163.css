@@ -1,0 +1,62 @@
+/* ARX V300.163 — server picker premium badges show explicit plan type text */
+
+/* Both premium badge variants become text-first pills with no icon. */
+.server-premium-tier-badge-v300163{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:max-content;
+  white-space:nowrap;
+}
+
+.server-premium-tier-badge-v300163 span{
+  white-space:nowrap;
+}
+
+/* Top-right premium glass pill */
+.premium-glass-badge.server-premium-tier-badge-v300163{
+  padding:0 14px!important;
+  min-height:40px!important;
+  gap:0!important;
+}
+
+.premium-glass-badge.server-premium-tier-badge-v300163 span{
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.05em!important;
+  text-transform:uppercase!important;
+}
+
+/* Small inline badge near ARX Kurulu */
+.subscription-badge.server-premium-tier-badge-v300163{
+  padding:0 12px!important;
+  min-height:28px!important;
+  gap:0!important;
+}
+
+.subscription-badge.server-premium-tier-badge-v300163 span{
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+  line-height:1!important;
+}
+
+/* Slight width/contrast refinement for the longer Lifetime Premium text */
+.server-premium-tier-badge-v300163.lifetime-tier{
+  padding-left:13px!important;
+  padding-right:13px!important;
+}
+
+/* Monthly and lifetime can share the same warm premium treatment, but
+   monthly remains slightly brighter to echo the active recurring tier. */
+.server-premium-tier-badge-v300163.monthly-tier{
+  box-shadow:
+    inset 0 0 14px rgba(245,197,24,.08),
+    0 0 16px rgba(245,197,24,.10)!important;
+}
+
+.server-premium-tier-badge-v300163.lifetime-tier{
+  box-shadow:
+    inset 0 0 14px rgba(245,197,24,.06),
+    0 0 14px rgba(245,197,24,.08)!important;
+}

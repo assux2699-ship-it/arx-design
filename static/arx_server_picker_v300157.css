@@ -1,0 +1,232 @@
+/* ARX V300.157 — centered server picker shell + current ARX background + flag language UI */
+
+/* Use the current ARX cat background on this page instead of the old honeycomb image. */
+body.arx-server-picker-page-v300157::before{
+  background-image:url('/static/arx_server_picker_bg_v300157.png')!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  filter:none!important;
+  transform:none!important;
+}
+body.arx-server-picker-page-v300157::after{
+  background:rgba(4,5,7,.18)!important;
+}
+
+/* Center sidebar + main content together as a single application shell. */
+body.arx-server-picker-page-v300157{
+  display:grid!important;
+  grid-template-columns:270px minmax(0,1500px);
+  column-gap:24px;
+  justify-content:center;
+  align-items:start;
+  padding-left:24px;
+  padding-right:24px;
+}
+
+body.arx-server-picker-page-v300157>.sidebar{
+  position:sticky!important;
+  inset:auto!important;
+  top:0!important;
+  grid-column:1;
+  width:270px!important;
+  height:100vh;
+  min-height:100vh;
+  margin:0!important;
+}
+
+body.arx-server-picker-page-v300157>main{
+  grid-column:2;
+  width:100%!important;
+  min-width:0;
+  max-width:none!important;
+  margin:0!important;
+  padding:38px 0 80px!important;
+}
+
+/* Header remains clean after centering. */
+body.arx-server-picker-page-v300157 header{
+  gap:28px;
+}
+body.arx-server-picker-page-v300157 .header-tools{
+  align-items:center;
+}
+
+/* Updated flag-based language selector */
+.dashboard-language-menu-v300157{
+  position:relative;
+  flex:0 0 auto;
+}
+.dashboard-language-menu-v300157>summary{
+  list-style:none;
+  height:44px;
+  min-width:88px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 11px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:11px;
+  background:rgba(13,15,19,.86);
+  cursor:pointer;
+  user-select:none;
+}
+.dashboard-language-menu-v300157>summary::-webkit-details-marker{display:none}
+.dashboard-language-menu-v300157>summary:hover,
+.dashboard-language-menu-v300157[open]>summary{
+  border-color:rgba(245,197,24,.28);
+  background:rgba(18,20,25,.96);
+}
+.dashboard-language-menu-v300157 summary img{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  object-fit:contain;
+}
+.dashboard-language-menu-v300157 summary span{
+  color:#e9ecf1;
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.03em;
+}
+.dashboard-language-menu-v300157 summary i{
+  position:relative;
+  width:16px;
+  height:16px;
+  margin-left:auto;
+}
+.dashboard-language-menu-v300157 summary i::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:43%;
+  width:6px;
+  height:6px;
+  border-right:1.7px solid #9ba3ad;
+  border-bottom:1.7px solid #9ba3ad;
+  transform:translate(-50%,-50%) rotate(45deg);
+  transition:transform .16s ease,top .16s ease,border-color .16s ease;
+}
+.dashboard-language-menu-v300157[open] summary i::before{
+  top:57%;
+  transform:translate(-50%,-50%) rotate(225deg);
+  border-color:#f5c518;
+}
+.dashboard-language-dropdown-v300157{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  z-index:120;
+  width:205px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  background:#12141a;
+  box-shadow:0 22px 60px rgba(0,0,0,.5);
+}
+.dashboard-language-dropdown-v300157 button{
+  width:100%;
+  min-height:40px;
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  align-items:center;
+  gap:10px;
+  padding:0 10px;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:#cbd0d8;
+  text-align:left;
+  font:inherit;
+  font-size:12px;
+  cursor:pointer;
+}
+.dashboard-language-dropdown-v300157 button:hover{
+  background:rgba(245,197,24,.08);
+  color:#fff;
+}
+.dashboard-language-dropdown-v300157 button.active{
+  background:rgba(245,197,24,.055);
+  color:#ffd84a;
+}
+.dashboard-language-dropdown-v300157 button img{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+.dashboard-language-native-v300157{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+}
+
+/* Improve breathing room around the account/header tools on wide screens. */
+body.arx-server-picker-page-v300157 .system.system-compact{
+  min-height:44px;
+}
+body.arx-server-picker-page-v300157 .panel-account{
+  min-height:44px;
+}
+
+/* Preserve ARX tablet/mobile behavior while keeping the shell centered. */
+@media(max-width:1050px) and (min-width:721px){
+  body.arx-server-picker-page-v300157{
+    grid-template-columns:220px minmax(0,1fr);
+    column-gap:16px;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  body.arx-server-picker-page-v300157>.sidebar{
+    width:220px!important;
+  }
+  body.arx-server-picker-page-v300157>main{
+    margin:0!important;
+    padding:25px 0 80px!important;
+  }
+}
+
+@media(max-width:720px){
+  body.arx-server-picker-page-v300157{
+    display:block!important;
+    padding-left:0;
+    padding-right:0;
+  }
+  body.arx-server-picker-page-v300157>.sidebar{
+    position:static!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  body.arx-server-picker-page-v300157>main{
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:20px!important;
+  }
+  body.arx-server-picker-page-v300157 header{
+    flex-direction:column;
+  }
+  body.arx-server-picker-page-v300157 .header-tools{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .dashboard-language-dropdown-v300157{
+    right:auto;
+    left:0;
+  }
+}
+
+/* V300.194: keep only the ARX install CTA in a neutral silver tone. */
+body.arx-server-picker-page-v300157 .server-card-install .arx-install-watch{
+  background:#b8bdc5!important;
+  color:#101216!important;
+  border:1px solid #d2d6dc!important;
+  box-shadow:none!important;
+}
+body.arx-server-picker-page-v300157 .server-card-install .arx-install-watch:hover{
+  background:#d0d4da!important;
+  color:#0a0c0f!important;
+}

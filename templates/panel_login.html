@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0b0d">
+  <meta name="description" content="{{ tr('marketing.login_meta_description') }}">
+  <title>{{ tr('marketing.login_title') }} · ARX</title>
+  {% set asset_url_base = public_site_url if standalone_login|default(false) else '' %}
+  <link rel="stylesheet" href="{{ asset_url_base }}/static/marketing.css?v=300313-login-css-recovery-1">
+  <link rel="stylesheet" href="{{ asset_url_base }}/static/locale.css?v=key10-1">
+  {% if standalone_login|default(false) %}
+  <script>window.ARX_ASSET_BASE = {{ public_site_url|tojson }};</script>
+  {% endif %}
+  {% include "_locale.html" %}
+  {% if standalone_login|default(false) %}
+  <link rel="stylesheet" href="{{ asset_url_base }}/static/bot-maintenance.css?v=300286-maint-cat-2">
+  <script src="{{ asset_url_base }}/static/bot-maintenance.js?v=300286-login-assets-1" defer></script>
+  <script src="{{ asset_url_base }}/static/login-bridge.js?v=300286-login-loopfix-2" defer></script>
+  {% endif %}
+</head>
+<body class="marketing-body login-body">
+  <div class="marketing-noise" aria-hidden="true"></div>
+  <main class="login-shell">
+    <section class="login-showcase">
+      <a class="marketing-brand" href="{{ public_site_url }}"><img src="{{ asset_url_base }}/static/arx_brand_logo.png" alt="ARX"><span><strong>ARX</strong><small>CONTROL CENTER</small></span></a>
+      <div class="login-showcase-copy"><p class="marketing-kicker"><span></span>{{ tr('marketing.login_kicker') }}</p><h1>{{ tr('marketing.login_showcase_title') }}</h1><p>{{ tr('marketing.login_showcase_text') }}</p></div>
+      <div class="login-benefits"><article><b>01</b><div><strong>{{ tr('marketing.login_benefit_1_title') }}</strong></div></article><article><b>02</b><div><strong>{{ tr('marketing.login_benefit_2_title') }}</strong></div></article><article><b>03</b><div><strong>{{ tr('marketing.login_benefit_3_title') }}</strong></div></article></div>
+      <a class="login-back" href="{{ public_site_url }}">← {{ tr('marketing.back_to_site') }}</a>
+    </section>
+
+    <section class="login-panel-wrap">
+      <div class="login-topbar">{% include "_language_selector.html" %}</div>
+      <div class="login-card">
+        <div class="login-logo"><img src="{{ asset_url_base }}/static/arx_brand_logo.png" alt="ARX"></div>
+        <p class="marketing-kicker centered"><span></span>{{ tr('marketing.login_control_center') }}</p>
+        <h2>{{ tr('marketing.login_title') }}</h2>
+        <p class="login-copy">{{ tr('marketing.login_text') }}</p>
+        {% if oauth_enabled %}
+        <a class="discord-login-button" href="{{ oauth_start_url|default('/oauth/start') }}"><span class="discord-mark">D</span><strong>{{ tr('marketing.login_with_discord') }}</strong></a>
+        {% else %}
+        <button class="discord-login-button disabled" disabled><span class="discord-mark">D</span><strong>{{ tr('marketing.login_unavailable') }}</strong></button>
+        {% endif %}
+        <div class="login-assurance"><span>✓ {{ tr('marketing.login_no_password') }}</span><span>✓ {{ tr('marketing.login_permissions') }}</span><span>✓ {{ tr('marketing.login_secure_session') }}</span></div>
+        <p class="login-legal">{{ tr('marketing.login_legal_prefix') }} <a href="{{ public_site_url }}/terms">{{ tr('legal.terms_of_service') }}</a> {{ tr('marketing.login_and') }} <a href="{{ public_site_url }}/privacy">{{ tr('legal.privacy_policy') }}</a>.</p>
+      </div>
+      <small class="login-domain">panel.arxbot.dev · ARX CONTROL CENTER</small>
+    </section>
+  </main>
+</body>
+</html>

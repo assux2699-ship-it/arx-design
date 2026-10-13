@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX — Bonus Kodları</title>
+<style>
+body{background:#101115;color:#eee;font-family:system-ui,Arial,sans-serif;margin:0;padding:32px}
+main{max-width:750px;margin:0 auto;background:#181a20;border:1px solid #424039;border-radius:16px;padding:28px}
+h1,h2{color:#f6c626}label{display:block;margin-top:20px}input{box-sizing:border-box;width:100%;margin-top:7px;padding:11px;color:#eee;background:#0d0e12;border:1px solid #555;border-radius:8px;font-size:1rem}
+button{margin-top:24px;border:0;border-radius:8px;background:#f5c518;color:#111;padding:12px 22px;font-weight:700;cursor:pointer}
+a{color:#f6c626}.code{user-select:all;padding:16px;background:#090909;border:1px solid #9d821f;border-radius:8px;overflow-wrap:anywhere;font-size:1.3rem}
+small,p{color:#c3c5cc}
+</style></head><body><main>
+<a href="/admin">← Yönetici paneline dön</a>
+<h1>Premium+ Destek Bonus Kodları</h1>
+<p>Bu kodlar yalnızca belirtilen Discord sunucusunda bir kez kullanılabilir. Müşteri kodu Ayarlar → ARX Aboneliği bölümünde kaydeder; günler ücretli üyelik bittikten sonra müşteri etkinleştirince başlar. Paddle faturalandırması değişmez.</p>
+<form method="post" action="/admin/bonus-codes">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Discord sunucu ID <input name="guild_id" required pattern="[0-9]{5,21}" maxlength="21" inputmode="numeric" autocomplete="off"></label>
+<label>Hediye Premium+ günü (1–365) <input name="days" required type="number" min="1" max="365" value="7"></label>
+<button type="submit">Tek kullanımlık kod oluştur</button>
+</form>
+{% if issued_code %}
+<h2>Oluşturulan kod</h2><p>{{ message }}</p>
+<p class="code" id="issuedCode">{{ issued_code }}</p>
+<small>Bu kodu şimdi kopyalayın. Düz metin hâli veritabanında saklanmaz; bu sayfa yenilenince tekrar gösterilemez.</small>
+{% endif %}
+</main></body></html>

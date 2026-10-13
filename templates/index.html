@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ tr('index.arx_control_center') }}</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png?v=300172">
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/favicon-48x48.png?v=300172">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png?v=300172">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png?v=300172">
+  <link rel="shortcut icon" href="/static/favicon.ico?v=300172">
+  <link rel="stylesheet" href="/static/style.css?v=300204-branding-lock">
+<link rel="stylesheet" href="/static/locale.css?v=key10-1">
+
+<link rel="stylesheet" href="/static/bot-maintenance.css?v=300286-maint-cat-2">
+<script src="/static/bot-maintenance.js?v=300286-maint-compat-3" defer></script>
+<link rel="stylesheet" href="/static/workspace-order.css?v=253-20260925"><link rel="stylesheet" href="/static/arx_server_picker_v300157.css?v=300194"><link rel="stylesheet" href="/static/arx_server_picker_plan_v300158.css?v=300200"><link rel="stylesheet" href="/static/arx_server_picker_brand_v300159.css?v=300159"><link rel="stylesheet" href="/static/arx_server_picker_brand_v300160.css?v=300160"><link rel="stylesheet" href="/static/arx_server_picker_background_v300161.css?v=300161"><link rel="stylesheet" href="/static/arx_server_picker_background_fx_v300162.css?v=300162"><link rel="stylesheet" href="/static/arx_server_picker_plan_badges_v300163.css?v=300163"><link rel="stylesheet" href="/static/arx_server_picker_plan_badges_v300164.css?v=300164"><link rel="stylesheet" href="/static/arx_server_picker_header_vignette_v300165.css?v=300165"><link rel="stylesheet" href="/static/arx_server_picker_top_badge_v300166.css?v=300166"><link rel="stylesheet" href="/static/arx_server_picker_header_glass_v300167.css?v=300193"><link rel="stylesheet" href="/static/arx_server_picker_sidebar_mascot_v300168.css?v=300168"><link rel="stylesheet" href="/static/arx_server_picker_sidebar_mascot_scale_v300169.css?v=300169"><link rel="stylesheet" href="/static/arx_server_picker_sidebar_mascot_precision_v300170.css?v=300170"><link rel="stylesheet" href="/static/arx_server_picker_sidebar_mascot_layout_fix_v300171.css?v=300171">
+<link rel="stylesheet" href="/static/arx_premium_checkout_v300287.css?v=300287-4">
+<style id="arx-paddle-comparison-layer-v300288">
+/* V300.288: a single stable backdrop. No showModal/close/show top-layer switch. */
+.arx-purchase-screen-shade {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(3, 7, 13, .76);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+.arx-purchase-screen-shade.is-visible { opacity: 1; pointer-events: auto; }
+.arx-purchase-modal[open] {
+  position: fixed !important;
+  inset: 50% auto auto 50% !important;
+  margin: 0 !important;
+  z-index: 81;
+  transform: translate(-50%, calc(-50% + 9px)) scale(.988);
+  opacity: 0;
+  transition: transform 220ms ease, opacity 200ms ease;
+}
+.arx-purchase-modal[open].arx-purchase-visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+/* Paddle owns a separate overlay above these ordinary fixed-position layers. */
+@media (prefers-reduced-motion: reduce) {
+  .arx-purchase-screen-shade,
+  .arx-purchase-modal[open] { transition: none !important; }
+}
+</style>
+
+<link rel="stylesheet" href="/static/arx_server_subscription_buttons_v300287.css?v=300287-free-emerald-1">
+{% include "_locale.html" %}
+</head>
+<body class="arx-server-picker-page-v300157">
+  <aside class="sidebar dashboard-sidebar">
+    <div class="brand dashboard-brand-v300160">
+      <img class="dashboard-brand-logo-v300160 arx-branding-protected" src="/static/arx_brand_mascot_square_v300160.png" alt="ARX" draggable="false">
+    </div>
+    <nav><a class="active" href="/"><span>⌂</span> {{ tr('overview.title') }}</a></nav>
+    <div class="sidebar-ladder-mascot-v300168" aria-hidden="true"><img class="arx-branding-protected" src="/static/arx_sidebar_ladder_mascot_v300168.png" alt="" draggable="false"></div>
+    <div class="dashboard-workspace-note"><small>{{ tr('index.server_workspaces') }}</small><strong>{{ tr('index.each_server_is_independent') }}</strong><p>{{ tr('index.modules_setup_and_subscription_are_tied_to_the_discord_server_you_sele') }}</p></div>
+    <div class="plan"><span>{{ tr('index.plan_model') }}</span><strong>{{ tr('index.server_based') }}</strong><small>{{ tr('index.premium_is_tracked_separately_for_each_server') }}</small></div>
+  </aside>
+
+  <main>
+    <header>
+      <div><p class="eyebrow">{{ tr('common.management_center') }}</p><h1>{{ tr('dashboard.select_server') }}</h1><p>{{ tr('index.only_discord_servers_you_own_or_have_permission_to_manage_are_shown') }}</p><p class="arx-domain">www.arxbot.dev</p></div>
+      <div class="header-tools">
+        <div class="system system-compact"><span id="status-dot" class="dot online"></span><div><strong id="system-text">{{ tr('common.bot_online_simple') }}</strong></div></div>
+        {% set language_flag_files = {
+          'en':'en.png','fr':'fr.png','es':'es.png','de':'de.png','tr':'tr.png',
+          'ar':'ar.png','pt':'pt.png','ja':'ja.png','ru':'ru.png','ko':'ko.png',
+          'pt-BR':'pt-BR.png','pl':'pl.png','it':'it.png','sv-SE':'sv-SE.png','nl':'nl.png'
+        } %}
+        <details class="dashboard-language-menu-v300157">
+          <summary aria-label="{{ tr('index.interface_language') }}">
+            <img src="/static/arx_flags_v300157/{{ language_flag_files.get(ui_language, 'en.png') }}" alt="">
+            <span>{{ ui_language|upper }}</span>
+            <i aria-hidden="true"></i>
+          </summary>
+          <div class="dashboard-language-dropdown-v300157">
+            {% for code, label in language_options.items() %}
+            <button type="button" class="{{ 'active' if code == ui_language else '' }}" data-dashboard-language="{{ code }}">
+              <img src="/static/arx_flags_v300157/{{ language_flag_files.get(code, 'en.png') }}" alt="">
+              <span>{{ label }}</span>
+            </button>
+            {% endfor %}
+          </div>
+        </details>
+        <select id="app-language" class="dashboard-language-native-v300157" aria-hidden="true" tabindex="-1">
+          {% for code, label in language_options.items() %}
+          <option value="{{ code }}" {{ 'selected' if code == ui_language else '' }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% if oauth_enabled and panel_user %}
+        <div class="panel-account">
+          {% if panel_user.avatar_url %}<img src="{{ panel_user.avatar_url }}" alt="">{% else %}<span class="panel-account-fallback">{{ panel_user.display_name[:1]|upper }}</span>{% endif %}
+          <div><strong>{{ panel_user.display_name }}</strong><small>@{{ panel_user.username }}</small></div>
+          <a class="ghost link-button" href="/logout">{{ tr('index.log_out') }}</a>
+        </div>
+        {% endif %}
+      </div>
+    </header>
+
+    {% if request.query_params.get('access_denied') == '1' %}<p class="action-message error dashboard-message">{{ tr('index.you_do_not_have_permission_to_manage_this_discord_server') }}</p>{% endif %}
+    {% if not oauth_enabled %}<p class="action-message dashboard-message">{{ tr('index.discord_oauth_is_not_configured_yet_so_the_panel_is_in_development_mod') }}</p>{% endif %}
+
+    <section class="stats dashboard-stats">
+      <article><span>{{ tr('index.servers_you_can_manage') }}</span><strong>{{ guilds|length }}</strong><small>{{ tr('index.retrieved_from_your_discord_account') }}</small></article>
+      <article><span>{{ tr('index.arx_installed') }}</span><strong>{{ installed_guilds|length }}</strong><small>{{ tr('index.workspaces_where_the_bot_is_active') }}</small></article>
+      <article><span>{{ tr('index.premium_server') }}</span><strong>{{ premium_count }}</strong><small>{{ tr('index.subscription_is_tied_to_the_server_id') }}</small></article>
+      <article class="accent"><span>{{ tr('index.isolation') }}</span><strong>{{ tr('module.server') }}</strong><small>{{ tr('index.settings_are_not_shared_between_servers') }}</small></article>
+    </section>
+
+    <section class="panel server-picker-panel">
+      <div class="panel-title"><div><p class="eyebrow">{{ tr('index.your_discord_servers') }}</p><h2>{{ tr('index.arx_workspaces') }}</h2><p class="section-note">{{ tr('index.management_modules_do_not_open_until_you_select_a_server_if_arx_is_not') }}</p></div><a class="ghost link-button dashboard-guild-refresh" href="/login?refresh=1">{{ tr('index.refresh_from_discord') }}</a></div>
+      {% if guilds %}
+      <div class="guild-grid server-picker-grid" data-workspace-grid data-workspace-user="{{ panel_user.user_id if panel_user else 'guest' }}">
+        {% for guild in guilds %}
+        <article class="guild-card server-picker-card stylish-server-card {{ 'installed' if guild.bot_installed else 'not-installed' }} {{ 'premium-card' if guild.bot_installed and guild.subscription_plan|lower != 'free' else 'free-card' if guild.bot_installed else 'install-card' }}" data-guild-id="{{ guild.guild_id }}" data-workspace-card draggable="true">
+          <div class="server-card-cover {{ 'has-banner' if guild.banner_url else '' }}" {% if guild.banner_url %}style="background-image:url('{{ guild.banner_url }}')"{% endif %}>
+            <div class="server-card-cover-overlay"></div>
+            {% if guild.bot_installed and guild.subscription_plan|lower != 'free' %}
+            <div class="server-card-cover-flare" aria-hidden="true"></div>
+            <div class="premium-glass-badge server-premium-tier-badge-v300163 server-premium-top-badge-v300164 {{ 'lifetime-tier' if guild.subscription_plan|lower == 'lifetime' else 'premium-plus-tier' if guild.subscription_plan|lower == 'premium_plus' else 'monthly-tier' }}">
+              {% if guild.subscription_plan|lower == 'lifetime' %}<span>{{ tr('plan.lifetime') }}</span><img class="premium-glass-tier-icon" src="/static/premium-lifetime-phoenix.gif?v=300287-phoenix-master" alt="">
+              {% elif guild.subscription_plan|lower == 'premium_plus' %}<span>PREMIUM+</span><img class="premium-glass-tier-icon" src="/static/premium-lifetime-crown.gif" alt="">
+              {% else %}<span>{{ tr('plan.premium') }}</span><img class="premium-glass-tier-icon" src="/static/premium-lightning.gif" alt="">{% endif %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="guild-head server-card-head">
+            {% if guild.icon_url %}<img src="{{ guild.icon_url }}" alt="">{% else %}<div class="fallback">{{ guild.guild_name[0]|upper }}</div>{% endif %}
+            <div class="server-card-copy"><h3>{{ guild.guild_name }}</h3><p>{{ tr('common.id') }} {{ guild.guild_id }}{% if guild.bot_installed and guild.member_count %} · <span>{{ guild.member_count }}</span> <span>{{ tr('module.members') }}</span>{% endif %}</p></div>
+          </div>
+          <div class="server-card-badges">
+            <span class="badge {{ 'ready' if guild.bot_installed else '' }}">{{ tr('index.arx_installed') if guild.bot_installed else tr('index.arx_not_installed') }}</span>
+            {% if guild.bot_installed %}<span class="subscription-badge {{ 'premium server-premium-tier-badge-v300163 server-premium-inline-badge-v300164 ' ~ ('lifetime-tier' if guild.subscription_plan|lower == 'lifetime' else 'premium-plus-tier' if guild.subscription_plan|lower == 'premium_plus' else 'monthly-tier') if guild.subscription_plan|lower != 'free' else 'free' }}">{% if guild.subscription_plan|lower == 'lifetime' %}<span>{{ tr('plan.lifetime') }}</span>{% elif guild.subscription_plan|lower == 'premium_plus' %}<span>PREMIUM+</span>{% elif guild.subscription_plan|lower != 'free' %}<span>{{ tr('plan.premium') }}</span>{% else %}<span>{{ tr('plan.free') }}</span>{% endif %}</span>{% endif %}
+          </div>
+          {% if guild.bot_installed %}
+          <div class="guild-controls server-card-controls server-card-controls-simple">
+            <div class="server-card-actions server-card-actions-simple {{ 'free-actions' if guild.subscription_plan|lower == 'free' else 'pro-actions' }}">
+              {% if guild.subscription_plan|lower == 'free' %}
+                <button class="premium-upgrade-button arx-premium-checkout" type="button" data-guild-id="{{ guild.guild_id }}"><img class="premium-upgrade-button-gif" src="/static/arx_premium_money_v300287.gif?v=300287-money-1" alt="" aria-hidden="true"><span>{{ tr('index.get_arx_premium') }}</span><img class="premium-upgrade-button-gif" src="/static/arx_premium_money_v300287.gif?v=300287-money-1" alt="" aria-hidden="true"></button>
+
+              {% endif %}
+              {% if guild.subscription_plan|lower != 'free' %}
+              {% set subscribe_text = {'en':'Subscribe', 'tr':'Abonelik', 'fr':"S'abonner", 'es':'Suscribirse', 'de':'Abonnieren', 'ar':'اشترك', 'pt':'Subscrever', 'ja':'申し込む', 'ru':'Оформить подписку', 'ko':'구독하기', 'pt-BR':'Assinar', 'pl':'Subskrybuj', 'it':'Abbonati', 'sv-SE':'Prenumerera', 'nl':'Abonneren'} %}
+              {% if guild.subscription_plan|lower == 'lifetime' %}
+              <button class="premium-upgrade-button subscription-lifetime-button" type="button" disabled aria-disabled="true">
+                <span class="subscription-lifetime-content">
+                  <img src="/static/diamante49.gif?v=300287-lifetime-diamond-2" alt="" aria-hidden="true">
+                  <span>{{ tr('plan.lifetime') }}</span>
+                  <img class="is-mirror" src="/static/diamante49.gif?v=300287-lifetime-diamond-2" alt="" aria-hidden="true">
+                </span>
+              </button>
+              {% elif guild.subscription_plan|lower == 'premium_plus' %}
+              <button class="premium-upgrade-button arx-premium-checkout arx-existing-subscription subscription-premium-plus-button" type="button" data-guild-id="{{ guild.guild_id }}">
+                <span class="subscription-button-content subscription-plus-content">
+                  <img class="premium-upgrade-button-gif subscription-button-icon diamond-icon" src="/static/premium-blue-diamond.gif?v=300287-premium-diamond-1" alt="" aria-hidden="true">
+                  <span class="button-label">{{ subscribe_text.get(ui_language, 'Subscribe') }}</span>
+                  <img class="premium-upgrade-button-gif subscription-button-icon diamond-icon is-mirror" src="/static/premium-blue-diamond.gif?v=300287-premium-diamond-1" alt="" aria-hidden="true">
+                </span>
+              </button>
+              {% else %}
+              <button class="premium-upgrade-button arx-premium-checkout arx-existing-subscription subscription-premium-button" type="button" data-guild-id="{{ guild.guild_id }}">
+                <span class="subscription-button-content subscription-premium-content">
+                  <img class="premium-upgrade-button-gif subscription-button-icon star-icon" src="/static/premium-star.gif?v=300287-premium-star-1" alt="" aria-hidden="true">
+                  <span class="button-label">{{ subscribe_text.get(ui_language, 'Subscribe') }}</span>
+                  <img class="premium-upgrade-button-gif subscription-button-icon star-icon" src="/static/premium-star.gif?v=300287-premium-star-1" alt="" aria-hidden="true">
+                </span>
+              </button>
+              {% endif %}
+              {% endif %}
+              <a class="primary link-button server-manage-button {{ 'pro-manage' if guild.subscription_plan|lower != 'free' else 'free-manage' }}" href="/guild/{{ guild.guild_id }}/overview">{{ tr('index.manage_this_server') }}</a>
+              
+            </div>
+          </div>
+          {% else %}
+          <div class="server-card-install"><p>{{ tr('index.you_can_manage_this_server_but_arx_has_not_been_added_yet') }}</p><a class="primary link-button arx-install-watch" href="{{ guild.install_url }}" target="_blank" rel="noopener" data-guild-id="{{ guild.guild_id }}">{{ tr('index.add_arx_to_this_server') }}</a><small>{{ tr('index.the_discord_authorization_screen_opens_with_only_this_server_selected') }}</small></div>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty"><span>⌁</span><h3>{{ tr('index.no_manageable_servers_found') }}</h3><p>{{ tr('index.you_must_own_a_server_or_have_the_manage_server_permission_in_discord') }}</p></div>
+      {% endif %}
+    </section>
+
+    <section class="panel workspace-isolation-panel"><div class="panel-title"><div><p class="eyebrow">{{ tr('index.workspace_isolation') }}</p><h2>{{ tr('index.each_server_has_its_own_arx_setup') }}</h2></div></div><div class="setup-list"><span>{{ tr('index.moderation_tickets_temporary_rooms_role_panels_giveaways_and_announcem') }}</span><span>{{ tr('index.a_servers_free_premium_plan_does_not_carry_over_to_another_server') }}</span><span>{{ tr('index.server_management_routes_are_validated_per_server_using_discord_oauth') }}</span><span>{{ tr('index.the_global_status_activity_of_the_arx_system_bot_cannot_be_changed_fro') }}</span></div></section>
+  </main>
+  <!-- Lifetime is deliberately absent: only an admin may grant it. -->
+  {% import '_premium_purchase_i18n.html' as price_i18n with context %}
+  <dialog id="arxPurchaseDialog" class="arx-purchase-modal" aria-labelledby="arxPurchaseHeading">
+    <div class="arx-purchase-inner">
+      <div class="arx-purchase-head">
+        <div>
+          <small>ARX PREMIUM</small>
+          <h2 id="arxPurchaseHeading">{{ price_i18n.t('Compare plans') }}</h2>
+          <p><span>{{ price_i18n.t('Discord server:') }}</span> <strong data-arx-guild-name></strong></p>
+          <p>{{ price_i18n.t('One subscription per server. Choose a plan and billing period.') }}</p>
+        </div>
+        <button type="button" class="arx-purchase-close" data-arx-close aria-label="{{ price_i18n.t('Close') }}">×</button>
+      </div>
+      <div class="arx-purchase-period" role="group" aria-label="{{ price_i18n.t('Billing period') }}">
+        <button type="button" data-arx-period="monthly" aria-pressed="true">{{ price_i18n.t('Monthly') }}</button>
+        <button type="button" class="arx-purchase-yearly-choice" data-arx-period="yearly" aria-pressed="false"><span>{{ price_i18n.t('Yearly') }}</span><span class="arx-purchase-yearly-highlight">{{ price_i18n.t('Best value') }}</span></button>
+      </div>
+      <p class="arx-purchase-compare-intro"><a href="#arxPurchaseFeatureMatrix">{{ price_i18n.t('Compare all 36 features in detail ↓') }}</a></p>
+      <div class="arx-purchase-grid">
+        <article class="arx-purchase-card" data-comparison="free">
+          <h3>{{ tr('plan.free') }}</h3>
+          <p>{{ price_i18n.t('A free plan to get started.') }}</p>
+          <div class="arx-purchase-price">$0 <small>{{ price_i18n.t('Forever') }}</small></div>
+          <ul class="arx-purchase-features">
+            <li>{{ price_i18n.t('One-click ARX setup') }}</li>
+            <li>{{ tr('common.moderation') }}</li>
+            <li>{{ price_i18n.t('Music Bitrate: 96 kbps') }}</li>
+            <li>{{ price_i18n.t('Basic access to ARX features') }}</li>
+          </ul>
+          <div class="arx-purchase-free-label">{{ price_i18n.t('Continue using Free') }}</div>
+        </article>
+        <article class="arx-purchase-card is-gold" data-comparison="pro">
+          <h3 class="arx-purchase-plan-title">Premium <img src="/static/premium-lightning.gif" alt="" aria-hidden="true" loading="lazy"></h3>
+          <p>{{ price_i18n.t('Free features plus advanced server management.') }}</p>
+          <div class="arx-purchase-price"><span data-arx-price-plan="pro">$3.99</span> <small data-arx-period-suffix></small></div>
+          <p class="arx-purchase-saving" data-arx-saving-plan="pro" hidden aria-live="polite"></p>
+          <ul class="arx-purchase-features">
+            <li>{{ price_i18n.t('Advanced management and community tools') }}</li>
+            <li>{{ tr('common.advanced_ticket_system') }}</li>
+            <li>{{ tr('common.members') }}</li>
+            <li>{{ price_i18n.t('Custom bot and advanced tools') }}</li>
+            <li>{{ price_i18n.t('Music Bitrate: 128–256 kbps') }}</li>
+            <li class="is-absent">{{ tr('common.bot_chat') }}</li>
+          </ul>
+          <button type="button" class="arx-purchase-buy" data-arx-buy-plan="pro">{{ price_i18n.t('Buy Premium') }}</button>
+        </article>
+        <article class="arx-purchase-card is-plus is-diamond" data-comparison="premium_plus">
+          <h3 class="arx-purchase-plan-title">Premium+ <img src="/static/premium-lifetime-crown.gif" alt="" aria-hidden="true" loading="lazy"></h3>
+          <p>{{ price_i18n.t('Everything in Premium plus Bot Chat.') }}</p>
+          <div class="arx-purchase-price"><span data-arx-price-plan="premium_plus">$6.99</span> <small data-arx-period-suffix></small></div>
+          <p class="arx-purchase-saving" data-arx-saving-plan="premium_plus" hidden aria-live="polite"></p>
+          <ul class="arx-purchase-features">
+            <li>{{ price_i18n.t('Complete ARX experience') }}</li>
+            <li>{{ tr('common.bot_chat') }}</li>
+            <li>{{ price_i18n.t('Priority access to new features') }}</li>
+            <li>{{ tr('common.advanced_ticket_system') }}</li>
+            <li>{{ price_i18n.t('Custom bot and advanced tools') }}</li>
+            <li>{{ price_i18n.t('Music Bitrate: 256–320 kbps') }}</li>
+          </ul>
+          <button type="button" class="arx-purchase-buy" data-arx-buy-plan="premium_plus">{{ price_i18n.t('Buy Premium+') }}</button>
+        </article>
+      </div>
+      {% include "_premium_feature_comparison.html" %}
+      <p class="arx-purchase-note">{{ price_i18n.t('Prices in USD. Payments are processed by Paddle. Existing subscriptions cannot create a second recurring checkout.') }}</p>
+      <p class="arx-purchase-feedback" aria-live="polite" role="status"></p>
+    </div>
+  </dialog>
+  <script type="application/json" id="arxPurchaseConfig">{{ {
+    'checkoutEnabled': paddle_checkout_enabled,
+    'clientToken': paddle_client_token,
+    'sandbox': paddle_environment == 'sandbox',
+    'offers': paddle_checkout_options,
+    'text': {
+      'monthly': price_i18n.t('/ month'),
+      'yearly': price_i18n.t('/ year'),
+      'annualSaving': price_i18n.t('Save {amount} vs. monthly billing ({percent}%)'),
+      'preparing': price_i18n.t('Preparing secure checkout…'),
+      'unavailable': price_i18n.t('This plan is not configured for Paddle checkout.'),
+      'providerError': price_i18n.t('Paddle checkout failed. Check the Sandbox default payment link, client token and price IDs.'),
+      'existingSubscription': price_i18n.t('A subscription already exists for this server. Use subscription management to change plans.')
+    }
+  }|tojson }}</script>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js" defer></script>
+  <script src="/static/arx_premium_checkout_v300287.js?v=300291-snowflake-safe-1" defer></script>
+<script src="/static/arx_subscription_management_v300287.js?v=300290-keep-plan-locked-1" defer></script>
+  <script src="/static/app.js?v=300286-maint-compat-3"></script>
+  <script src="/static/arx_server_picker_v300157.js?v=300157"></script>
+
+  <script src="/static/workspace-order.js?v=253-20260925"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const WATCH_KEY = 'arx.install.watch.v300178';
+      const MAX_WATCH_MS = 2 * 60 * 1000;
+      const POLL_MS = 1200;
+      let timer = null;
+      let checking = false;
+
+      function readWatch() {
+        try {
+          const raw = sessionStorage.getItem(WATCH_KEY);
+          if (!raw) return null;
+          const value = JSON.parse(raw);
+          const guildId = String(value && value.guildId || '');
+          const startedAt = Number(value && value.startedAt || 0);
+          if (!guildId || !startedAt || Date.now() - startedAt > MAX_WATCH_MS) {
+            sessionStorage.removeItem(WATCH_KEY);
+            return null;
+          }
+          return {guildId, startedAt};
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function saveWatch(guildId) {
+        const value = {guildId: String(guildId), startedAt: Date.now()};
+        try {
+          sessionStorage.setItem(WATCH_KEY, JSON.stringify(value));
+        } catch (_) {}
+        return value;
+      }
+
+      function clearWatch() {
+        try { sessionStorage.removeItem(WATCH_KEY); } catch (_) {}
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+      }
+
+      async function checkInstalled() {
+        const watch = readWatch();
+        if (!watch || checking) return false;
+        checking = true;
+        try {
+          const response = await fetch('/', {
+            method: 'GET',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: {'X-ARX-Install-Watch': '1'}
+          });
+          if (!response.ok) return false;
+
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const selector = `.server-picker-card[data-guild-id="${CSS.escape(watch.guildId)}"]`;
+          const card = doc.querySelector(selector);
+
+          if (card && card.classList.contains('installed')) {
+            clearWatch();
+            window.location.reload();
+            return true;
+          }
+        } catch (_) {
+          // A transient network failure must not interrupt the normal panel.
+        } finally {
+          checking = false;
+        }
+        return false;
+      }
+
+      function scheduleCheck(delay = POLL_MS) {
+        const watch = readWatch();
+        if (!watch) return;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(async () => {
+          const installed = await checkInstalled();
+          if (!installed && readWatch()) scheduleCheck();
+        }, delay);
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.arx-install-watch[data-guild-id]').forEach((link) => {
+          link.addEventListener('click', () => {
+            saveWatch(link.dataset.guildId);
+            scheduleCheck(700);
+          });
+        });
+
+        if (readWatch()) {
+          scheduleCheck(250);
+        }
+      }, {once: true});
+
+      // The most important path: user closes/returns from Discord's authorize tab.
+      window.addEventListener('focus', () => {
+        if (readWatch()) void checkInstalled();
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && readWatch()) void checkInstalled();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* ARX V300.170 — millimetric sidebar ladder mascot fit */
+
+/* Goal:
+   - mascot starts right below "Genel Bakış"
+   - mascot ends right above "Sunucu Çalışma Alanları"
+   - use the gap almost perfectly without looking stretched
+*/
+.sidebar-ladder-mascot-v300168{
+  flex:0 0 auto!important;
+  height:clamp(430px, calc(100vh - 430px), 535px)!important;
+  min-height:clamp(430px, calc(100vh - 430px), 535px)!important;
+  max-height:535px!important;
+  margin:6px 0 8px!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+
+.sidebar-ladder-mascot-v300168 img{
+  width:auto!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:none!important;
+}
+
+/* Keep the lower note cards tucked right under the mascot. */
+.dashboard-workspace-note{
+  margin-top:0!important;
+}
+
+/* Tablet */
+@media(max-width:1050px) and (min-width:721px){
+  .sidebar-ladder-mascot-v300168{
+    height:clamp(385px, calc(100vh - 395px), 485px)!important;
+    min-height:clamp(385px, calc(100vh - 395px), 485px)!important;
+    max-height:485px!important;
+    margin:6px 0 8px!important;
+  }
+}
+
+/* Narrow/mobile-like sidebar crops */
+@media(max-width:720px){
+  .sidebar-ladder-mascot-v300168{
+    height:clamp(470px, calc(100vh - 380px), 610px)!important;
+    min-height:clamp(470px, calc(100vh - 380px), 610px)!important;
+    max-height:610px!important;
+    margin:6px 0 8px!important;
+  }
+}

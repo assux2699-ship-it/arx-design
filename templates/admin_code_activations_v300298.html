@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX · Kod Aktivasyonları</title>
+<link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<link rel="stylesheet" href="/static/admin_commerce_v300294.css?v=300294-1">
+<link rel="stylesheet" href="/static/admin_codes_v300298.css?v=300298-1">
+<link rel="stylesheet" href="/static/admin_billing_v300299.css?v=300299-1"></head><body class="admin-body">
+<aside class="sidebar admin-sidebar"><div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div><nav><a href="/admin"><span>◆</span> Sunucular ve Abonelikler</a><a href="/admin/payments"><span>₺</span> Ödemeler ve Satın Alma Kayıtları</a><a href="/admin/customers"><span>♟</span> Müşteri Geçmişi</a><a href="/admin/reminders"><span>⏰</span> Hatırlatıcılar</a></nav></aside>
+<main class="main admin-main ac-page code-page"><div class="ac-shell">
+<header class="ac-top"><div><p class="ac-eyebrow">ARX / ÖDEME MERKEZİ / KODLAR</p><h1>Kod Kullanımları</h1><p class="ac-description">Premium, Premium+ ve Lifetime kodlarını sunucu bazında takip edin. Kodla verilen haklar Paddle tahsilatı değildir.</p></div><div class="codes-actions"><a class="ac-action" href="/admin/payments">← Ödeme Merkezi</a><a class="ac-action" href="/admin/premium-codes">Kod Oluşturma →</a></div></header>
+{% include '_arx_admin_billing_tabs_v300299.html' %}
+{% if not report.ready %}
+<section class="ac-panel"><div class="ac-panel-content"><div class="codes-empty"><h2>Henüz kod aktivasyon tablosu bulunamadı</h2><p>Premium kodları veya önceki bonus kodlarının kayıt tabloları mevcut veritabanında bulunmuyor. Yeni veritabanı ya da sahte veri oluşturulmadı.</p></div></div></section>
+{% else %}
+<section class="codes-stats" aria-label="Kod özeti"><article><span>Kullanılan kod</span><strong>{{report.summary.codes}}</strong><small>Seçili filtre kapsamında</small></article><article><span>Sunucu sayısı</span><strong>{{report.summary.guilds}}</strong><small>Kod kullanılan sunucu</small></article><article><span>Kullanan hesap</span><strong>{{report.summary.users}}</strong><small>Farklı Discord ID</small></article><article><span>Cüzdana aktarılan</span><strong>{{report.summary.banked}}</strong><small>Premium hemen başlamayabilir</small></article></section>
+<section class="ac-panel"><div class="ac-panel-heading"><div><h2>Sunucuların kod kullanım geçmişi</h2><p>Bir sunucuya girilen kod adedi, verilen süre ve en son aktivasyon tek satırda.</p></div><span class="ac-badge">{{report.total}} sunucu</span></div><div class="ac-panel-content">
+<form class="codes-filter" method="get" action="/admin/code-activations"><label class="codes-search"><span>Sunucu veya kullanıcı ara</span><input type="search" name="q" value="{{q}}" maxlength="100" placeholder="Sunucu ID, Discord ID veya kullanıcı adı" autocomplete="off"></label><label><span>Kod planı</span><select name="plan"><option value="all" {% if plan=='all' %}selected{% endif %}>Tüm planlar</option><option value="pro" {% if plan=='pro' %}selected{% endif %}>Premium</option><option value="premium_plus" {% if plan=='premium_plus' %}selected{% endif %}>Premium+</option><option value="lifetime" {% if plan=='lifetime' %}selected{% endif %}>Lifetime</option></select></label><button class="ac-action ac-action-primary" type="submit">Filtrele</button>{% if q or plan!='all' %}<a class="ac-action" href="/admin/code-activations">Temizle</a>{% endif %}</form>
+<div class="ac-table-wrap"><table class="ac-table codes-table codes-index"><thead><tr><th>Discord sunucusu</th><th>Girilen kod</th><th>Kullanıcı</th><th>Toplam tanımlanan süre</th><th>İlk / son kod kullanımı (UTC)</th><th>Mevcut üyelik bitişi</th><th></th></tr></thead><tbody>
+{% for item in report.rows %}{% set guild=report.visuals.guilds.get(item.guild_id|string,{}) %}<tr>
+<td><div class="ac-identity">{% if guild.icon %}<img class="ac-avatar guild" src="{{guild.icon}}" alt="" loading="lazy" referrerpolicy="no-referrer">{% else %}<span class="ac-avatar guild">{{(item.guild_name or guild.name or 'S')[:1]|upper}}</span>{% endif %}<div class="ac-identity-info"><strong class="codes-title">{{item.guild_name or guild.name or 'Sunucu kaydı'}}</strong><small class="codes-id">{{item.guild_id}}</small></div></div></td>
+<td><strong class="codes-num">{{item.code_count}}</strong><small>{{item.lifetime_count}} Lifetime kodu</small></td><td><strong>{{item.user_count}}</strong><small>Farklı hesap</small></td><td><strong>{{(item.seconds / 86400)|round(2)}} gün</strong><small>Kodların nominal süresi; kullanım tarihiyle eşit değildir</small></td>
+<td><span class="codes-date">{{item.first_at or '—'}}</span><small>Son: {{item.last_at or '—'}}</small></td>
+<td>{% if item.state.subscription_plan=='lifetime' %}<span class="codes-pill gold">Ömür boyu</span>{% elif item.state.subscription_expires_at %}<span class="codes-date">{{item.state.subscription_expires_at}}</span><small>Mevcut sunucu kaydı</small>{% else %}<span class="codes-muted">Kayıt yok / süre yok</span>{% endif %}</td>
+<td><a class="ac-link" href="/admin/code-activations/guild/{{item.guild_id}}">Tüm kodları aç →</a></td></tr>
+{% else %}<tr><td colspan="7"><div class="codes-empty"><h3>Kod kullanımı bulunamadı</h3><p>Filtreyi temizleyerek diğer sunucuları görebilirsiniz.</p></div></td></tr>{% endfor %}
+</tbody></table></div>
+{% if report.pages>1 %}<div class="ac-pager"><a href="{{previous_url}}">← Önceki</a><span>{{report.page}} / {{report.pages}}</span><a href="{{next_url}}">Sonraki →</a></div>{% endif %}
+</div></section>
+<section class="ac-panel"><div class="ac-panel-content"><p class="ac-note"><strong>Kayıt ayrımı:</strong> “Kod kullanımı” müşterinin kodu girdiği zamanı gösterir. Yeni kod sistemi üyelik süresini cüzdanda saklayabilir ve kullanıcı daha sonra etkinleştirebilir. Toplam gün, farklı tarihlerdeki kodların nominal toplamıdır; şu anda kalan üyelik süresi değildir. Kodların açık değeri yalnızca yetkili yerel admin ayrıntı sayfasında gösterilir.</p></div></section>
+{% endif %}
+</div></main></body></html>

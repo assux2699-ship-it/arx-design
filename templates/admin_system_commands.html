@@ -1,0 +1,32 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARX · Sistem Komutları</title>
+<link rel="stylesheet" href="/static/style.css?v=admin-v90"><style>
+.command-box{padding:25px}.command-box p{color:#aeb0b7;line-height:1.6}.command-box select{min-height:40px;padding:8px 12px;background:#101319;color:#fff;border:1px solid #424751;border-radius:8px}
+.command-box form{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.command-box code{color:#eebc25}
+</style></head><body class="admin-body"><aside class="sidebar admin-sidebar"><div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+<nav><a href="/admin"><span>◆</span> Abonelikler</a><a href="/admin/payments"><span>₺</span> Ödemeler ve Abonelikler</a>
+<a href="/admin/support"><span>✉</span> Müşteri Destek Merkezi</a><a href="/admin/errors"><span>!</span> Hata Yönetimi</a>
+<a href="/admin/reports"><span>◈</span> Discord Bildirimleri</a><a class="active" href="/admin/system-commands"><span>/</span> Sistem Komutları</a>
+<a href="/admin/system"><span>●</span> Temel Sistem Sağlığı</a><a href="/admin/reminders"><span>◷</span> Hatırlatıcılar</a>
+<a href="{{ admin_back_url|default('https://panel.arxbot.dev/') }}"><span>←</span> Panele Dön</a></nav>
+<div class="plan"><span>YALNIZCA YEREL</span><strong>8010</strong><small>Müşteriler bu ayarları değiştiremez</small></div></aside>
+<main class="main admin-main"><header class="topbar"><div><p class="eyebrow">ARX INTERNAL / KOMUT YÖNETİMİ</p><h1>Sistem Komutları</h1><p>ARX'a ait, müşteri komutu sayılmayan yönetici tanımlı komutlar.</p></div></header>
+{% if request.query_params.get('updated') %}<p class="action-message dashboard-message">Komut ayarı kaydedildi.</p>{% endif %}
+<section class="panel command-box"><div class="panel-title"><h2>/error — Hata Bildirimi</h2></div><p>Üyelerden ve müşterilerden sorun yaşadıkları paneli ve açıklamayı alır. Raporlar yalnızca <a href="/admin/reports">Discord Bildirimleri</a> ekranında görünür. 15 dilde açıklama ve yanıt desteği vardır.</p>
+<form method="post" action="/admin/system-commands/error"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label for="enabled">Durum</label><select id="enabled" name="enabled">
+<option value="1" {% if error_enabled %}selected{% endif %}>Açık</option>
+<option value="0" {% if not error_enabled %}selected{% endif %}>Geçici olarak kapalı</option></select>
+<button class="primary" type="submit">Kaydet</button></form>
+<p>Bu ayar slash komutunu Discord'dan silmez; kapalıyken yeni bildirim kabulünü durdurur. Müşteri panelinden veya Free komut limitinden bağımsızdır. Yeni işlem tipleri denetlenmeden rastgele çalıştırılabilir komut oluşturulmaz.</p></section>
+<section class="panel command-box"><div class="panel-title"><h2>Yönetici Komutları</h2></div>
+<p><a class="primary link-button" href="/admin/system-commands/new">+ Yeni komut oluştur</a></p>
+<p>Bu komutlar Free/Premium müşteri komut kotasına dahil değildir. Her komut tüm ARX botlarında global olarak güncellenir. Yeni kayıt Discord tarafında kısa bir senkronizasyon gecikmesiyle görünebilir.</p>
+<div class="table-wrap"><table class="admin-table"><thead><tr><th>Komut</th><th>Açıklama</th><th>Durum</th><th>İşlemler</th></tr></thead><tbody>
+{% for command in staff_commands %}<tr><td><code>/{{ command.name }}</code></td>
+<td>{{ command.descriptions.get('tr',command.descriptions.get('en')) }}</td>
+<td>{{ 'Açık' if command.enabled else 'Kapalı' }}</td><td><a href="/admin/system-commands/{{ command.name }}/edit">Düzenle</a>
+<form method="post" action="/admin/system-commands/{{ command.name }}/delete" onsubmit="return confirm('Bu komut silinsin mi?');" style="display:inline-block"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="ghost" type="submit">Sil</button></form>
+</td></tr>{% else %}<tr><td colspan="4">Henüz yönetici komutu bulunmuyor.</td></tr>{% endfor %}</tbody></table></div>
+<p>En fazla 12 komut. Tanımlar metin ve HTTPS bağlantılarından oluşur; Python kodu veya Paddle fiyat değişikliği çalıştırmaz.</p>
+</section>
+</main></body></html>

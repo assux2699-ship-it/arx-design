@@ -1,0 +1,52 @@
+/* ARX V300.164 — differentiate top premium tier badge from lower inline premium badge */
+
+/* Top glass badge: icon + plan type text */
+.server-premium-top-badge-v300164{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:0 14px!important;
+  min-height:40px!important;
+}
+
+.server-premium-top-badge-v300164 .premium-glass-tier-icon{
+  width:15px!important;
+  height:15px!important;
+  flex:0 0 15px!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 0 8px rgba(245,197,24,.32));
+}
+
+.server-premium-top-badge-v300164 span{
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.05em!important;
+  text-transform:uppercase!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+/* Lower dark badge: Premium only, no icon, no duplicated plan-type text */
+.server-premium-inline-badge-v300164{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 12px!important;
+  min-height:28px!important;
+  gap:0!important;
+}
+
+.server-premium-inline-badge-v300164 img,
+.server-premium-inline-badge-v300164 .subscription-tier-icon,
+.server-premium-inline-badge-v300164 .premium-glass-tier-icon{
+  display:none!important;
+}
+
+.server-premium-inline-badge-v300164 span{
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}

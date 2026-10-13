@@ -1,0 +1,45 @@
+{# ARX V300.287 — feature matrix follows the current plan entitlements; Lifetime is not for sale. #}
+{% import '_premium_purchase_i18n.html' as price_i18n with context %}
+{% set comp_sections = [{"tr":"Kurulum ve güvenlik","en":"Setup and security","rows":[["Tek tık Genel Topluluk kurulumu","One-click Community setup","Dahil","Included","Dahil","Included","Dahil","Included"],["Ek topluluk kurulum şablonları","Additional community setup templates","Yok","No","Dahil","Included","Dahil","Included"],["Moderasyon kuralları","Moderation rules","Dahil","Included","Dahil","Included","Dahil","Included"],["Spam ve bot koruması","Spam and bot protection","Dahil","Included","Dahil","Included","Dahil","Included"],["Sunucu etkinlik kayıtları","Server activity logs","Dahil","Included","Dahil","Included","Dahil","Included"],["Kritik güvenlik bildirimleri","Critical security alerts","Yok","No","Dahil","Included","Dahil","Included"],["Moderasyon mesaj özelleştirmesi","Moderation message customization","Kısıtlı","Limited","Gelişmiş","Advanced","Gelişmiş","Advanced"]]},{"tr":"Üyeler ve topluluk","en":"Members and community","rows":[["Gelişmiş üye paneli ve profiller","Advanced member panel and profiles","Yok","No","Dahil","Included","Dahil","Included"],["Seviye, Rank ve liderlik tablosu","Leveling, Rank and leaderboards","Dahil","Included","Dahil","Included","Dahil","Included"],["Üye kayıt sistemi","Member registration","Dahil","Included","Dahil","Included","Dahil","Included"],["Doğum günü sistemi","Birthday system","Dahil","Included","Dahil","Included","Dahil","Included"],["Hoş geldin kartları","Welcome cards","1 görsel","1 image","5 görsel","5 images","10 görsel","10 images"],["Yeni üye otomatik DM görselleri","New-member auto-DM images","1 görsel","1 image","5 görsel","5 images","10 görsel","10 images"],["Rol buton paneli sayısı","Role button panel allowance","3 panel","3 panels","Genişletilmiş","Expanded","Genişletilmiş","Expanded"],["Rol paneli başına buton","Buttons per role panel","5 buton","5 buttons","Genişletilmiş","Expanded","Genişletilmiş","Expanded"],["Tüm sunucu üyelerine rol atama","Assign a role to all server members","Yok","No","Dahil","Included","Dahil","Included"]]},{"tr":"Destek, otomasyon ve araçlar","en":"Support, automation and tools","rows":[["Standart Ticket","Standard tickets","1 panel","1 panel","Genişletilmiş","Expanded","Genişletilmiş","Expanded"],["Ticket Plus / Gelişmiş Ticket","Ticket Plus / Advanced tickets","Yok","No","Dahil","Included","Dahil","Included"],["Geçici ses odaları","Temporary voice rooms","Dahil","Included","Dahil","Included","Dahil","Included"],["Duyuru yönetimi","Announcements","Sınırlı","Limited","Genişletilmiş","Expanded","Genişletilmiş","Expanded"],["Çekiliş yönetimi","Giveaways","Dahil","Included","Dahil","Included","Dahil","Included"],["Özel Slash komutları","Custom slash commands","5 komut","5 commands","Genişletilmiş","Expanded","Genişletilmiş","Expanded"],["Özel mesaj gelen kutusu (DM Inbox)","Private message inbox (DM Inbox)","Yok","No","Dahil","Included","Dahil","Included"]]},{"tr":"Müzik, yayın ve içerik","en":"Music, streaming and content","rows":[["ARX resmi botuyla müzik","Music with official ARX bot","Dahil","Included","Dahil","Included","Dahil","Included"],["Müzik kalitesi (hedef bitrate)","Music quality (target bitrate)","96 kbps","96 kbps","128–256 kbps","128–256 kbps","256–320 kbps","256–320 kbps"],["Çoklu müzik botu kullanımı","Multiple music bots","Yok","No","Dahil","Included","Dahil","Included"],["Twitch yayın bildirimleri","Twitch stream alerts","1 kanal","1 channel","5 kanal","5 channels","7 kanal","7 channels"],["Kick yayın bildirimleri","Kick stream alerts","1 kanal","1 channel","5 kanal","5 channels","7 kanal","7 channels"],["YouTube yayın bildirimleri","YouTube live alerts","1 kanal","1 channel","5 kanal","5 channels","7 kanal","7 channels"],["Ücretsiz oyun bildirimleri","Free game notifications","Dahil","Included","Dahil","Included","Dahil","Included"]]},{"tr":"Botlar ve kişiselleştirme","en":"Bots and customization","rows":[["Müşteriye ait bot bağlama","Connect customer-owned bots","Yok","No","Dahil","Included","Dahil","Included"],["Bot profilini özelleştirme","Customize bot profile","Yok","No","Dahil","Included","Dahil","Included"],["Embed renk özelleştirmesi","Embed color customization","Yok","No","Dahil","Included","Dahil","Included"],["Embed alt yazısı / markalama","Embed footer and branding","ARX sabit","Fixed ARX","Özelleştirilebilir","Customizable","Özelleştirilebilir","Customizable"],["Bot Sohbeti (Premium+ özel)","Bot Chat (Premium+ exclusive)","Yok","No","Yok","No","Dahil","Included"],["Yeni özellikleri öncelikli deneme","Priority access to new features","Yok","No","Yok","No","Dahil","Included"]]}] %}
+<section class="arx-purchase-details" id="arxPurchaseFeatureMatrix" aria-labelledby="arxPurchaseFeatureHeading">
+  <div class="arx-purchase-details-head">
+    <div>
+      <small class="arx-purchase-details-eyebrow">ARX PREMIUM</small>
+      <h3 id="arxPurchaseFeatureHeading">{{ price_i18n.t('Complete feature comparison') }}</h3>
+      <p>{{ price_i18n.t('Module availability, plan limits and the Premium+ difference are listed below.') }}</p>
+    </div>
+    <a class="arx-purchase-back-link" href="#arxPurchaseHeading">{{ price_i18n.t('Back to plans ↑') }}</a>
+  </div>
+  {% for section in comp_sections %}
+  <div class="arx-purchase-feature-section">
+    <h4>{{ price_i18n.t(section.en) }}</h4>
+    <div class="arx-purchase-feature-scroll" tabindex="0" role="region" aria-label="{{ (price_i18n.t(section.en)) ~ (price_i18n.t(' plan table')) }}">
+      <table class="arx-purchase-feature-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ price_i18n.t('Feature') }}</th>
+            <th scope="col">{{ price_i18n.t('Free') }}</th>
+            <th scope="col">Premium</th>
+            <th scope="col">Premium+</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for row in section.rows %}
+          <tr>
+            <th scope="row">{{ price_i18n.t(row[1]) }}</th>
+            {% for col in (2,4,6) %}
+              {% set cell = price_i18n.t(row[col+1]) %}
+              {% set unavailable = row[col+1] == 'No' %}
+              <td class="{{ 'is-unavailable' if unavailable else 'is-available' }}" data-plan="{{ 'free' if col == 2 else 'pro' if col == 4 else 'premium_plus' }}">
+                <span class="arx-purchase-cell-icon" aria-hidden="true">{{ '×' if unavailable else '✓' }}</span><span>{{ cell }}</span>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+  <p class="arx-purchase-details-footnote">{{ price_i18n.t('Plan limits reflect the current ARX release. Music kbps ranges are targets, not currently guaranteed playback bitrates. Lifetime Premium is not sold and can only be granted by an administrator.') }}</p>
+</section>

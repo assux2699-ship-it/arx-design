@@ -1,0 +1,79 @@
+/* ARX V300.147 — MEE6-like centered application shell.
+   Sidebar + main content are centered together as one unit.
+   Background still covers the full viewport. */
+
+/* Desktop app shell */
+body{
+  display:grid!important;
+  grid-template-columns:270px minmax(0,1650px);
+  column-gap:24px;
+  justify-content:center;
+  align-items:start;
+  padding-left:24px;
+  padding-right:24px;
+}
+
+/* Sidebar is part of the centered shell now; it is no longer pinned to viewport x=0. */
+body > .sidebar{
+  position:sticky!important;
+  inset:auto!important;
+  top:0!important;
+  grid-column:1;
+  width:270px!important;
+  height:100vh;
+  min-height:100vh;
+  margin:0!important;
+}
+
+/* Main content sits directly beside the sidebar inside the same centered shell. */
+body > main[data-arx-workspace-main]{
+  grid-column:2;
+  width:100%!important;
+  min-width:0;
+  max-width:none!important;
+  margin:0!important;
+  padding:38px 0 80px!important;
+}
+
+/* Preserve the existing ARX tablet breakpoint while keeping the same shell logic. */
+@media(max-width:1050px) and (min-width:721px){
+  body{
+    grid-template-columns:220px minmax(0,1fr);
+    column-gap:16px;
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  body > .sidebar{
+    width:220px!important;
+  }
+
+  body > main[data-arx-workspace-main]{
+    margin:0!important;
+    padding:25px 0 80px!important;
+  }
+}
+
+/* Preserve the existing stacked mobile layout. */
+@media(max-width:720px){
+  body{
+    display:block!important;
+    padding-left:0;
+    padding-right:0;
+  }
+
+  body > .sidebar{
+    position:static!important;
+    inset:auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+
+  body > main[data-arx-workspace-main]{
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:20px!important;
+  }
+}

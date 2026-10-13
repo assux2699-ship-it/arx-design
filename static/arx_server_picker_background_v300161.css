@@ -1,0 +1,8 @@
+/* ARX V300.161 — server picker page background refresh */
+
+body.arx-server-picker-page-v300157::before{
+  background-image:url('/static/arx_server_picker_bg_v300161.png')!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+}

@@ -1,0 +1,12 @@
+/* ARX V300.132 — control-center background only */
+body::before{
+  background-image:url('/static/arx_website_background.png')!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  filter:none!important;
+  transform:none!important;
+}
+body::after{
+  background:rgba(4,5,7,.18)!important;
+}

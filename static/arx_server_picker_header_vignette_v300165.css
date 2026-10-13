@@ -1,0 +1,38 @@
+/* ARX V300.165 — subtle vignette on the top header area */
+
+body.arx-server-picker-page-v300157 header{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+}
+
+/* Very light vignette so the top area feels less flat without
+   noticeably darkening the readable center content. */
+body.arx-server-picker-page-v300157 header::before{
+  content:"";
+  position:absolute;
+  inset:-26px -34px -12px;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(72% 140% at 0% 0%, rgba(0,0,0,.28) 0%, rgba(0,0,0,.16) 20%, rgba(0,0,0,0) 54%),
+    radial-gradient(72% 140% at 100% 0%, rgba(0,0,0,.28) 0%, rgba(0,0,0,.16) 20%, rgba(0,0,0,0) 54%),
+    linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.05) 28%, rgba(0,0,0,0) 76%);
+  border-radius:24px;
+}
+
+/* Keep real header content above the vignette layer. */
+body.arx-server-picker-page-v300157 header > *{
+  position:relative;
+  z-index:1;
+}
+
+@media(max-width:720px){
+  body.arx-server-picker-page-v300157 header::before{
+    inset:-18px -18px -10px;
+    background:
+      radial-gradient(80% 130% at 0% 0%, rgba(0,0,0,.22) 0%, rgba(0,0,0,.11) 22%, rgba(0,0,0,0) 56%),
+      radial-gradient(80% 130% at 100% 0%, rgba(0,0,0,.22) 0%, rgba(0,0,0,.11) 22%, rgba(0,0,0,0) 56%),
+      linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.04) 26%, rgba(0,0,0,0) 76%);
+  }
+}

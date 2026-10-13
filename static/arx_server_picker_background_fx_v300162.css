@@ -1,0 +1,18 @@
+/* ARX V300.162 — subtle grain + soft background blur for server picker */
+
+body.arx-server-picker-page-v300157::before{
+  filter:blur(3.8px) brightness(.92)!important;
+  transform:scale(1.025)!important;
+  transform-origin:center center!important;
+}
+
+/* Keep the page readable while adding a soft film-grain layer. */
+body.arx-server-picker-page-v300157::after{
+  background-image:
+    linear-gradient(rgba(4,5,7,.16), rgba(4,5,7,.16)),
+    url('/static/arx_server_picker_grain_v300162.png')!important;
+  background-repeat:no-repeat, repeat!important;
+  background-size:auto, 128px 128px!important;
+  background-position:center center, 0 0!important;
+  opacity:.52!important;
+}

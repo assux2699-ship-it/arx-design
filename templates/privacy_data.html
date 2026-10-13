@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ tr('legal.data_controls') }} · ARX</title>
+<link rel="stylesheet" href="/static/style.css?v=91"><link rel="stylesheet" href="/static/locale.css?v=key10-1">
+{% include "_locale.html" %}
+</head><body class="legal-body">
+<main class="legal-shell"><header class="legal-head"><a class="ghost link-button" href="/">← ARX</a>{% include "_language_selector.html" %}</header>
+<article class="legal-document privacy-controls"><p class="eyebrow">ARX Privacy</p><h1>{{ tr('legal.data_controls') }}</h1>
+<p class="legal-lead">{{ tr('legal.data_controls_intro') }}</p>
+{% if request.query_params.get('restored') == '1' %}<p class="action-message">{{ tr('legal.restored_notice') }}</p>{% endif %}
+<div class="privacy-account"><strong>{{ panel_user.display_name }}</strong><span>@{{ panel_user.username }}</span><code>{{ panel_user.user_id }}</code></div>
+<div class="critical-callout"><strong>{{ tr('legal.dm_consent_title') }}</strong><p>{{ tr('legal.dm_consent_body') }}</p></div>
+{% if privacy_suppressed %}
+<div class="action-message">{{ tr('legal.suppressed_notice') }}</div>
+<form method="post" action="/privacy/data/restore"><button class="primary" type="submit">{{ tr('legal.restore_button') }}</button></form>
+{% else %}
+<div class="danger-zone"><h2>{{ tr('legal.delete_title') }}</h2><p>{{ tr('legal.delete_warning') }}</p>
+<form method="post" action="/privacy/data/delete" data-confirm="{{ tr('legal.delete_confirm') }}"><button class="danger" type="submit">{{ tr('legal.delete_button') }}</button></form></div>
+{% endif %}
+</article>{% include "_legal_footer.html" %}</main>
+<script src="/static/app.js?v=91" defer></script></body></html>

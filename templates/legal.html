@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ tr('legal.privacy_policy') if legal_page=='privacy' else tr('legal.terms_of_service') }} · ARX</title>
+<link rel="stylesheet" href="/static/style.css?v=91"><link rel="stylesheet" href="/static/locale.css?v=key10-1">
+{% include "_locale.html" %}
+</head><body class="legal-body">
+<main class="legal-shell">
+  <header class="legal-head"><a class="ghost link-button" href="/">← ARX</a>{% include "_language_selector.html" %}</header>
+  {% if request.query_params.get('deleted') == '1' %}<p class="action-message">{{ tr('legal.deleted_notice') }}</p>{% endif %}
+  {% if legal_page == 'privacy' %}
+  <article class="legal-document">
+    <p class="eyebrow">ARX</p><h1>{{ tr('legal.privacy_policy') }}</h1><p class="legal-updated">{{ tr('legal.last_updated') }}: 2026-09-20</p><p class="legal-lead">{{ tr('legal.privacy_intro') }}</p>
+    <section><h2>{{ tr('legal.data_title') }}</h2><p>{{ tr('legal.data_body') }}</p></section>
+    <section><h2>{{ tr('legal.use_title') }}</h2><p>{{ tr('legal.use_body') }}</p></section>
+    <section><h2>{{ tr('legal.sharing_title') }}</h2><p>{{ tr('legal.sharing_body') }}</p></section>
+    <section><h2>{{ tr('legal.retention_title') }}</h2><p>{{ tr('legal.retention_body') }}</p></section>
+    <section><h2>{{ tr('legal.voice_title') }}</h2><p>{{ tr('legal.voice_body') }}</p></section>
+    <section><h2>{{ tr('legal.security_title') }}</h2><p>{{ tr('legal.security_body') }}</p></section>
+    <section><h2>{{ tr('legal.rights_title') }}</h2><p>{{ tr('legal.rights_body') }}</p><a class="primary link-button" href="/privacy/data">{{ tr('legal.data_controls') }}</a></section>
+    <section><h2>{{ tr('legal.contact_title') }}</h2><p>{{ tr('legal.contact_body', email=legal_contact) }}</p></section>
+  </article>
+  {% else %}
+  <article class="legal-document">
+    <p class="eyebrow">ARX</p><h1>{{ tr('legal.terms_of_service') }}</h1><p class="legal-updated">{{ tr('legal.last_updated') }}: 2026-09-20</p><p class="legal-lead">{{ tr('legal.terms_intro') }}</p>
+    <section><h2>{{ tr('legal.terms_access_title') }}</h2><p>{{ tr('legal.terms_access_body') }}</p></section>
+    <section><h2>{{ tr('legal.terms_use_title') }}</h2><p>{{ tr('legal.terms_use_body') }}</p></section>
+    <section><h2>{{ tr('legal.terms_paid_title') }}</h2><p>{{ tr('legal.terms_paid_body') }}</p></section>
+    <section><h2>{{ tr('legal.terms_availability_title') }}</h2><p>{{ tr('legal.terms_availability_body') }}</p></section>
+    <section><h2>{{ tr('legal.terms_discord_title') }}</h2><p>{{ tr('legal.terms_discord_body') }}</p></section>
+    <section><h2>{{ tr('legal.terms_changes_title') }}</h2><p>{{ tr('legal.terms_changes_body') }}</p></section>
+    <section><h2>{{ tr('legal.contact_title') }}</h2><p>{{ tr('legal.contact_body', email=legal_contact) }}</p></section>
+  </article>
+  {% endif %}
+  {% include "_legal_footer.html" %}
+</main></body></html>

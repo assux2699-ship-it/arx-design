@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0b0d">
+  <meta name="description" content="{{ tr('marketing.meta_description') }}">
+  <meta property="og:title" content="ARX · {{ tr('marketing.hero_title') }}">
+  <meta property="og:description" content="{{ tr('marketing.meta_description') }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ public_site_url }}">
+  <meta property="og:image" content="{{ public_site_url }}/static/arx_brand_logo.png">
+  <link rel="canonical" href="{{ public_site_url }}">
+  <title>ARX · {{ tr('marketing.hero_title') }}</title>
+  <link rel="stylesheet" href="/static/marketing.css?v=300257-stair-dim-blur">
+  <link rel="stylesheet" href="/static/locale.css?v=key10-1">
+  {% include "_locale.html" %}
+</head>
+<body class="marketing-body">
+  <div class="marketing-noise" aria-hidden="true"></div>
+  <header class="marketing-nav-shell">
+    <nav class="marketing-nav" aria-label="ARX">
+      <a class="marketing-brand" href="{{ public_site_url }}" aria-label="ARX">
+        <img src="/static/arx_brand_logo.png" alt="ARX">
+        <span><strong>ARX</strong><small>DISCORD OPERATIONS</small></span>
+      </a>
+      <div class="marketing-links">
+        <a href="#product">{{ tr('marketing.nav_product') }}</a>
+        <a href="#features">{{ tr('marketing.nav_features') }}</a>
+        <a href="#security">{{ tr('marketing.nav_security') }}</a>
+        <a href="#plans">{{ tr('marketing.nav_plans') }}</a>
+        <a href="#faq">{{ tr('marketing.nav_faq') }}</a>
+      </div>
+      <div class="marketing-nav-actions">
+        {% include "_language_selector.html" %}
+        <a class="marketing-button ghost" href="{{ panel_public_url }}/login">{{ tr('marketing.open_panel') }}</a>
+        <a class="marketing-button primary" href="{{ panel_public_url }}/login">{{ tr('marketing.add_arx') }}</a>
+      </div>
+      <button class="marketing-menu-toggle" type="button" aria-label="{{ tr('marketing.menu') }}" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="marketing-hero marketing-hero-setup" id="product">
+      <div class="hero-grid"></div>
+      <div class="hero-orb hero-orb-one"></div><div class="hero-orb hero-orb-two"></div>
+      <div class="marketing-container hero-layout setup-hero-layout paired-hero-layout">
+        <div class="hero-copy setup-hero-copy">
+          <p class="marketing-kicker"><span></span>{{ tr('common.arx_setup_center') }}</p>
+          <h1><em>{% if ui_language == 'tr' %}Hızlı Kurulum{% else %}{{ tr('common.automatic_setup') }}{% endif %}</em><br>{{ tr('marketing.hero_title') }}</h1>
+          <p class="hero-lead">{{ tr('marketing.feature_setup_text') }}</p>
+          <div class="hero-actions">
+            <a class="marketing-button primary large" href="{{ panel_public_url }}/login">{{ tr('common.start_server_setup') }}</a>
+            <a class="marketing-button ghost large" href="#features">{{ tr('marketing.explore_features') }}</a>
+          </div>
+          <div class="hero-badges">
+            <span>{{ marketing_languages_badge or tr('marketing.hero_badge_languages') }}</span>
+            <span>{{ tr('marketing.hero_badge_server_based') }}</span>
+            <span>{{ tr('marketing.hero_badge_private') }}</span>
+          </div>
+        </div>
+
+        <div class="setup-demo" aria-label="ARX quick setup preview">
+          <div class="setup-demo-glow"></div>
+          <div class="setup-demo-browser">
+            <div class="setup-demo-topbar"><i></i><i></i><i></i><strong>{{ tr('common.arx_setup_center') }}</strong><span>LIVE</span></div>
+            <div class="setup-demo-gif"><img src="/static/marketing-showcase/quick-setup.gif" alt="ARX setup preview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip">
+      <div class="marketing-container proof-grid">
+        <article><strong>OAuth2</strong><span>{{ tr('marketing.trust_no_password') }}</span></article>
+        <article><strong>{{ 15 if marketing_languages_title else 10 }}</strong><span>{{ marketing_languages_badge or tr('marketing.hero_badge_languages') }}</span></article>
+        <article><strong>NO REC</strong><span>{{ tr('marketing.trust_no_recording') }}</span></article>
+        <article><strong>DM SAFE</strong><span>{{ tr('marketing.trust_first_contact') }}</span></article>
+      </div>
+    </section>
+
+    <section class="marketing-section quick-setup-section" id="quick-setup">
+      <div class="marketing-container showcase-container-wide">
+        <div class="section-heading showcase-section-heading">
+          <p class="marketing-kicker"><span></span>{{ tr('common.arx_setup_center') }}</p>
+          <h2>{{ tr('common.automatic_setup') }}</h2>
+          <p>{{ tr('marketing.feature_setup_text') }}</p>
+        </div>
+
+        <div class="setup-editorial">
+          <div class="setup-editorial-intro">
+            <figure class="setup-master-demo">
+              <img src="/static/marketing-showcase/quick-setup.gif" alt="ARX quick setup">
+            </figure>
+            <div class="setup-master-copy">
+              <span class="setup-index">01 — {% if ui_language == 'tr' %}TEK TIK KURULUM{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</span>
+              <h3>{% if ui_language == 'tr' %}Boş bir Discord sunucusunu dakikalar içinde kullanılabilir hale getirin.{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</h3>
+              <p>{% if ui_language == 'tr' %}ARX; kanal ve rol düzenini oluşturur, seçtiğiniz modülleri kurar ve kurulumun parçalarını tek tek yönetilebilir halde bırakır. Aşağıdaki ekranlar kurulumun oluşturduğu gerçek Discord bileşenlerinden örneklerdir.{% else %}{{ tr('marketing.feature_setup_text') }}{% endif %}</p>
+              <div class="setup-keywords"><span>{{ tr('marketing.feature_setup_title') }}</span><span>{{ tr('common.role_button_panels') }}</span><span>{{ tr('common.ticket_setup') }}</span><span>{{ tr('common.music') }}</span><span>{{ tr('common.temporary_rooms') }}</span><span>{{ tr('common.moderation') }}</span></div>
+            </div>
+          </div>
+
+          <div class="setup-scenes">
+            <article class="setup-scene portrait">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-rules.png" alt="{{ tr('marketing.feature_setup_title') }}"></div>
+              <div class="setup-scene-copy"><span>02</span><h3>{% if ui_language == 'tr' %}Kurallar ve Rol Onayı{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</h3><p>{% if ui_language == 'tr' %}Sunucu kurallarını hazır bir embed ve onay butonuyla yayınlayın; yeni üyeler için ilk giriş akışını baştan düzenleyin.{% else %}{{ tr('marketing.feature_setup_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene reverse portrait">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-rules-2.png" alt="{{ tr('marketing.feature_setup_title') }}"></div>
+              <div class="setup-scene-copy"><span>03</span><h3>{% if ui_language == 'tr' %}Hazır Sunucu Kuralları{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</h3><p>{% if ui_language == 'tr' %}Kurulumdan sonra kurallarınız Discord içinde okunaklı, markalı ve üyelerin kolayca kabul edebileceği şekilde hazır olur.{% else %}{{ tr('marketing.feature_setup_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene landscape">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-rooms.png" alt="{{ tr('common.temporary_rooms') }}"></div>
+              <div class="setup-scene-copy"><span>04</span><h3>{{ tr('common.temporary_rooms') }}</h3><p>{% if ui_language == 'tr' %}Üyeler kendi geçici ses odalarını açabilir; kilitleme, gizleme, kullanıcı limiti ve oda sahipliği gibi kontroller otomatik hazırlanır.{% else %}{{ tr('marketing.features_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene reverse wide">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-ticket.png" alt="{{ tr('common.ticket_setup') }}"></div>
+              <div class="setup-scene-copy"><span>05</span><h3>{{ tr('common.ticket_setup') }}</h3><p>{% if ui_language == 'tr' %}Destek merkezi ve ticket açma paneli kurulumla birlikte hazır gelir; üyeler tek butonla özel destek talebi oluşturabilir.{% else %}{{ tr('marketing.feature_ticket_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene portrait">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-games.png" alt="ARX Free Games"></div>
+              <div class="setup-scene-copy"><span>06</span><h3>{% if ui_language == 'tr' %}Ücretsiz Oyunlar{% else %}{{ tr('marketing.features_kicker') }}{% endif %}</h3><p>{% if ui_language == 'tr' %}Ücretsiz oyun paylaşımları için kanal ve paylaşım düzenini hazır kurun; kampanyalar üyelerinize düzenli bir formatta ulaşsın.{% else %}{{ tr('marketing.features_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene reverse wide">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-music.png" alt="{{ tr('common.music') }}"></div>
+              <div class="setup-scene-copy"><span>07</span><h3>{{ tr('common.music') }}</h3><p>{% if ui_language == 'tr' %}Müzik kontrol paneli, oynatma düğmeleri ve oda akışı kurulum sırasında oluşturulur; üyeler panel üzerinden doğrudan kullanmaya başlayabilir.{% else %}{{ tr('marketing.features_text') }}{% endif %}</p></div>
+            </article>
+
+            <article class="setup-scene wide">
+              <div class="setup-scene-media"><img src="/static/marketing-showcase/quick-setup-warning.png" alt="{{ tr('common.moderation') }}"></div>
+              <div class="setup-scene-copy"><span>08</span><h3>{% if ui_language == 'tr' %}Koruma ve Uyarı Alanları{% else %}{{ tr('common.moderation') }}{% endif %}</h3><p>{% if ui_language == 'tr' %}Spam ve bot koruması için gerekli kanal ve bilgilendirme alanları da kurulum paketine dahil edilir; sunucu ilk günden daha kontrollü başlar.{% else %}{{ tr('marketing.feature_moderation_text') }}{% endif %}</p></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marketing-section open-showcase-section" id="features">
+      <div class="marketing-container showcase-container-wide">
+        <div class="section-heading showcase-section-heading">
+          <p class="marketing-kicker"><span></span>{{ tr('marketing.features_kicker') }}</p>
+          <h2>{{ tr('marketing.features_title') }}</h2>
+          <p>{{ tr('marketing.features_text') }}</p>
+        </div>
+
+        <div class="open-showcase-list">
+          <article class="open-showcase-item media-landscape">
+            <div class="open-showcase-meta"><span>01</span><small>{{ tr('common.moderation') }}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/moderation-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product landscape-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/moderation.png" alt="{{ tr('common.moderation') }}"></div>
+                <figcaption><strong>{{ tr('common.moderation') }}</strong><span>{{ tr('marketing.feature_moderation_text') }}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item reverse media-medium-gif">
+            <div class="open-showcase-meta"><span>02</span><small>{% if ui_language == 'tr' %}Spam Bot Koruması{% else %}{{ tr('common.moderation') }}{% endif %}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/spam-protection-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product medium-gif-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/spam-protection.gif" alt="Spam Bot Protection"></div>
+                <figcaption><strong>{% if ui_language == 'tr' %}Spam Bot Koruması Paneli{% else %}{{ tr('common.moderation') }}{% endif %}</strong><span>{% if ui_language == 'tr' %}Şüpheli bot girişleri, spam davranışı ve koruma kurallarını tek panelden takip edip yönetmenizi sağlar.{% else %}{{ tr('marketing.feature_moderation_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item media-landscape">
+            <div class="open-showcase-meta"><span>03</span><small>{% if ui_language == 'tr' %}Gelişmiş Ticket{% else %}{{ tr('common.ticket_setup') }}{% endif %}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/advanced-ticket-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product landscape-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/advanced-ticket.png" alt="{{ tr('common.ticket_setup') }}"></div>
+                <figcaption><strong>{% if ui_language == 'tr' %}Gelişmiş Ticket Sistemi{% else %}{{ tr('common.ticket_setup') }}{% endif %}</strong><span>{{ tr('marketing.feature_ticket_text') }}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item reverse media-tall-gif">
+            <div class="open-showcase-meta"><span>04</span><small>{{ tr('common.role_button_panels') }}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/role-buttons-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product tall-gif-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/role-buttons.gif" alt="{{ tr('common.role_button_panels') }}"></div>
+                <figcaption><strong>{{ tr('common.role_button_panels') }}</strong><span>{% if ui_language == 'tr' %}Üyelerin tek tıkla rol seçebildiği panelleri oluşturun; rol havuzunu ve buton düzenini ARX üzerinden yönetin.{% else %}{{ tr('marketing.features_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item media-compact">
+            <div class="open-showcase-meta"><span>05</span><small>{{ tr('common.welcome_rules_role_approval') }}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/welcome-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product compact-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/welcome.png" alt="{{ tr('common.welcome_rules_role_approval') }}"></div>
+                <figcaption><strong>{{ tr('common.welcome_rules_role_approval') }}</strong><span>{% if ui_language == 'tr' %}Yeni üyeleri karşılama kartları, kurallar ve rol akışlarıyla sunucunuzun tarzına uygun şekilde karşılayın.{% else %}{{ tr('marketing.features_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item reverse media-landscape">
+            <div class="open-showcase-meta"><span>06</span><small>{{ tr('common.moderation_logs') }}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/logs-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product landscape-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/logs.png" alt="{{ tr('common.moderation_logs') }}"></div>
+                <figcaption><strong>{{ tr('common.moderation_logs') }}</strong><span>{% if ui_language == 'tr' %}Önemli yönetim ve moderasyon hareketlerini düzenli kayıtlar halinde toplayın ve gerektiğinde hızlıca geriye dönün.{% else %}{{ tr('marketing.features_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item media-medium-gif">
+            <div class="open-showcase-meta"><span>07</span><small>{{ tr('module.sponsorship_and_collaboration') }}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/sponsorship-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product medium-gif-product sponsorship-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/sponsorship.gif" alt="{{ tr('module.sponsorship_and_collaboration') }}"></div>
+                <figcaption><strong>{{ tr('module.sponsorship_and_collaboration') }}</strong><span>{% if ui_language == 'tr' %}Sponsorluk ve iş birliği alanlarını daha düzenli, görünür ve yönetilebilir bir akışa dönüştürün.{% else %}{{ tr('marketing.features_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item reverse media-tall-gif red-carpet-open-story">
+            <div class="open-showcase-meta"><span>08</span><small>{% if ui_language == 'tr' %}Kırmızı Halı{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</small></div>
+            <div class="open-showcase-stage">
+              <figure class="open-showcase-mascot"><img src="/static/marketing-showcase/red-carpet-mascot.png" alt="ARX"></figure>
+              <figure class="open-showcase-product tall-gif-product red-carpet-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/red-carpet.gif" alt="ARX Red Carpet"></div>
+                <figcaption><strong>{% if ui_language == 'tr' %}Kırmızı Halı Topluluk Kurulumu{% else %}{{ tr('marketing.feature_setup_title') }}{% endif %}</strong><span>{% if ui_language == 'tr' %}Hazır topluluk yapısını tek kurulumla sunucunuza taşıyın; kanallar, roller ve temel düzen ARX tarafından oluşturulsun.{% else %}{{ tr('marketing.feature_setup_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item single-media-story media-tall-gif">
+            <div class="open-showcase-meta"><span>09</span><small>{{ tr('common.giveaway_management') }}</small></div>
+            <div class="open-showcase-stage single-stage">
+              <figure class="open-showcase-product tall-gif-product giveaway-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/giveaway.gif" alt="{{ tr('common.giveaway_management') }}"></div>
+                <figcaption><strong>{{ tr('common.giveaway_management') }}</strong><span>{{ tr('marketing.feature_giveaway_text') }}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="open-showcase-item single-media-story stream-story">
+            <div class="open-showcase-meta"><span>10</span><small>{{ tr('common.stream_alerts') }}</small></div>
+            <div class="open-showcase-stage single-stage">
+              <figure class="open-showcase-product stream-product">
+                <div class="open-showcase-media"><img src="/static/marketing-showcase/stream-alerts.png" alt="{{ tr('common.stream_alerts') }}"></div>
+                <figcaption><strong>{{ tr('common.stream_alerts') }}</strong><span>{% if ui_language == 'tr' %}Twitch, Kick ve YouTube yayınlarını takip edin; canlı yayın bildirimlerini seçtiğiniz Discord kanallarına otomatik gönderin.{% else %}{{ tr('marketing.features_text') }}{% endif %}</span></figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="marketing-section security-section" id="security">
+      <div class="marketing-container security-layout">
+        <div class="security-copy">
+          <p class="marketing-kicker"><span></span>{{ tr('marketing.security_kicker') }}</p>
+          <h2>{{ tr('marketing.security_title') }}</h2>
+          <p>{{ tr('marketing.security_text') }}</p>
+          <a class="text-link" href="/privacy">{{ tr('marketing.read_privacy') }} →</a>
+        </div>
+        <div class="security-stack">
+          <article><span>01</span><div><h3>{{ tr('marketing.security_oauth_title') }}</h3><p>{{ tr('marketing.security_oauth_text') }}</p></div></article>
+          <article><span>02</span><div><h3>{{ tr('marketing.security_dm_title') }}</h3><p>{{ tr('marketing.security_dm_text') }}</p></div></article>
+          <article><span>03</span><div><h3>{{ tr('marketing.security_voice_title') }}</h3><p>{{ tr('marketing.security_voice_text') }}</p></div></article>
+          <article><span>04</span><div><h3>{{ tr('marketing.security_isolation_title') }}</h3><p>{{ tr('marketing.security_isolation_text') }}</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="marketing-section languages-section">
+      <div class="marketing-container language-layout">
+        <div><p class="marketing-kicker"><span></span>{{ tr('marketing.languages_kicker') }}</p><h2>{{ marketing_languages_title or tr('marketing.languages_title') }}</h2><p>{{ tr('marketing.languages_text') }}</p></div>
+        <div class="language-cloud"><span>English</span><span>Français</span><span>Español</span><span>Deutsch</span><span>Türkçe</span><span>العربية</span><span>Português</span><span>日本語</span><span>Русский</span><span>한국어</span>{% if marketing_languages_title %}<span>Português (Brasil)</span><span>Polski</span><span>Italiano</span><span>Svenska</span><span>Nederlands</span>{% endif %}</div>
+      </div>
+    </section>
+
+    <section class="marketing-section" id="plans">
+      <div class="marketing-container">
+        <div class="section-heading"><p class="marketing-kicker"><span></span>{{ tr('marketing.plans_kicker') }}</p><h2>{{ tr('marketing.plans_title') }}</h2><p>{{ tr('marketing.plans_text') }}</p></div>
+        <div class="plan-grid">
+          <article class="plan-card"><small>FREE</small><h3>{{ tr('marketing.plan_free_title') }}</h3><p>{{ tr('marketing.plan_free_text') }}</p><div class="plan-feature-line">{{ tr('marketing.plan_free_summary') }}</div><a class="marketing-button ghost" href="{{ panel_public_url }}/login">{{ tr('marketing.start_free') }}</a></article>
+          <article class="plan-card pro"><div class="plan-popular">PRO</div><small>PRO</small><h3>{{ tr('marketing.plan_pro_title') }}</h3><p>{{ tr('marketing.plan_pro_text') }}</p><div class="plan-feature-line">{{ tr('marketing.plan_pro_summary') }}</div><a class="marketing-button primary" href="{{ panel_public_url }}/login">{{ tr('marketing.open_panel') }}</a></article>
+          <article class="plan-card"><small>PREMIUM+</small><h3>PREMIUM+</h3><p>{{ tr('marketing.plan_pro_text') }}</p><div class="plan-feature-line">{{ tr('common.bot_chat') }} · {{ tr('marketing.plan_pro_summary') }}</div><a class="marketing-button ghost" href="{{ panel_public_url }}/login">{{ tr('marketing.view_options') }}</a></article>
+        </div>
+        <p class="plan-note">{{ tr('marketing.plan_note') }}</p>
+      </div>
+    </section>
+
+    <section class="marketing-section faq-section" id="faq">
+      <div class="marketing-container faq-layout">
+        <div><p class="marketing-kicker"><span></span>{{ tr('marketing.faq_kicker') }}</p><h2>{{ tr('marketing.faq_title') }}</h2></div>
+        <div class="faq-list">
+          <details open><summary>{{ tr('marketing.faq_1_q') }}</summary><p>{{ tr('marketing.faq_1_a') }}</p></details>
+          <details><summary>{{ tr('marketing.faq_2_q') }}</summary><p>{{ tr('marketing.faq_2_a') }}</p></details>
+          <details><summary>{{ tr('marketing.faq_3_q') }}</summary><p>{{ tr('marketing.faq_3_a') }}</p></details>
+          <details><summary>{{ tr('marketing.faq_4_q') }}</summary><p>{{ tr('marketing.faq_4_a') }}</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="marketing-cta">
+      <div class="marketing-container cta-card">
+        <div><p class="marketing-kicker"><span></span>ARX</p><h2>{{ tr('marketing.cta_title') }}</h2><p>{{ tr('marketing.cta_text') }}</p></div>
+        <a class="marketing-button primary large" href="{{ panel_public_url }}/login">{{ tr('marketing.cta_button') }}</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="marketing-footer">
+    <div class="marketing-container footer-layout">
+      <div class="footer-brand"><img src="/static/arx_brand_logo.png" alt="ARX"><div><strong>ARX</strong><p>{{ tr('marketing.footer_tagline') }}</p></div></div>
+      <div class="footer-links"><a href="/privacy">{{ tr('legal.privacy_policy') }}</a><a href="/terms">{{ tr('legal.terms_of_service') }}</a><a href="{{ panel_public_url }}/login">{{ tr('marketing.open_panel') }}</a></div>
+      <small>© 2026 ARX · arxbot.dev</small>
+    </div>
+  </footer>
+  <script src="/static/marketing.js?v=300252-open-showcase"></script>
+</body>
+</html>

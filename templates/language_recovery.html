@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARX · Select a supported language</title>
+  <style>
+    :root{color-scheme:dark}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#0e0e10;color:#f5f5f5;font:16px/1.5 system-ui,sans-serif}
+    main{width:min(440px,100%);padding:28px;border:1px solid #3b3520;border-radius:14px;background:#18181b}
+    h1{margin:0 0 12px;font-size:24px}
+    p{color:#c9c9c9}
+    label{display:block;margin:22px 0 8px;font-weight:600}
+    select,button{width:100%;font:inherit;padding:11px;border-radius:7px}
+    select{border:1px solid #5e5e64;background:#222228;color:#fff}
+    button{margin-top:20px;border:0;background:#f5c518;color:#141414;font-weight:700;cursor:pointer}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>ARX · Language selection</h1>
+    <p>Your previously selected language is not available in this version. Choose one of the currently supported languages to continue. Your server data is not affected.</p>
+    <form method="post" action="/ui-language/recover">
+      <label for="language">Supported language</label>
+      <select id="language" name="language" required>
+        {% for code, label in language_options.items() %}
+        <option value="{{ code }}">{{ label }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Continue to ARX</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+/* V252 — persistent drag-and-drop ordering for ARX workspaces */
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card]{
+  cursor:grab;
+  transition:transform .16s ease,opacity .16s ease,box-shadow .16s ease,border-color .16s ease;
+  user-select:none;
+}
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] a,
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] button,
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] input,
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] select,
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] textarea,
+.server-picker-grid[data-workspace-grid] .server-picker-card[data-workspace-card] label{
+  cursor:pointer;
+  user-select:auto;
+}
+.server-picker-grid[data-workspace-grid].is-workspace-sorting .server-picker-card[data-workspace-card]{
+  transition:transform .1s ease,opacity .1s ease,border-color .1s ease,box-shadow .1s ease;
+}
+.server-picker-grid[data-workspace-grid] .server-picker-card.is-workspace-dragging{
+  opacity:.46;
+  transform:scale(.975);
+  cursor:grabbing;
+  box-shadow:0 18px 40px rgba(0,0,0,.34);
+}
+.server-picker-grid[data-workspace-grid] .server-picker-card.is-workspace-drag-over:not(.is-workspace-dragging){
+  border-color:rgba(245,197,24,.72)!important;
+  box-shadow:0 0 0 2px rgba(245,197,24,.12),0 14px 30px rgba(0,0,0,.22);
+  transform:translateY(-2px);
+}

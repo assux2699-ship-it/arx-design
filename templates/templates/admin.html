@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ tr('admin.title') }}</title>
+  <link rel="stylesheet" href="/static/style.css?v=admin-v90">
+  <link rel="stylesheet" href="/static/locale.css?v=key10-1">
+  {% include "_locale.html" %}
+</head>
+<body class="admin-body">
+  <aside class="sidebar admin-sidebar">
+    <div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>{{ tr('admin.console') }}</small></span></div>
+    <nav>
+      <a class="active" href="/admin"><span>◆</span> {{ tr('admin.subscriptions') }}</a>
+      <a href="/admin/payments"><span>₺</span> Ödemeler ve Satın Alma Kayıtları</a>
+      <a href="/admin/reminders"><span>⏰</span> Hatırlatıcılar</a>
+      <a href="/"><span>←</span> {{ tr('admin.back_to_panel') }}</a>
+    </nav>
+    <div class="plan"><span>{{ tr('admin.entitlement_core') }}</span><strong>FREE / PRO</strong><small>{{ tr('admin.enforcement_on') if subscription_enforcement_enabled else tr('admin.enforcement_off') }}</small></div>
+  </aside>
+
+  <main>
+    <header>
+      <div><p class="eyebrow">ARX INTERNAL</p><h1>{{ tr('admin.title') }}</h1><p>{{ tr('admin.subtitle') }}</p></div>
+      {% if oauth_enabled and panel_user %}<div class="panel-account">{% if panel_user.avatar_url %}<img src="{{ panel_user.avatar_url }}" alt="">{% endif %}<div><strong>{{ panel_user.display_name }}</strong><small>@{{ panel_user.username }}</small></div></div>{% endif %}
+    </header>
+
+    {% if request.query_params.get('updated') %}<p class="action-message dashboard-message">{{ tr('admin.subscription_updated') }}</p>{% endif %}
+
+    <section class="stats admin-stats">
+      <article><span>{{ tr('admin.total_servers') }}</span><strong>{{ stats.total }}</strong></article>
+      <article class="accent"><span>{{ tr('admin.pro_servers') }}</span><strong>{{ stats.pro }}</strong></article>
+      <article><span>{{ tr('admin.free_servers') }}</span><strong>{{ stats.free }}</strong></article>
+      <article class="admin-stat-expired"><span>{{ tr('admin.expired_servers') }}</span><strong>{{ stats.expired }}</strong></article>
+      <article><span>{{ tr('admin.custom_bots') }}</span><strong>{{ stats.custom }}</strong></article>
+    </section>
+
+    <section class="panel admin-control-panel">
+      <div class="admin-filter-tabs">
+        <a class="{{ 'active' if admin_view == 'all' else '' }}" href="{{ tab_urls.all }}"><span>{{ tr('admin.total_servers') }}</span><strong>{{ stats.total }}</strong></a>
+        <a class="{{ 'active' if admin_view == 'pro' else '' }}" href="{{ tab_urls.pro }}"><span>{{ tr('admin.pro_servers') }}</span><strong>{{ stats.pro }}</strong></a>
+        <a class="{{ 'active' if admin_view == 'free' else '' }}" href="{{ tab_urls.free }}"><span>{{ tr('admin.free_servers') }}</span><strong>{{ stats.free }}</strong></a>
+        <a class="{{ 'active' if admin_view == 'expired' else '' }}" href="{{ tab_urls.expired }}"><span>{{ tr('admin.expired_servers') }}</span><strong>{{ stats.expired }}</strong></a>
+        <a class="{{ 'active' if admin_view == 'custom' else '' }}" href="{{ tab_urls.custom }}"><span>{{ tr('admin.custom_bots') }}</span><strong>{{ stats.custom }}</strong></a>
+      </div>
+      <form method="get" action="/admin" class="admin-search-form">
+        <input type="hidden" name="view" value="{{ admin_view }}">
+        <input type="search" name="q" value="{{ search_query }}" placeholder="{{ tr('admin.search_placeholder') }}">
+        <button class="primary" type="submit">{{ tr('admin.search') }}</button>
+        {% if search_query %}<a class="ghost link-button" href="{{ tab_urls[admin_view] }}">{{ tr('module.clear') }}</a>{% endif %}
+      </form>
+    </section>
+
+    <section class="panel admin-guilds-panel">
+      <div class="panel-title admin-list-title">
+        <div><p class="eyebrow">ARX WORKSPACES</p><h2>{{ tr('admin.servers_and_subscriptions') }}</h2></div>
+        <div class="admin-result-count"><strong>{{ first_item }}–{{ last_item }}</strong><span>/ {{ filtered_total }}</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>{{ tr('admin.server') }}</th><th>{{ tr('admin.customer') }}</th><th>{{ tr('admin.bots') }}</th><th>{{ tr('admin.subscription') }}</th><th>{{ tr('admin.expires') }}</th><th>{{ tr('admin.actions') }}</th></tr></thead>
+          <tbody>
+          {% for guild in guilds %}
+            <tr class="{{ 'admin-row-expired' if guild.is_expired else ('admin-row-pro' if guild.plan == 'pro' else 'admin-row-free') }}">
+              <td><div class="admin-server-cell">{% if guild.icon_url %}<img src="{{ guild.icon_url }}" alt="">{% else %}<span class="admin-server-fallback">A</span>{% endif %}<div><strong>{{ guild.guild_name }}</strong><small>ID {{ guild.guild_id }} · {{ guild.member_count }} {{ tr('module.members') }}</small></div></div></td>
+              <td><strong>{{ guild.customer_display_name or tr('admin.no_customer_login') }}</strong><small>{% if guild.customer_username %}@{{ guild.customer_username }} · {% endif %}ID {{ guild.owner_id }}</small></td>
+              <td><strong>{{ tr('admin.official_arx') }}</strong>{% if guild.managed_bot_count %}<small class="admin-custom-bot-note">+ {{ guild.managed_bot_count }} {{ tr('admin.custom_bots') }}{% if guild.managed_bot_names %}: {{ guild.managed_bot_names }}{% endif %}</small>{% else %}<small>{{ tr('admin.no_custom_bot') }}</small>{% endif %}</td>
+              <td>
+                {% if guild.is_expired %}
+                  <span class="subscription-badge expired">{{ tr('admin.expired') }}</span>
+                  <small>{{ tr('plan.pro') }}</small>
+                {% elif guild.plan == 'pro' %}
+                  <span class="subscription-badge premium">{{ tr('plan.pro') }}</span>
+                  {% if guild.is_unlimited_pro %}<small>∞ {{ tr('admin.never') }}</small>{% endif %}
+                {% else %}
+                  <span class="subscription-badge free">{{ tr('plan.free') }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if guild.is_expired %}
+                  <strong class="admin-expired-date">{{ guild.expires_at or '—' }}</strong>
+                {% elif guild.plan == 'pro' %}
+                  <strong>{{ guild.expires_at or tr('admin.never') }}</strong>
+                {% else %}
+                  <strong class="admin-empty-value">—</strong>
+                {% endif %}
+                {% if guild.plan == 'pro' or guild.is_expired %}<small>{{ guild.status }}</small>{% endif %}
+              </td>
+              <td>
+                {% set extendable = guild.plan == 'pro' and guild.expires_at %}
+                <div class="admin-sub-actions">
+                  <form method="post" action="/admin/guild/{{ guild.guild_id }}/subscription"><input type="hidden" name="action" value="{{ 'extend_7' if extendable else 'pro_7' }}"><input type="hidden" name="return_view" value="{{ admin_view }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="ghost" type="submit">+7 {{ tr('plan.pro') }}</button></form>
+                  <form method="post" action="/admin/guild/{{ guild.guild_id }}/subscription"><input type="hidden" name="action" value="{{ 'extend_30' if extendable else 'pro_30' }}"><input type="hidden" name="return_view" value="{{ admin_view }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="primary" type="submit">+30 {{ tr('plan.pro') }}</button></form>
+                  <form method="post" action="/admin/guild/{{ guild.guild_id }}/subscription"><input type="hidden" name="action" value="{{ 'extend_90' if extendable else 'pro_90' }}"><input type="hidden" name="return_view" value="{{ admin_view }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="ghost" type="submit">+90 {{ tr('plan.pro') }}</button></form>
+                  <form method="post" action="/admin/guild/{{ guild.guild_id }}/subscription"><input type="hidden" name="action" value="pro_unlimited"><input type="hidden" name="return_view" value="{{ admin_view }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="ghost admin-unlimited-pro" type="submit">∞ {{ tr('plan.pro') }}</button></form>
+                  {% if guild.stored_plan == 'pro' %}<form method="post" action="/admin/guild/{{ guild.guild_id }}/subscription"><input type="hidden" name="action" value="free"><input type="hidden" name="return_view" value="{{ admin_view }}"><input type="hidden" name="return_q" value="{{ search_query }}"><input type="hidden" name="return_page" value="{{ page }}"><button class="danger" type="submit">{{ tr('admin.set_free') }}</button></form>{% endif %}
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6"><div class="empty"><h3>{{ tr('admin.no_servers') }}</h3></div></td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if filtered_total %}
+      <div class="admin-pagination">
+        {% if page > 1 %}<a class="ghost link-button" href="{{ prev_url }}">{{ tr('module.previous') }}</a>{% else %}<span class="ghost admin-page-disabled">{{ tr('module.previous') }}</span>{% endif %}
+        <div class="admin-page-numbers">
+          {% for number in page_numbers %}<a class="{{ 'active' if number == page else '' }}" href="{{ page_urls[number] }}">{{ number }}</a>{% endfor %}
+        </div>
+        <span class="admin-page-ratio">{{ page }} / {{ total_pages }}</span>
+        {% if page < total_pages %}<a class="ghost link-button" href="{{ next_url }}">{{ tr('module.next') }}</a>{% else %}<span class="ghost admin-page-disabled">{{ tr('module.next') }}</span>{% endif %}
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="panel admin-audit-panel">
+      <div class="panel-title"><div><p class="eyebrow">AUDIT</p><h2>{{ tr('admin.audit_log') }}</h2></div></div>
+      <div class="table-wrap"><table class="admin-table compact"><thead><tr><th>{{ tr('admin.server') }}</th><th>{{ tr('admin.action') }}</th><th>{{ tr('admin.actor') }}</th><th>{{ tr('admin.subscription') }}</th><th>{{ tr('admin.changed_at') }}</th></tr></thead><tbody>
+      {% for event in events %}<tr><td>{{ guild_name_by_id.get(event.guild_id, event.guild_id) }}</td><td>{{ event.action }}</td><td>{{ event.actor_user_id or 'local' }}</td><td>{{ event.old_plan|upper }} → {{ event.new_plan|upper }}</td><td>{{ event.created_at }}</td></tr>{% else %}<tr><td colspan="5">{{ tr('admin.no_events') }}</td></tr>{% endfor %}
+      </tbody></table></div>
+    </section>
+  </main>
+  <script src="/static/app.js?v=key10-1"></script>
+{% include "_legal_footer.html" %}
+</body>
+</html>

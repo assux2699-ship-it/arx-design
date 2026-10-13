@@ -1,0 +1,73 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX — Premium Kod Yönetimi</title><link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<style>
+.arx-code-layout{max-width:1160px;margin:28px auto;padding:0 22px;color:#f4f4f4}.arx-code-layout a{color:#f8c800}
+.arx-code-layout .panel{padding:22px;margin:20px 0;border:1px solid #292d35;background:#11151e;border-radius:13px}
+.arx-code-layout input,.arx-code-layout select{color:#fff;background:#0b0e14;border:1px solid #303641;border-radius:8px;padding:11px;max-width:100%}
+.arx-code-layout button{background:#f8ca1a;color:#161616;border:0;border-radius:8px;padding:11px 16px;font-weight:750;cursor:pointer}
+.arx-code-layout [hidden]{display:none!important}
+.arx-code-layout .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.arx-code-layout table{width:100%;border-collapse:collapse}
+.arx-code-layout td,.arx-code-layout th{text-align:left;border-bottom:1px solid #30333a;padding:12px 8px;vertical-align:middle}
+.arx-code-layout .new{display:block;overflow-wrap:anywhere;background:#080c10;border:1px solid #4b430e;padding:12px;border-radius:8px;margin:6px 0;font:600 15px monospace}
+.arx-code-layout small{color:#a1a6b1}.arx-code-layout .danger{background:#472326;color:#ffe1e4}
+.arx-code-layout tr.promo-unused{background:rgba(24,122,67,.13)}
+.arx-code-layout tr.promo-used{background:rgba(169,45,55,.14)}
+.arx-code-layout tr.promo-revoked{background:rgba(105,107,113,.09)}
+.arx-code-layout .promo-state{font-weight:800;padding:5px 9px;border-radius:7px;white-space:nowrap}
+.arx-code-layout .promo-unused .promo-state{color:#79e5a1;background:#164a31}
+.arx-code-layout .promo-used .promo-state{color:#ff999d;background:#532229}
+.arx-code-layout .promo-revoked .promo-state{color:#b8bbc1;background:#333740}
+.arx-code-layout .promo-code{white-space:nowrap;font:600 12px ui-monospace,Consolas,monospace;color:#fafafa}
+.arx-code-layout .promo-user a{color:#f8c800;display:block;margin-top:4px}
+.arx-code-layout .promo-error{font-size:12px;color:#c2c6d0}
+</style></head><body class="admin-body"><main class="arx-code-layout">
+<a href="/admin">← Yönetici Paneline Dön</a>
+<p class="eyebrow">ARX INTERNAL — YALNIZ YEREL YÖNETİCİ</p><h1>ARX Aktivasyon ve Bonus Kodları</h1>
+<p>Premium ve Premium+ kodları müşterinin süre bakiyesine eklenir. Lifetime üyelik yalnızca bu yerel yönetici panelinden doğrudan tanımlanır. Paddle ödemeleri otomatik iptal edilmez.</p>
+<section class="panel"><h2>Kod oluştur</h2>
+<form class="row" method="post" action="/admin/premium-codes/create">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Paket <select name="code_type" id="arxCodeType" required>
+<option value="pro">Premium</option><option value="premium_plus">Premium+</option>
+</select></label>
+<label id="arxCodeDurationLabel">Gün <select name="duration_days" id="arxCodeDuration">
+<option value="7">7</option><option value="15">15</option><option value="30" selected>30</option><option value="60">60</option><option value="90">90</option>
+</select></label>
+<label>Adet <input type="number" name="quantity" min="1" max="100" value="1" required style="width:90px"></label>
+<button type="submit">Kod oluştur</button>
+</form>
+
+<p>Premium ve Premium+ kodları kullanılınca günler birikir; etkinleştirme yalnızca üyelik bitince yapılır.</p>
+{% if error %}<p role="alert">{{ error }}</p>{% endif %}
+{% if created %}<p role="status">{{ created }} kod oluşturuldu; kodlar aşağıdaki tabloda görülebilir.</p>{% endif %}
+</section>
+<section class="panel"><h2>Lifetime Premium tanımla — Yalnızca yönetici</h2>
+<p>Lifetime kodu üretilmez. Discord sunucusunun kimliğini girerek Lifetime hakkını doğrudan tanımlayın. Aktif veya ödenmiş Paddle aboneliği bulunan sunucuya bu işlem uygulanmaz; ödeme sağlayıcısı aboneliğini ayrıca sonlandırmanız ve ödenmiş dönemin bitmesini beklemeniz gerekir.</p>
+<form class="row" method="post" action="/admin/premium-codes/grant-lifetime">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Discord sunucu ID <input type="number" name="guild_id" min="1" step="1" required placeholder="Sunucu ID"></label>
+<label>Onay için LIFETIME yazın <input type="text" name="confirmation" pattern="LIFETIME" autocomplete="off" required placeholder="LIFETIME"></label>
+<button type="submit">Lifetime tanımla</button>
+</form>
+{% if lifetime_done %}<p role="status">Lifetime Premium başarıyla tanımlandı.</p>{% endif %}
+<p><small>Önceden oluşturulmuş Lifetime kod kayıtları geçmişte saklanır fakat müşteri tarafından kullanılamaz. Daha önce cüzdana kaydedilmiş Lifetime hakları silinmez; yönetici gerekli doğrulamayı yaparak sunucuya doğrudan Lifetime tanımlayabilir.</small></p>
+</section>
+<section class="panel"><h2>Kod Geçmişi — {{ code_count }} kayıt</h2>
+<form class="row" method="get" action="/admin/premium-codes">
+<label>Durum <select name="status"><option value="all" {{ 'selected' if code_status=='all' else '' }}>Tümü</option><option value="unused" {{ 'selected' if code_status=='unused' else '' }}>Kullanılmadı</option><option value="used" {{ 'selected' if code_status=='used' else '' }}>Kullanıldı</option><option value="revoked" {{ 'selected' if code_status=='revoked' else '' }}>İptal</option></select></label><button type="submit">Filtrele</button></form>
+<div style="overflow-x:auto"><table><thead><tr><th>Kod ID</th><th>Aktivasyon Kodu</th><th>Kod türü</th><th>Hak</th><th>Durum</th><th>Sunucu / Kullanıcı</th><th>Tarih</th><th>İşlem</th></tr></thead><tbody>
+{% for c in codes %}<tr class="promo-{{ c.status }}"><td>#{{ c.id }}</td>
+<td>{% if c.code %}<code class="promo-code">{{ c.code }}</code>{% else %}<code>{{ c.code_hint }}</code><small class="promo-error">{{ c.code_unavailable_reason or "Kodun tam hali gösterilemiyor" }}</small>{% endif %}</td>
+<td>{{ 'Lifetime' if c.duration_days == 0 else ('Premium+' if c.plan == 'premium_plus' else 'Premium') }}</td>
+<td>{{ 'Süresiz' if c.duration_days == 0 else (c.duration_days|string ~ ' gün') }}</td>
+<td><span class="promo-state">{{ {'unused':'Kullanılmadı','used':'Kullanıldı','revoked':'İptal'}[c.status] }}</span></td>
+<td>{% if c.used_guild_id %}<div class="promo-user"><small>Sunucu ID: {{ c.used_guild_id }}</small>
+{% if c.used_by_display_name %}<strong>{{ c.used_by_display_name }}</strong>{% endif %}
+{% if c.used_by_username %}<small>@{{ c.used_by_username }}</small>{% endif %}
+{% if c.used_by_user_id %}<a href="https://discord.com/users/{{ c.used_by_user_id }}" target="_blank" rel="noopener noreferrer">Discord hesabı · {{ c.used_by_user_id }}</a>{% else %}<small>Kullanıcı ID kaydı yok</small>{% endif %}</div>{% else %}—{% endif %}</td>
+<td><small>Üretim: {{ c.created_at }}{% if c.used_at %}<br>Kullanım: {{ c.used_at }}{% endif %}</small></td>
+<td>{% if c.status=='unused' %}<form method="post" action="/admin/premium-codes/{{ c.id }}/revoke"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="danger" type="submit">İptal Et</button></form>{% else %}—{% endif %}</td></tr>
+{% else %}<tr><td colspan="8">Bu filtrede kod bulunamadı.</td></tr>{% endfor %}
+</tbody></table></div><div class="row" style="margin-top:16px"><a href="{{ prev_url }}">← Önceki</a><span>Sayfa {{ code_page }} / {{ code_pages }}</span><a href="{{ next_url }}">Sonraki →</a></div>
+</section><small>Etkinleştirilmiş ve iptal edilmiş kodların geçmişi silinmez. Yeni kodların tam halleri yalnız 8010 yerel admin panelinde görüntülenir. Önceden sadece özeti kaydedilen kodlar geri getirilemez.</small>
+</main></body></html>

@@ -1,0 +1,81 @@
+/* ARX V300.160 — 300x300 mascot logo at top-left, Overview immediately below */
+
+/* The mascot is explicitly 300x300, so the desktop sidebar is widened to fit it cleanly. */
+body.arx-server-picker-page-v300157{
+  grid-template-columns:320px minmax(0,1500px)!important;
+}
+
+body.arx-server-picker-page-v300157>.sidebar{
+  width:320px!important;
+}
+
+/* Remove the previous compact brand sizing entirely. */
+.dashboard-sidebar .dashboard-brand-v300160{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:300px!important;
+  height:300px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+
+.dashboard-brand-logo-v300160{
+  display:block!important;
+  width:300px!important;
+  height:300px!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  margin:0!important;
+}
+
+/* General Overview navigation begins directly under the 300px logo. */
+.dashboard-sidebar .dashboard-brand-v300160 + nav{
+  margin-top:0!important;
+  padding-top:0!important;
+}
+
+.dashboard-sidebar .dashboard-brand-v300160 + nav a:first-child{
+  margin-top:0!important;
+}
+
+/* Keep the centered app-shell coherent after widening the sidebar. */
+@media(max-width:1050px) and (min-width:721px){
+  body.arx-server-picker-page-v300157{
+    grid-template-columns:250px minmax(0,1fr)!important;
+  }
+
+  body.arx-server-picker-page-v300157>.sidebar{
+    width:250px!important;
+  }
+
+  .dashboard-sidebar .dashboard-brand-v300160{
+    min-height:230px!important;
+    height:230px!important;
+  }
+
+  .dashboard-brand-logo-v300160{
+    width:230px!important;
+    height:230px!important;
+  }
+}
+
+@media(max-width:720px){
+  body.arx-server-picker-page-v300157>.sidebar{
+    width:auto!important;
+  }
+
+  .dashboard-sidebar .dashboard-brand-v300160{
+    min-height:220px!important;
+    height:220px!important;
+  }
+
+  .dashboard-brand-logo-v300160{
+    width:220px!important;
+    height:220px!important;
+  }
+}

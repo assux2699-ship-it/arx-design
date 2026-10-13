@@ -1,0 +1,10 @@
+/* Layout follows the selected UI direction. */
+[dir="rtl"] .sidebar{inset:0 0 0 auto;border-right:0!important;border-left:1px solid var(--line)}
+[dir="rtl"] .sidebar~main{margin-left:0;margin-right:270px}
+[dir="rtl"] th,[dir="rtl"] .member-trigger,[dir="rtl"] .member-menu>a,[dir="rtl"] .member-menu>button,[dir="rtl"] .discord-channel-row,[dir="rtl"] .discord-member-row,[dir="rtl"] .discord-voice-member,[dir="rtl"] .discord-message-context button,[dir="rtl"] .discord-message-reply-ref,[dir="rtl"] .discord-forward-member{text-align:start}
+[dir="rtl"] .badge,[dir="rtl"] .pill,[dir="rtl"] .nav-unread,[dir="rtl"] .voice-row-live,[dir="rtl"] .chat-meta time{margin-left:0;margin-right:auto}
+[dir="rtl"] .discord-voice-member-list{padding-left:0;padding-right:24px}
+[dir="rtl"] input[type="url"],[dir="rtl"] input[type="email"],[dir="rtl"] input[type="number"]{direction:ltr;text-align:start}
+.app-language-control{flex-shrink:0}
+@media(max-width:1050px){[dir="rtl"] .sidebar~main{margin-right:220px}}
+@media(max-width:720px){[dir="rtl"] .sidebar~main{margin:0}[dir="rtl"] .sidebar{border-left:0}}

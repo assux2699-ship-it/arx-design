@@ -1,0 +1,44 @@
+/* ARX V300.146 — center the customer workspace inside the area remaining after the sidebar.
+   Sidebar dimensions and all panel/card dimensions remain untouched. */
+
+.arx-workspace-content-v300146{
+  width:100%;
+  max-width:1560px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Desktop: fixed 270px sidebar; center the content in the remaining viewport. */
+@media (min-width:1051px){
+  main[data-arx-workspace-main]{
+    width:calc(100% - 270px)!important;
+    max-width:none!important;
+    margin-left:270px!important;
+    margin-right:0!important;
+    padding:38px 42px 80px!important;
+  }
+}
+
+/* Existing ARX breakpoint: sidebar becomes 220px. Keep the same centering model. */
+@media (min-width:721px) and (max-width:1050px){
+  main[data-arx-workspace-main]{
+    width:calc(100% - 220px)!important;
+    max-width:none!important;
+    margin-left:220px!important;
+    margin-right:0!important;
+    padding:25px!important;
+  }
+}
+
+/* Mobile keeps the current stacked layout. */
+@media (max-width:720px){
+  main[data-arx-workspace-main]{
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:20px!important;
+  }
+  .arx-workspace-content-v300146{
+    max-width:none;
+  }
+}

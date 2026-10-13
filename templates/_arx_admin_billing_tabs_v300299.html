@@ -1,0 +1,8 @@
+{# One navigation for five distinct, non-overlapping record categories. #}
+{% set current_path = request.url.path if request is defined and request is not none else '' %}
+<nav class="arx-billing-tabs" aria-label="Üyelik ve ödeme kayıtları">
+  {% for path,caption in [('/admin/payments','Paddle Ödemeleri'),('/admin/code-activations','Kod Kullanımları'),('/admin/manual-activations','Panelden Verilen Üyelikler'),('/admin/customers','Satın Alan Müşteriler'),('/admin/payment-audit','Ödeme Denetimi')] %}
+  {% set selected = current_path == path or current_path.startswith(path ~ '/') %}
+  <a href="{{ path }}" class="{% if selected %}current{% endif %}" {% if selected %}aria-current="page"{% endif %}>{{ caption }}</a>
+  {% endfor %}
+</nav>

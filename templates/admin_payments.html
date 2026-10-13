@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX · Ödeme Merkezi</title>
+<link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<link rel="stylesheet" href="/static/admin_commerce_v300294.css?v=300294-1"><link rel="stylesheet" href="/static/admin_finance_v300297.css?v=300297-1">
+<link rel="stylesheet" href="/static/admin_billing_v300299.css?v=300299-1"></head><body class="admin-body">
+<aside class="sidebar admin-sidebar">
+<div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+<nav><a href="/admin"><span>◆</span> Sunucular ve Abonelikler</a><a class="active" href="/admin/payments"><span>₺</span> Ödeme Geçmişi</a><a href="/admin/customers"><span>♟</span> Müşteri Geçmişi</a><a href="/admin/reminders"><span>⏰</span> Hatırlatıcılar</a><a href="{{admin_back_url|default('https://panel.arxbot.dev/')}}"><span>←</span> Panele Dön</a></nav>
+<div class="plan"><span>YEREL ERİŞİM</span><strong>ÖDEME KAYITLARI</strong><small>Doğrulanmış Paddle işlemleri</small></div>
+</aside>
+<main class="main admin-main ac-page"><div class="ac-shell">
+<header class="ac-top"><div><p class="ac-eyebrow">ARX / TİCARİ İŞLEMLER</p><h1>Paddle Ödemeleri</h1><p class="ac-description">Doğrulanmış Paddle ödemeleri, müşteriler ve bağlı Discord sunucuları tek ekranda. Yönetici tarafından verilen planlar satış sayılmaz.</p></div></header>
+{% include '_arx_admin_billing_tabs_v300299.html' %}
+<section class="ac-summary" aria-label="Ödeme özeti">
+<div class="ac-stat"><span>Toplam işlem</span><strong>{{stats.transactions}}</strong></div>
+<div class="ac-stat ac-stat-accent"><span>Tamamlanan ödeme</span><strong>{{stats.completed}}</strong></div>
+<div class="ac-stat ac-stat-alert"><span>Eşleşme bekleyen</span><strong>{{stats.unlinked}}</strong></div>
+</section>
+<section class="ac-panel"><header class="ac-panel-heading"><div><h2>Satın alma kayıtları</h2><p>Alıcıya veya sunucuya tıklayarak geçmişi inceleyebilirsiniz.</p></div><span class="ac-badge">{{total}} kayıt</span></header>
+<div class="ac-panel-content">
+<form class="ac-search" method="get" action="/admin/payments"><input type="search" name="q" value="{{q}}" maxlength="120" aria-label="Ödeme araması" placeholder="İşlem ID, abonelik, Discord kullanıcı veya sunucu ID"><select name="status" aria-label="İşlem durumu">{% for key,label in [('all','Tüm işlemler'),('completed','Tamamlanan'),('paid','İşleniyor'),('unlinked','Eşleşmeyen'),('past_due','Gecikmiş'),('canceled','İptal'),('refund','İadeler'),('chargeback','İtirazlar')] %}<option value="{{key}}" {% if status==key %}selected{% endif %}>{{label}}</option>{% endfor %}</select><button class="ac-action ac-action-primary" type="submit">Ara</button>{% if q or status!='all' %}<a class="ac-action" href="/admin/payments">Temizle</a>{% endif %}</form>
+<nav class="ac-tabs" aria-label="Hızlı filtreler">{% for key,label in [('all','Tüm kayıtlar'),('completed','Tamamlanan'),('unlinked','Eşleşmeyen'),('refund','İadeler'),('chargeback','İtirazlar')] %}<a class="ac-tab {% if status==key %}active{% endif %}" href="{{status_urls[key]}}">{{label}}</a>{% endfor %}</nav>
+<div class="ac-grid-table"><div class="ac-grid-head"><div>Ödeme tarihi</div><div>Satın alan</div><div>Discord sunucusu</div><div>Tutar</div><div>Durum</div><div>Detay</div></div>
+{% for p in payments %}{% set user=visuals.users.get(p.purchaser_user_id|string,{}) if p.purchaser_user_id else {} %}{% set gid=p.service_guild_id or p.original_guild_id %}{% set guild=visuals.guilds.get(gid|string,{}) if gid else {} %}
+<div class="ac-payment-item">
+<div><strong class="ac-main-text">{{p.provider_occurred_at[:16] if p.provider_occurred_at else '—'}}</strong><span class="ac-fine">UTC · {{p.environment|upper}}</span></div>
+<div class="ac-identity">{% if user.avatar_url %}<img class="ac-avatar" src="{{user.avatar_url}}" alt="" loading="lazy" referrerpolicy="no-referrer">{% else %}<span class="ac-avatar">{{(p.purchaser_username or 'M')[:1]|upper}}</span>{% endif %}<div class="ac-identity-info">{% if p.purchaser_user_id %}<a class="ac-name" href="/admin/customers/{{p.purchaser_user_id}}">{{p.purchaser_username or user.display_name or 'Discord müşterisi'}}</a>{% else %}<span class="ac-main-text">Eşleşmedi</span>{% endif %}<span class="ac-fine">{{p.purchaser_user_id or 'Kimlik doğrulanamadı'}}</span></div></div>
+<div class="ac-identity">{% if guild.avatar_url %}<img class="ac-avatar guild" src="{{guild.avatar_url}}" alt="" loading="lazy" referrerpolicy="no-referrer">{% else %}<span class="ac-avatar guild">{{(p.original_guild_name or guild.name or 'S')[:1]|upper}}</span>{% endif %}<div class="ac-identity-info"><span class="ac-main-text">{{p.original_guild_name or guild.name or 'Sunucu bilinmiyor'}}</span><span class="ac-fine">{{gid or 'Henüz eşleşmedi'}}</span></div></div>
+<div><span class="ac-money">{{amount_label(p.amount_minor,p.currency)}}</span><span class="ac-fine">{{p.product or 'ARX üyelik'}}</span></div>
+<div><span class="ac-badge {% if p.status=='completed' %}success{% elif p.status in ('past_due','canceled') %}error{% else %}pending{% endif %}">{{status_label(p.status)}}</span>{% if p.adjustment_count %}<span class="ac-fine">{{event_label(p.adjustment_action)}}</span>{% endif %}</div>
+<div><a class="ac-link" href="/admin/payments/{{p.transaction_id|urlencode}}?environment={{p.environment|urlencode}}">Ayrıntılar →</a><span class="ac-fine">{{p.transaction_id}}</span></div></div>
+{% else %}<div class="ac-empty"><strong>Bu filtre için işlem bulunamadı.</strong>Aramayı temizleyerek tüm kayıtları görebilirsiniz.</div>{% endfor %}</div>
+<div class="ac-pager"><a href="{{previous_url}}">← Önceki</a><span>{{page}} / {{page_count}} · {{total}} kayıt</span><a href="{{next_url}}">Sonraki →</a></div>
+</div></section>
+<section class="ac-panel ac-panel-slim"><div class="ac-panel-content"><p class="ac-note"><strong>Doğrulama ve gizlilik:</strong> Yalnızca Paddle'dan imzası doğrulanarak alınan işlem kayıtları görünür. Eşleşmeyen bir tahsilat otomatik olarak başka Discord hesabına bağlanmaz. Avatarlar varsa ARX'in daha önce kaydettiği Discord verilerinden alınır.</p></div></section>
+</div></main></body></html>

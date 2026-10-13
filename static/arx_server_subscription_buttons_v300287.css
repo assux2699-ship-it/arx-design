@@ -1,0 +1,162 @@
+/* ARX V300.287 — refined subscription buttons */
+
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-button,
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button,
+.server-card-actions-simple .premium-upgrade-button.subscription-lifetime-button {
+  min-height: 56px;
+}
+
+.server-card-actions-simple .subscription-button-content,
+.server-card-actions-simple .subscription-lifetime-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.server-card-actions-simple .subscription-button-content .button-label,
+.server-card-actions-simple .subscription-lifetime-content > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: .01em;
+}
+
+.server-card-actions-simple .subscription-button-icon {
+  display: block;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.server-card-actions-simple .diamond-icon {
+  width: 21px;
+  height: 21px;
+  filter: drop-shadow(0 0 6px rgba(103, 214, 255, .45));
+}
+.server-card-actions-simple .diamond-icon.is-mirror { transform: scaleX(-1); }
+.server-card-actions-simple .star-icon {
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(0 0 6px rgba(255, 208, 78, .42));
+}
+
+/* Premium: dark gold glass with star accents */
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-button {
+  background: radial-gradient(circle at 50% 0%, rgba(255,233,140,.12), transparent 58%),
+              linear-gradient(180deg, rgba(36,28,8,.98), rgba(24,19,8,.98)) !important;
+  border: 1px solid rgba(255,211,91,.72) !important;
+  color: #ffd85b !important;
+  box-shadow: 0 0 0 1px rgba(255,213,74,.08), 0 0 18px rgba(255,208,64,.12), inset 0 0 28px rgba(255,205,64,.06);
+  text-shadow: 0 0 12px rgba(255,215,87,.14);
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-button:hover:not(:disabled) {
+  background: radial-gradient(circle at 50% 0%, rgba(255,233,140,.16), transparent 60%), linear-gradient(180deg, rgba(45,34,10,.98), rgba(28,22,10,.98)) !important;
+  box-shadow: 0 0 0 1px rgba(255,213,74,.12), 0 0 24px rgba(255,208,64,.18), 0 0 50px rgba(255,196,0,.08), inset 0 0 34px rgba(255,205,64,.08);
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-button .button-label { color: #ffd85b !important; }
+
+/* Premium+: more attractive diamond blue */
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button {
+  background: radial-gradient(ellipse 86% 130% at 50% -55%, rgba(153, 236, 255, .30), transparent 86%),
+              linear-gradient(180deg, #12365c 0%, #0e2846 46%, #0a1830 100%) !important;
+  border: 1px solid rgba(118, 220, 255, .92) !important;
+  color: #effcff !important;
+  text-shadow: 0 1px 5px rgba(0, 14, 34, .55) !important;
+  box-shadow: 0 0 0 1px rgba(135,218,255,.12), 0 0 24px rgba(84,183,255,.24), inset 0 1px 0 rgba(218,247,255,.20), inset 0 -12px 30px rgba(7,15,31,.16) !important;
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button:hover:not(:disabled) {
+  background: radial-gradient(ellipse 86% 130% at 50% -55%, rgba(170, 242, 255, .34), transparent 86%),
+              linear-gradient(180deg, #17426f 0%, #123154 46%, #0d1d38 100%) !important;
+  box-shadow: 0 0 0 1px rgba(129,220,255,.20), 0 0 32px rgba(92,193,255,.30), inset 0 1px 0 rgba(228,250,255,.22) !important;
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button .button-label { color: #ecfbff !important; }
+
+/* Lifetime */
+.server-card-actions-simple .premium-upgrade-button.subscription-lifetime-button,
+.server-card-actions-simple .premium-upgrade-button.subscription-lifetime-button:disabled {
+  background: radial-gradient(ellipse 80% 110% at 50% -45%, rgba(255,180,114,.21), transparent 87%),
+              linear-gradient(105deg, #47251c 0%, #6f3426 49%, #491d23 100%) !important;
+  border: 1px solid rgba(255,157,102,.79) !important;
+  color: #fff2e7 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: 0 1px 6px rgba(12,2,0,.44) !important;
+  box-shadow: 0 0 0 1px rgba(255,167,115,.07), 0 0 19px rgba(235,102,71,.17), inset 0 1px 0 rgba(255,215,167,.19), inset 0 -10px 28px rgba(20,7,5,.23) !important;
+  cursor: default !important;
+  transform: none !important;
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-lifetime-button > span,
+.server-card-actions-simple .premium-upgrade-button.subscription-lifetime-button .subscription-lifetime-content > span {
+  color: #fff2e7 !important;
+  font-size: 16px;
+}
+.server-card-actions-simple .subscription-lifetime-content { gap: 12px; }
+.server-card-actions-simple .subscription-lifetime-content img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(255,120,117,.36));
+}
+.server-card-actions-simple .subscription-lifetime-content img.is-mirror { transform: scaleX(-1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button,
+  .server-card-actions-simple .premium-upgrade-button.subscription-premium-button {
+    transition: none;
+  }
+}
+
+
+/* V4 icon visibility hardening */
+.server-card-actions-simple .premium-upgrade-button .premium-upgrade-button-gif.subscription-button-icon {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  vertical-align: middle;
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-plus-button .premium-upgrade-button-gif.subscription-button-icon.diamond-icon {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
+}
+.server-card-actions-simple .premium-upgrade-button.subscription-premium-button .premium-upgrade-button-gif.subscription-button-icon.star-icon {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+}
+
+
+/* V300.287 — Emerald action ONLY on Free-plan server cards.
+   Keep the existing animated pink hearts and all paid-tier buttons intact. */
+.server-card-actions-simple.free-actions .premium-upgrade-button.arx-premium-checkout:not(.arx-existing-subscription) {
+  background: radial-gradient(ellipse 80% 120% at 50% -35%, rgba(100, 239, 165, .24), transparent 82%),
+              linear-gradient(180deg, #125333 0%, #0d3b27 55%, #09291e 100%) !important;
+  border: 1px solid rgba(87, 235, 151, .82) !important;
+  color: #e1ffeb !important;
+  text-shadow: 0 1px 4px rgba(2, 19, 10, .55) !important;
+  box-shadow: 0 0 0 1px rgba(71, 208, 133, .09),
+              0 0 19px rgba(38, 198, 116, .19),
+              inset 0 1px 0 rgba(177, 255, 215, .14) !important;
+}
+.server-card-actions-simple.free-actions .premium-upgrade-button.arx-premium-checkout:not(.arx-existing-subscription) > span {
+  color: #e1ffeb !important;
+}
+.server-card-actions-simple.free-actions .premium-upgrade-button.arx-premium-checkout:not(.arx-existing-subscription):hover:not(:disabled) {
+  background: radial-gradient(ellipse 80% 120% at 50% -35%, rgba(133, 255, 187, .31), transparent 82%),
+              linear-gradient(180deg, #17643e 0%, #0e482d 55%, #0c3224 100%) !important;
+  box-shadow: 0 0 0 1px rgba(82, 234, 155, .15),
+              0 0 27px rgba(54, 214, 130, .28),
+              inset 0 1px 0 rgba(191, 255, 220, .18) !important;
+}
+.server-card-actions-simple.free-actions .premium-upgrade-button.arx-premium-checkout:not(.arx-existing-subscription):focus-visible {
+  outline: 2px solid #a8ffcb;
+  outline-offset: 3px;
+}

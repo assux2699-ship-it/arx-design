@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="{{ ui_language }}" dir="{{ ui_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ARX · {{ transfer_ui.title }}</title>
+  <link rel="stylesheet" href="/static/style.css?v=30059-v58-regression-recovery">
+  <link rel="stylesheet" href="/static/arx_panel_background_v300145.css?v=300145">
+  <link rel="stylesheet" href="/static/arx_premium_transfer_v300152.css?v=300152">
+  <link rel="stylesheet" href="/static/locale.css?v=key10-1">
+  {% include "_locale.html" %}
+</head>
+<body class="arx-premium-transfer-body">
+  <main class="arx-transfer-shell-v300152">
+    <header class="arx-transfer-heading-v300152">
+      <a class="arx-transfer-back-v300152" href="/guild/{{ active_guild.guild_id }}/overview">← ARX</a>
+      <h1>{{ transfer_ui.title }}</h1>
+      <p>{{ transfer_ui.subtitle }}</p>
+    </header>
+
+    {% if request.query_params.get('transferred') == '1' %}
+    <div class="arx-transfer-success">{{ transfer_ui.success }}</div>
+    {% endif %}
+    {% if transfer_error %}
+    <div class="arx-transfer-error">{{ transfer_error }}</div>
+    {% endif %}
+
+    <div class="arx-transfer-warning-v300152">
+      <strong>{{ transfer_ui.warning_title }}</strong>
+      <span>{{ transfer_ui.warning_text.replace('{remaining}', transfer_remaining|string).replace('{limit}', transfer_limit|string) }}</span>
+    </div>
+
+    <section class="arx-transfer-panel-v300152">
+      <div class="arx-transfer-panel-title-v300152">
+        <strong>{{ transfer_ui.transfer|title }}</strong>
+        <span aria-hidden="true">⌃</span>
+      </div>
+
+      <form
+        method="post"
+        action="/guild/{{ active_guild.guild_id }}/premium-transfer"
+        data-arx-native-submit="1"
+      >
+        <label class="arx-transfer-field-v300152">
+          <span>{{ transfer_ui.source }}</span>
+          <select name="source_guild_id" required>
+            <option value="">{{ transfer_ui.choose }}</option>
+            {% for guild in source_guilds %}
+            <option value="{{ guild.guild_id }}" {{ 'selected' if guild.guild_id == active_guild.guild_id else '' }}>
+              {{ guild.guild_name }} · {{ 'Lifetime' if guild.subscription_expires_at is none else 'Premium' }}
+            </option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <label class="arx-transfer-field-v300152">
+          <span>{{ transfer_ui.target }}</span>
+          <select name="target_guild_id" required>
+            <option value="">{{ transfer_ui.choose }}</option>
+            {% for guild in target_guilds %}
+            <option value="{{ guild.guild_id }}">{{ guild.guild_name }}</option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <div class="arx-transfer-divider-v300152"></div>
+
+        <div class="arx-transfer-bottom-v300152">
+          <p>{{ transfer_ui.note }}</p>
+          <span class="arx-transfer-counter-v300152">{{ transfer_remaining }}/{{ transfer_limit }}</span>
+        </div>
+
+        <button
+          class="primary arx-transfer-submit-v300152"
+          type="submit"
+          {{ 'disabled' if transfer_remaining <= 0 or not source_guilds or not target_guilds else '' }}
+        >
+          {{ transfer_ui.submit }}
+        </button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

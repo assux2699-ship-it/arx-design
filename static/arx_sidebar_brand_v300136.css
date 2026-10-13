@@ -1,0 +1,44 @@
+/* ARX V300.136 — sidebar brand logo refresh */
+.brand.brand-v300136{
+  display:grid!important;
+  gap:6px;
+  padding:0 6px 18px!important;
+  align-items:start;
+}
+.brand-v300136 .brand-logo-wrap{
+  position:relative;
+  width:100%;
+  min-height:78px;
+}
+.brand-v300136 .brand-logo-wide{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.26));
+}
+.brand-v300136 .brand-plan-tier-only{
+  position:absolute;
+  top:2px;
+  right:-2px;
+  width:30px;
+  height:30px;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.32));
+}
+.brand-v300136 .brand-copy{
+  display:grid;
+  gap:4px;
+  min-width:0;
+}
+.brand-v300136 .brand-copy strong{
+  display:none!important;
+}
+.brand-v300136 .brand-copy small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:2.1px;
+  margin-top:0;
+  padding-left:8px;
+}

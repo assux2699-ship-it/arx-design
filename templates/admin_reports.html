@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX · Discord Hata Bildirimleri</title><link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<style>
+.feedback-wrap{padding:20px}.feedback-note{font-size:.86rem;color:#aeb0bb}.feedback-desc{max-width:450px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
+.feedback-form{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.feedback-form select,.feedback-filter select{padding:8px;border:1px solid #424751;border-radius:8px;background:#101319;color:#fff}
+.feedback-table td{vertical-align:top;overflow-wrap:anywhere}.feedback-table small{display:block;color:#aaadb9;margin-top:6px}
+.feedback-toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0 18px}
+@media(max-width:900px){.feedback-table{min-width:850px}}
+</style></head><body class="admin-body">
+<aside class="sidebar admin-sidebar"><div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+<nav>
+<a href="/admin"><span>◆</span> Abonelikler</a><a href="/admin/payments"><span>₺</span> Ödemeler ve Abonelikler</a>
+<a href="/admin/support"><span>✉</span> Müşteri Destek Merkezi</a><a href="/admin/errors"><span>!</span> Hata Yönetimi</a>
+<a class="active" href="/admin/reports"><span>◈</span> Discord Bildirimleri</a>
+<a href="/admin/system-commands"><span>/</span> Sistem Komutları</a>
+<a href="/admin/system"><span>●</span> Temel Sistem Sağlığı</a><a href="/admin/reminders"><span>◷</span> Hatırlatıcılar</a>
+<a href="{{ admin_back_url|default('https://panel.arxbot.dev/') }}"><span>←</span> Panele Dön</a></nav>
+<div class="plan"><span>YALNIZCA YEREL</span><strong>8010</strong><small>Bildirimler müşteriye açık değildir</small></div></aside>
+<main class="main admin-main"><header class="topbar"><div><p class="eyebrow">ARX INTERNAL / DESTEK</p><h1>Discord Hata Bildirimleri</h1>
+<p>ARX botunun <code>/error</code> komutuyla gönderilen raporlar. Yalnızca gönderilen açıklama ve gerekli Discord kimlikleri saklanır.</p></div></header>
+{% if request.query_params.get('updated') %}<p class="action-message dashboard-message">Bildirim güncellendi.</p>{% endif %}
+<section class="panel feedback-wrap"><div class="panel-title"><h2>Üyelerden gelen bildirimler</h2><span class="feedback-note">Toplam {{ total }} rapor</span></div>
+<form class="feedback-toolbar feedback-filter" action="/admin/reports" method="get"><label for="status">Durum</label>
+<select id="status" name="status"><option value="all" {% if status == 'all' %}selected{% endif %}>Tümü</option>
+{% for value, label in [('acik','Yeni / Açık'),('inceleniyor','İnceleniyor'),('cozuldu','Çözüldü')] %}
+<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+</select><button type="submit" class="ghost">Filtrele</button><a href="/admin/system-commands">Sistem komutu ayarları</a></form>
+<div class="table-wrap"><table class="admin-table feedback-table"><thead><tr><th>Bildirim</th><th>Discord kimlikleri</th><th>Açıklama</th><th>Durum</th></tr></thead><tbody>
+{% for item in records %}<tr><td><strong>ARX-{{ item.id }}</strong><small>Modül: {{ item.module_key }}</small>
+<small>Dil: {{ item.locale }}</small><small>Tarih: {{ item.created_at }} UTC</small></td>
+<td><small>Sunucu: <code>{{ item.guild_id }}</code></small><small>Üye: <code>{{ item.user_id }}</code></small><small>Bot: <code>{{ item.bot_user_id }}</code></small></td>
+<td class="feedback-desc">{{ item.description }}</td>
+<td><form method="post" class="feedback-form" action="/admin/reports/{{ item.id }}/status">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><select name="status">
+{% for value, label in [('acik','Açık'),('inceleniyor','İnceleniyor'),('cozuldu','Çözüldü')] %}
+<option value="{{ value }}" {% if item.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+<button type="submit" class="ghost">Kaydet</button></form></td></tr>
+{% else %}<tr><td colspan="4" class="feedback-note">Henüz bu filtrede bildirim bulunmuyor.</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="admin-pagination"><a class="ghost link-button" href="{{ previous_url }}">Önceki</a><span>{{ page }} / {{ pages }}</span><a class="ghost link-button" href="{{ next_url }}">Sonraki</a></div>
+</section><p class="feedback-note">Kaynak açıklamalar özgün dilinde saklanır. Kanal mesaj geçmişi, kullanıcı IP'si, token veya ek veri otomatik alınmaz.</p>
+</main></body></html>

@@ -1,0 +1,22 @@
+/* ARX V300.166 — top premium glass badge icon moved to the right and enlarged */
+
+.server-premium-top-badge-v300164{
+  justify-content:center!important;
+  gap:10px!important;
+  padding:0 14px 0 16px!important;
+  min-height:42px!important;
+}
+
+.server-premium-top-badge-v300164 span{
+  order:1;
+}
+
+.server-premium-top-badge-v300164 .premium-glass-tier-icon{
+  order:2;
+  width:20px!important;
+  height:20px!important;
+  flex:0 0 20px!important;
+  object-fit:contain!important;
+  margin-left:1px!important;
+  filter:drop-shadow(0 0 10px rgba(245,197,24,.34));
+}

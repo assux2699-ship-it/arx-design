@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARX · Sistem Sağlığı</title>
+<link rel="stylesheet" href="/static/style.css?v=admin-v90">
+<style>.system-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.system-cards article{padding:20px;border:1px solid #31343b;border-radius:14px;background:#101217}.system-cards article strong{font-size:1.1rem;display:block;margin-top:8px}.sys-on{color:#49db90}.sys-off{color:#ff8585}.sys-muted{color:#a4a4ae;font-size:.89rem}.system-check-note{padding:20px;margin-top:18px}@media(max-width:670px){.system-cards{grid-template-columns:1fr}}</style>
+</head><body class="admin-body">
+<aside class="sidebar admin-sidebar">
+  <div class="brand"><span class="brand-mark">A</span><span><strong>ARX</strong><small>Yönetici Merkezi</small></span></div>
+  <nav>
+    <a href="/admin"><span>◆</span> Abonelikler</a><a href="/admin/payments"><span>₺</span> Ödemeler ve Abonelikler</a>
+    <a href="/admin/support"><span>✉</span> Müşteri Destek Merkezi</a><a href="/admin/errors"><span>!</span> Hata Yönetimi</a>
+    <a href="/admin/reports"><span>◈</span> Discord Bildirimleri</a>
+    <a href="/admin/system-commands"><span>/</span> Sistem Komutları</a>
+    <a class="active" href="/admin/system"><span>●</span> Temel Sistem Sağlığı</a>
+    <a href="/admin/reminders"><span>◷</span> Hatırlatıcılar</a>
+    <a href="{{ admin_back_url|default('https://panel.arxbot.dev/') }}"><span>←</span> Panele Dön</a>
+  </nav><div class="plan"><span>YEREL DURUM</span><strong>ANLIK</strong><small>Kalıcı takip kaydı oluşturulmaz</small></div>
+</aside>
+<main class="main admin-main">
+  <header class="topbar"><div><p class="eyebrow">ARX / YEREL SAĞLIK</p><h1>Temel Sistem Sağlığı</h1><p>Son kontrol: {{ checked_at }}</p></div></header>
+  <section class="system-cards">
+    <article><span>Müşteri Paneli · 8000</span><strong class="{{ 'sys-on' if web_listening else 'sys-off' }}">{{ 'Port dinleniyor' if web_listening else 'Port yanıt vermiyor' }}</strong><p class="sys-muted">TCP erişimi; OAuth ve Paddle işlemlerinin uçtan uca testi değildir.</p></article>
+    <article><span>Tanıtım Sitesi · 8001</span><strong class="{{ 'sys-on' if website_listening else 'sys-off' }}">{{ 'Port dinleniyor' if website_listening else 'Port yanıt vermiyor' }}</strong><p class="sys-muted">TCP erişimi; içerik veya Cloudflare doğrulaması değildir.</p></article>
+    <article><span>Bağımsız Yönetici · 8010</span><strong class="sys-on">Panel isteğe yanıt verdi</strong><p class="sys-muted">Bu sayfa yerel admin sürecinden oluşturuldu.</p></article>
+    <article><span>Ana ARX SQLite</span><strong class="{{ 'sys-on' if database_ok else 'sys-off' }}">{{ 'Okunabiliyor' if database_ok else 'Erişilemiyor' }}</strong><p class="sys-muted">Sadece SELECT sorgusu yapıldı; hiçbir yeni kayıt üretilmedi.</p></article>
+    <article><span>Resmi Discord Botu</span><strong class="{{ 'sys-on' if bot_online else 'sys-off' }}">{{ 'Kalp atışı güncel' if bot_online else 'Kalp atışı güncel değil' }}</strong><p class="sys-muted">Son kayıt: {{ bot_last_seen or 'Yok' }} (UTC). 30 saniyelik bot bakım göstergesi kullanılır.</p></article>
+  </section>
+  <section class="panel system-check-note"><h2>Kontrol sınırı</h2><p>Bu sayfa bir izleme arşivi değildir. Yalnızca yerel port durumları ve mevcut sistem kalp atışı okunur. Paddle webhookları, müşteri verisi ve Discord komutları tetiklenmez.</p><p><a class="ghost link-button" href="/admin/system">Yeniden kontrol et</a> <a class="ghost link-button" href="/admin/health">Ham sağlık JSON</a></p></section>
+</main></body></html>

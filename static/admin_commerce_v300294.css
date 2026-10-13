@@ -1,0 +1,98 @@
+/* ARX V300.294 · Private Commerce workspace — scoped to admin commerce pages */
+.ac-page{--ac-bg:#11151e;--ac-panel:#151a25;--ac-line:#343c4d;--ac-muted:#a6afc2;--ac-gold:#f7c83e;--ac-soft:#fff0a8;--ac-green:#67e2ae;--ac-blue:#91caff;--ac-red:#ff9ba5;color:#f5f7fc;padding-bottom:65px}
+.ac-page *{box-sizing:border-box}
+.ac-page .ac-shell{max-width:1580px;margin:0 auto}
+.ac-page h1,.ac-page h2,.ac-page h3,.ac-page p{margin:0}
+.ac-page a,.ac-page a:visited{color:var(--ac-soft);text-decoration:none}
+.ac-page a:hover{color:#fff;}
+.ac-page a:focus-visible,.ac-page button:focus-visible,.ac-page input:focus-visible,.ac-page select:focus-visible{outline:2px solid var(--ac-gold);outline-offset:3px}
+.ac-page .ac-top{display:flex;align-items:start;justify-content:space-between;gap:22px;margin:3px 0 23px;flex-wrap:wrap}
+.ac-page .ac-eyebrow{font-size:11px;font-weight:900;letter-spacing:2.3px;color:var(--ac-gold);margin-bottom:9px}
+.ac-page .ac-top h1{font-size:clamp(27px,2.7vw,38px);line-height:1.18;letter-spacing:-.7px}
+.ac-page .ac-description{color:var(--ac-muted);font-size:13px;line-height:1.6;margin-top:10px;max-width:780px}
+.ac-page .ac-action{display:inline-flex;align-items:center;justify-content:center;min-height:39px;padding:9px 15px;border-radius:10px;border:1px solid #545160;background:linear-gradient(180deg,#242731,#161b23);color:#f2f4fa!important;font-weight:750;font-size:12px;white-space:nowrap;transition:background .12s,border-color .12s}
+.ac-page .ac-action:hover{border-color:#a68e43;background:#302817}
+.ac-page .ac-action-primary{background:linear-gradient(125deg,#f8d75a,#e8af24);border-color:#ffd64b;color:#211907!important}
+.ac-page .ac-action-primary:hover{background:linear-gradient(125deg,#ffe485,#f4c039);color:#18120a!important}
+.ac-page .ac-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 19px}
+.ac-page .ac-stat{min-height:107px;border:1px solid #343849;border-radius:15px;background:linear-gradient(135deg,rgba(34,35,42,.98),rgba(16,20,30,.96));padding:20px;position:relative;overflow:hidden}
+.ac-page .ac-stat:after{content:"";position:absolute;right:-42px;top:-44px;width:148px;height:148px;background:radial-gradient(circle,rgba(247,200,62,.09),transparent 70%);pointer-events:none}
+.ac-page .ac-stat span{display:block;color:#bec4ce;font-size:12px;font-weight:650}
+.ac-page .ac-stat strong{display:block;font-size:29px;line-height:1.2;margin-top:9px;letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+.ac-page .ac-stat.ac-stat-accent{border-color:#8b7029;background:linear-gradient(135deg,#30291a,#151922)}
+.ac-page .ac-stat.ac-stat-accent strong{color:#ffda6a}
+.ac-page .ac-stat.ac-stat-alert strong{color:#ffc987}
+.ac-page .ac-panel{background:linear-gradient(150deg,rgba(21,25,34,.99),rgba(13,17,25,.99));border:1px solid #343949;border-radius:16px;margin-bottom:17px;box-shadow:0 14px 38px rgba(0,0,0,.14);overflow:hidden}
+.ac-page .ac-panel-heading{padding:22px 23px 18px;border-bottom:1px solid #303747;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.ac-page .ac-panel-heading h2{font-size:18px;line-height:1.3;font-weight:800}
+.ac-page .ac-panel-heading p{color:var(--ac-muted);font-size:12px;margin-top:6px;line-height:1.5}
+.ac-page .ac-panel-content{padding:20px 23px 23px}
+.ac-page .ac-search{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;margin:0 0 17px}
+.ac-page .ac-search input,.ac-page .ac-search select,.ac-page .ac-inline-form input{min-width:0;min-height:44px;font-size:13px;border-radius:10px;border:1px solid #40485a;background:#090e16;color:#f3f5fa;padding:11px 13px}
+.ac-page .ac-search input{flex:2 1 260px}
+.ac-page .ac-search select{flex:1 1 165px;max-width:240px}
+.ac-page .ac-search button{min-height:44px;padding:0 22px}
+.ac-page .ac-tabs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 19px}
+.ac-page .ac-tab,.ac-page .ac-tab:visited{display:inline-flex;padding:8px 13px;border:1px solid #343d4c;background:#121823;border-radius:9px;color:#b9c3d2;font-weight:700;font-size:11px}
+.ac-page .ac-tab:hover{color:#f4f6fb;border-color:#7d6e3e}
+.ac-page .ac-tab.active{background:#463817;border-color:#bf972c;color:#ffe17a}
+.ac-page .ac-grid-table{overflow-x:auto}
+.ac-page .ac-grid-head,.ac-page .ac-payment-item{display:grid;grid-template-columns:142px minmax(190px,1.15fr) minmax(195px,1.2fr) 112px 120px 110px;gap:14px;align-items:center;min-width:1040px}
+.ac-page .ac-grid-head{padding:8px 14px 13px;border-bottom:1px solid #39404e;color:#a0aabb;font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:850}
+.ac-page .ac-payment-item{padding:15px 14px;border-bottom:1px solid #293240;transition:background .12s}
+.ac-page .ac-payment-item:last-child{border-bottom:none}
+.ac-page .ac-payment-item:hover{background:rgba(255,255,255,.03)}
+.ac-page .ac-identity{display:flex;align-items:center;gap:11px;min-width:0}
+.ac-page .ac-identity-info{min-width:0}
+.ac-page .ac-name,.ac-page .ac-name:visited{font-weight:850;color:#ffe196;text-decoration:none;font-size:13px;display:inline-block;max-width:100%;overflow-wrap:anywhere}
+.ac-page .ac-name:hover{text-decoration:underline;text-underline-offset:3px}
+.ac-page .ac-avatar{display:flex;align-items:center;justify-content:center;width:42px;height:42px;flex:0 0 42px;border:1px solid #8e783c;background:linear-gradient(145deg,#303244,#171c27);border-radius:50%;object-fit:cover;color:#ffe8a0;font-size:17px;font-weight:900;overflow:hidden}
+.ac-page .ac-avatar.guild{border-radius:12px;border-color:#506480}
+.ac-page .ac-avatar.large{width:78px;height:78px;flex-basis:78px;font-size:30px;border-width:2px}
+.ac-page .ac-fine{display:block;color:#a2afc0;font-size:11px;line-height:1.5;margin-top:4px;overflow-wrap:anywhere}
+.ac-page .ac-main-text{font-size:12px;font-weight:770;color:#e9eef9}
+.ac-page .ac-money{font-size:17px;letter-spacing:-.2px;color:#ffdf78;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ac-page .ac-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:800;border:1px solid #4a5362;background:#232b39;color:#dce3ee;white-space:nowrap}
+.ac-page .ac-badge:before{content:"";width:6px;height:6px;background:currentColor;border-radius:50%}
+.ac-page .ac-badge.success{background:#112c25;border-color:#346b56;color:#86f0bd}
+.ac-page .ac-badge.pending{background:#302a1a;border-color:#78683d;color:#ffe39a}
+.ac-page .ac-badge.error{background:#371b24;border-color:#854555;color:#ffb0bd}
+.ac-page .ac-link,.ac-page .ac-link:visited{font-weight:780;color:#ffdc71;text-decoration:underline;text-underline-offset:4px;font-size:12px;white-space:nowrap}
+.ac-page .ac-link:hover{color:#fff5c4}
+.ac-page .ac-empty{padding:35px 22px;text-align:center;color:#aeb6c4;font-size:13px;line-height:1.6}
+.ac-page .ac-empty strong{display:block;color:#f7ebcc;font-size:17px;margin-bottom:8px}
+.ac-page .ac-pager{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:20px;font-size:12px;color:#c5c9d2}
+.ac-page .ac-pager a,.ac-page .ac-pager a:visited{color:#f6dc8b;border:1px solid #5b5361;border-radius:8px;padding:8px 12px;font-weight:750}
+.ac-page .ac-pager a:hover{background:#342b1b}
+.ac-page .ac-note{color:#a7b0c1;font-size:12px;line-height:1.7;padding:13px 15px;border:1px solid #323b4c;border-radius:10px;background:#121925}
+.ac-page .ac-customer-row{display:grid;grid-template-columns:minmax(220px,1.6fr) 110px 150px minmax(160px,1fr) 115px;gap:14px;align-items:center;padding:15px 14px;border-bottom:1px solid #2c3440;min-width:840px}
+.ac-page .ac-customer-row:hover{background:rgba(255,255,255,.03)}
+.ac-page .ac-customer-row:last-child{border:0}
+.ac-page .ac-customer-head{font-weight:900;color:#aab5c2;font-size:10px;letter-spacing:.7px;text-transform:uppercase;border-bottom:1px solid #39404e;padding-top:10px;padding-bottom:12px}
+.ac-page .ac-profile-hero{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ac-page .ac-profile-hero h1{font-size:28px;margin-top:3px}
+.ac-page .ac-profile-hero .ac-fine{font-size:12px}
+.ac-page .ac-profile-id{display:inline-flex;background:#171e2a;border:1px solid #3b4658;border-radius:8px;color:#c5cfe0;padding:8px 11px;font-size:12px;margin-top:11px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ac-page .ac-mini-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:0 0 17px}
+.ac-page .ac-mini-card{background:#121925;border:1px solid #353f50;border-radius:12px;padding:17px}
+.ac-page .ac-mini-card small{display:block;color:#a6b3c4;margin-bottom:8px;font-size:11px}
+.ac-page .ac-mini-card strong{font-size:23px;color:#fff0bd;line-height:1.2;overflow-wrap:anywhere}
+.ac-page .ac-table-wrap{overflow:auto}
+.ac-page .ac-table{width:100%;border-collapse:collapse;min-width:810px;text-align:left}
+.ac-page .ac-table th{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#9eafc2;padding:13px 14px;border-bottom:1px solid #36404e}
+.ac-page .ac-table td{font-size:12px;color:#e3e7f0;padding:14px;border-bottom:1px solid #29323e;vertical-align:middle;overflow-wrap:anywhere}
+.ac-page .ac-table tr:last-child td{border-bottom:0}
+.ac-page .ac-table tbody tr:hover{background:rgba(255,255,255,.025)}
+.ac-page .ac-table .ac-link{white-space:normal}
+.ac-page .ac-receipt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ac-page .ac-receipt-field{background:rgba(255,255,255,.035);border:1px solid #2d3442;border-radius:11px;padding:14px 16px;min-width:0}
+.ac-page .ac-receipt-field small{display:block;color:#a5afc0;font-size:11px;margin-bottom:7px}
+.ac-page .ac-receipt-field strong{display:block;font-size:13px;overflow-wrap:anywhere;font-weight:770;color:#ecf0f9;line-height:1.4}
+.ac-page .ac-receipt-field .ac-link{display:inline-block;white-space:normal;margin-top:9px}
+.ac-page .ac-inline-form{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:13px}
+.ac-page .ac-inline-form input{flex:1 1 280px}
+.ac-page .ac-inline-form button{min-height:43px}
+.ac-page .ac-statusline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ac-page .ac-panel-slim .ac-panel-content{padding:18px 23px}
+@media(max-width:1000px){.ac-page .ac-summary{grid-template-columns:repeat(3,minmax(0,1fr))}.ac-page .ac-mini-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.ac-page .ac-summary,.ac-page .ac-mini-cards{grid-template-columns:1fr}.ac-page .ac-panel-heading,.ac-page .ac-panel-content{padding-left:15px;padding-right:15px}.ac-page .ac-receipt-grid{grid-template-columns:1fr}.ac-page .ac-search select{max-width:none}.ac-page .ac-top{gap:12px}.ac-page .ac-stat{min-height:88px}}

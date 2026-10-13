@@ -1,0 +1,47 @@
+/* ARX V300.138 — fit full cat+ARX logo and plan GIF inside the existing brand area */
+.brand.brand-v300138{
+  height:116px!important;
+  min-height:116px!important;
+  padding:0 2px 18px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:visible!important;
+}
+
+.brand-v300138 .brand-logo-row{
+  width:100%;
+  height:98px;
+  padding:0 4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  overflow:visible;
+}
+
+.brand-v300138 .brand-logo-wide{
+  display:block;
+  width:calc(100% - 36px);
+  max-width:194px;
+  min-width:0;
+  height:auto;
+  max-height:94px;
+  object-fit:contain;
+  object-position:center;
+  flex:1 1 auto;
+  margin:0;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.26));
+}
+
+.brand-v300138 .brand-plan-tier-only{
+  position:static!important;
+  display:block;
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  object-fit:contain;
+  margin:0;
+  transform:none;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.32));
+}

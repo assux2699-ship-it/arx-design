@@ -1,0 +1,52 @@
+/* ARX V300.139 — use the whole existing logo slot without resizing the slot itself */
+.brand.brand-v300139{
+  height:116px!important;
+  min-height:116px!important;
+  padding:0 2px 18px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:visible!important;
+}
+
+.brand-v300139 .brand-logo-row{
+  width:calc(100% + 24px);
+  height:98px;
+  margin-left:-12px;
+  margin-right:-12px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  overflow:visible;
+}
+
+.brand-v300139 .brand-logo-wide{
+  display:block;
+  width:220px;
+  max-width:220px;
+  min-width:220px;
+  height:auto;
+  max-height:94px;
+  object-fit:contain;
+  object-position:center;
+  flex:0 0 220px;
+  margin:0;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.26));
+}
+
+.brand-v300139 .brand-plan-tier-only{
+  position:static!important;
+  display:block;
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  object-fit:contain;
+  margin:0;
+  transform:translateY(7px);
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.32));
+}
+
+/* Keep the existing brand area dimensions unchanged.
+   CONTROL CENTER remains removed; the freed space is used by the larger logo. */

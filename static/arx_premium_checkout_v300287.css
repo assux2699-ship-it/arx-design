@@ -1,0 +1,160 @@
+/* V300.287 — scoped commerce UI and lifetime baseline correction. */
+.overview-v300153-plan .overview-v300153-plan-value{min-height:66px;align-items:center;overflow:visible;flex-wrap:wrap;row-gap:3px}
+.overview-v300153-plan .overview-v300153-plan-value strong{display:inline-block;line-height:1.22!important;padding:6px 0 10px;overflow:visible;max-width:100%;overflow-wrap:anywhere}
+.overview-v300153-plan .overview-v300153-plan-value img{object-fit:contain;align-self:center}
+@media(max-width:720px){.overview-v300153-plan .overview-v300153-plan-value strong{font-size:clamp(27px,7.5vw,40px)!important}}
+/* Only the plan card gets Phoenix; the header stays the universal paid heart. */
+.brand-v300139 .brand-logo-row .brand-plan-tier-only{object-fit:contain}
+/* Subscription selection lives in the dedicated comparison dialog, not on guild cards. */
+.arx-purchase-modal{max-width:min(990px,calc(100vw - 28px));width:100%;max-height:calc(100dvh - 38px);padding:0;border:1px solid rgba(245,197,24,.32);border-radius:20px;background:#101218;color:#f4f5f8;box-shadow:0 26px 100px rgba(0,0,0,.75);overflow:auto}
+.arx-purchase-modal::backdrop{background:rgba(0,0,0,.82);backdrop-filter:blur(7px)}
+.arx-purchase-inner{padding:clamp(18px,3vw,32px)}
+.arx-purchase-head{display:flex;align-items:flex-start;gap:16px;justify-content:space-between;margin-bottom:20px}
+.arx-purchase-head small{display:block;color:#f5ca20;letter-spacing:.14em;font-size:11px;font-weight:800}
+.arx-purchase-head h2{margin:6px 0;font-size:clamp(24px,3vw,34px);color:#fff}
+.arx-purchase-head p{color:#aab1bd;font-size:13px;margin:4px 0}
+.arx-purchase-close{min-width:42px;height:42px;background:#252933;color:#fff;border:1px solid #434850;border-radius:12px;cursor:pointer;font-size:25px}
+.arx-purchase-period{display:flex;gap:8px;margin:0 0 20px;align-items:center}
+.arx-purchase-period button{padding:10px 16px;border-radius:10px;color:#ced4df;background:#1f232c;border:1px solid #42454d;cursor:pointer;font-weight:750}
+.arx-purchase-period button[aria-pressed="true"]{background:#f5ca20;color:#151515;border-color:#f5ca20}
+.arx-purchase-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.arx-purchase-card{display:flex;flex-direction:column;gap:12px;border:1px solid #353a46;background:#181b23;border-radius:17px;padding:clamp(14px,2vw,22px);min-width:0}
+.arx-purchase-card.is-plus{border-color:rgba(255,201,43,.7);background:linear-gradient(145deg,#24200d,#171a22 70%)}
+.arx-purchase-card h3{color:#fff;font-size:22px;margin:0}
+.arx-purchase-card p{color:#aab1bb;font-size:12px;min-height:36px;margin:0}
+.arx-purchase-price{font-size:clamp(24px,3vw,37px);font-weight:900;color:#f5c518;white-space:nowrap;line-height:1.2}
+.arx-purchase-price small{font-size:12px;font-weight:600;color:#b8bfca}
+.arx-purchase-features{list-style:none;margin:0;padding:0;display:grid;gap:10px;flex:1}
+.arx-purchase-features li{font-size:13px;color:#d3d8df;padding-left:22px;position:relative;line-height:1.35}
+.arx-purchase-features li::before{content:'✓';position:absolute;left:0;top:0;color:#f5c518;font-weight:800}
+.arx-purchase-features li.is-absent{color:#828996}
+.arx-purchase-features li.is-absent::before{content:'—';color:#828996}
+.arx-purchase-buy{width:100%;background:#f5c518;color:#111;border-radius:10px;border:0;min-height:45px;font-size:14px;font-weight:900;cursor:pointer;padding:10px}
+.arx-purchase-buy:disabled{background:#383c44;color:#a0a4ab;cursor:not-allowed}
+.arx-purchase-card .arx-purchase-free-label{background:#292d34;color:#e5e6ea;border-radius:10px;display:grid;place-items:center;min-height:45px;font-size:13px;font-weight:700}
+.arx-purchase-note{font-size:12px;color:#afb7c1;margin-top:15px}
+.arx-purchase-feedback{margin-top:12px;min-height:20px;color:#ffe6a1;font-size:13px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.arx-purchase-feedback[data-level="error"]{color:#ffb4b4}
+@media(max-width:780px){.arx-purchase-grid{grid-template-columns:1fr}.arx-purchase-card p{min-height:0}.arx-purchase-modal{max-height:calc(100dvh - 15px)}}
+
+/* V300.287 — full customer-facing feature comparison, preserving checkout controls. */
+.arx-purchase-modal{max-width:min(1140px,calc(100vw - 24px))}
+.arx-purchase-compare-intro{margin:0 0 14px!important;font-size:13px;line-height:1.45}
+.arx-purchase-compare-intro a{color:#ffe16d;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;font-weight:800}
+.arx-purchase-compare-intro a:hover{color:#fff0ac}
+.arx-purchase-details{margin-top:27px;border-top:1px solid rgba(255,255,255,.12);padding-top:23px;scroll-margin-top:16px}
+.arx-purchase-details-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.arx-purchase-details-eyebrow{display:block;color:#ffd24d;font-size:10px;font-weight:900;letter-spacing:.1em}
+.arx-purchase-details-head h3{margin:5px 0 6px;color:#f8f9fc;font-size:clamp(20px,2.5vw,26px);line-height:1.25}
+.arx-purchase-details-head p{margin:0;color:#acb4c1;font-size:13px;line-height:1.5}
+.arx-purchase-back-link{display:inline-flex;align-items:center;min-height:34px;padding:8px 12px;color:#e6e9ef;border:1px solid #424958;border-radius:10px;font-size:12px;text-decoration:none}
+.arx-purchase-back-link:hover{border-color:#ffd34d;color:#ffe695}
+.arx-purchase-difference{padding:13px 15px;margin:17px 0 21px;border:1px solid rgba(245,197,24,.25);border-radius:12px;background:rgba(245,197,24,.07);color:#e8dfc6;font-size:13px;line-height:1.55}
+.arx-purchase-difference strong{color:#ffe16d}
+.arx-purchase-feature-section{margin:18px 0 23px}
+.arx-purchase-feature-section h4{margin:0 0 10px;color:#ffe07a;font-size:15px;font-weight:850}
+.arx-purchase-feature-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid #323847;border-radius:12px;background:#151820}
+.arx-purchase-feature-scroll:focus-visible{outline:2px solid #ffd04d;outline-offset:3px}
+.arx-purchase-feature-table{width:100%;min-width:690px;border-spacing:0;border-collapse:separate;table-layout:fixed;text-align:left}
+.arx-purchase-feature-table th,.arx-purchase-feature-table td{border-bottom:1px solid rgba(255,255,255,.07);padding:11px 12px;color:#e4e7ed;font-size:12px;line-height:1.5;vertical-align:middle;overflow-wrap:break-word}
+.arx-purchase-feature-table th:first-child{width:34%}
+.arx-purchase-feature-table th:not(:first-child),.arx-purchase-feature-table td{width:22%;text-align:center}
+.arx-purchase-feature-table thead th{background:#242833;color:#f9fafc;font-size:13px;font-weight:850;border-bottom:1px solid #444d5a}
+.arx-purchase-feature-table thead th:last-child{background:#302b1b;color:#ffe078}
+.arx-purchase-feature-table tbody th{font-weight:650;background:#191d25;color:#ecedf1}
+.arx-purchase-feature-table tbody tr:last-child th,.arx-purchase-feature-table tbody tr:last-child td{border-bottom:0}
+.arx-purchase-feature-table tbody tr:hover td{background:rgba(255,255,255,.025)}
+.arx-purchase-feature-table tbody td:last-child{background:rgba(245,197,24,.045)}
+.arx-purchase-feature-table .arx-purchase-cell-icon{display:inline-block;margin-right:7px;color:#f6ce43;font-weight:900}
+.arx-purchase-feature-table .is-unavailable{color:#818b99}
+.arx-purchase-feature-table .is-unavailable .arx-purchase-cell-icon{color:#848d98}
+.arx-purchase-feature-table td span:last-child{overflow-wrap:anywhere}
+.arx-purchase-details-footnote{margin:13px 0 0;color:#9ca5b5;font-size:12px;line-height:1.55}
+@media(max-width:780px){
+  .arx-purchase-details{margin-top:25px}
+  .arx-purchase-feature-table{min-width:700px}
+  .arx-purchase-feature-scroll{scrollbar-width:thin}
+  .arx-purchase-details-head h3{font-size:21px}
+}
+
+
+/* V300.287 — gold Premium / diamond Premium+, scoped strictly to commerce. */
+.arx-purchase-grid .arx-purchase-card.is-gold,
+.arx-purchase-grid .arx-purchase-card.is-diamond{position:relative;isolation:isolate;overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.arx-purchase-grid .arx-purchase-card.is-gold{border:1px solid #cba12e;background:linear-gradient(150deg,#282312 0%,#1e1c18 36%,#171a21 100%);box-shadow:inset 0 0 28px rgba(250,189,45,.07),0 0 18px rgba(233,164,23,.12)}
+.arx-purchase-grid .arx-purchase-card.is-gold:hover{border-color:#ffe28c;box-shadow:inset 0 0 38px rgba(245,193,59,.1),0 0 29px rgba(255,198,45,.26)}
+.arx-purchase-grid .arx-purchase-card.is-diamond{border:1px solid #7caee8;background:linear-gradient(145deg,#192639 0%,#191c29 53%,#151923 100%);box-shadow:inset 0 0 30px rgba(133,209,255,.08),0 0 20px rgba(98,164,245,.18)}
+.arx-purchase-grid .arx-purchase-card.is-diamond:hover{border-color:#c7efff;box-shadow:inset 0 0 40px rgba(119,202,255,.16),0 0 35px rgba(97,175,255,.29)}
+.arx-purchase-grid .arx-purchase-card.is-gold::before,
+.arx-purchase-grid .arx-purchase-card.is-diamond::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.6;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.08) 45%,transparent 60%);transform:translateX(-120%);animation:arx-plan-glint-v300287 8s ease-in-out infinite}
+.arx-purchase-grid .arx-purchase-card.is-diamond::before{background:linear-gradient(115deg,transparent 24%,rgba(195,236,255,.16) 47%,transparent 62%);animation-delay:2.2s}
+@keyframes arx-plan-glint-v300287{0%,62%{transform:translateX(-120%)}86%,100%{transform:translateX(130%)}}
+.arx-purchase-grid .arx-purchase-plan-title{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:36px;line-height:1.25}
+.arx-purchase-grid .arx-purchase-plan-title img{width:44px;height:44px;max-width:22%;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(255,210,92,.5))}
+.arx-purchase-grid .is-gold .arx-purchase-plan-title{color:#ffe29a;text-shadow:0 0 15px rgba(255,207,68,.38)}
+.arx-purchase-grid .is-diamond .arx-purchase-plan-title{color:#e6f8ff;text-shadow:0 0 16px rgba(117,196,255,.46)}
+.arx-purchase-grid .is-diamond .arx-purchase-plan-title img{filter:drop-shadow(0 0 9px rgba(120,211,255,.6))}
+.arx-purchase-grid .is-gold .arx-purchase-price{color:#ffd150;text-shadow:0 0 12px rgba(255,182,35,.22)}
+.arx-purchase-grid .is-diamond .arx-purchase-price{color:#b8e9ff;text-shadow:0 0 13px rgba(130,208,255,.42)}
+.arx-purchase-grid .is-diamond .arx-purchase-features li::before{color:#8bdcff}
+.arx-purchase-grid .is-gold .arx-purchase-buy{background:linear-gradient(120deg,#f5bf31,#ffe18a 55%,#e8aa1c);color:#241600}
+.arx-purchase-grid .is-diamond .arx-purchase-buy{background:linear-gradient(120deg,#76c4fb,#dbf6ff 54%,#87baff);color:#0e223c}
+.arx-purchase-grid .is-diamond .arx-purchase-buy:disabled,
+.arx-purchase-grid .is-gold .arx-purchase-buy:disabled{background:#383c44;color:#a0a4ab}
+.arx-purchase-feature-table thead th:nth-child(3){background:linear-gradient(140deg,#3d3019,#302819);color:#ffdf8e}
+.arx-purchase-feature-table thead th:last-child{background:linear-gradient(140deg,#263d55,#202b40);color:#c5eeff}
+.arx-purchase-feature-table tbody td:nth-child(3){background:rgba(229,173,57,.035)}
+.arx-purchase-feature-table tbody td:last-child{background:rgba(132,199,255,.055)}
+.arx-purchase-feature-table td:last-child:not(.is-unavailable) .arx-purchase-cell-icon{color:#99d9ff}
+@media(prefers-reduced-motion:reduce){.arx-purchase-grid .arx-purchase-card.is-gold::before,.arx-purchase-grid .arx-purchase-card.is-diamond::before{animation:none}}
+
+
+/* V300.287 annual discount choice and lossless-source Lifetime animation. */
+.arx-purchase-period{align-items:stretch;gap:10px;flex-wrap:wrap}
+.arx-purchase-period .arx-purchase-yearly-choice{
+ display:inline-flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;
+ min-height:42px;padding:7px 11px 7px 15px;
+ background:linear-gradient(125deg,#292718,#252a32);border:1px solid #aa8735;
+ color:#ffe2a1;box-shadow:0 0 0 1px rgba(244,191,66,.10),0 0 18px rgba(244,189,62,.09)
+}
+.arx-purchase-period .arx-purchase-yearly-choice[aria-pressed="true"]{
+ background:linear-gradient(110deg,#efb928,#ffe48f 57%,#f6c641);
+ border-color:#ffe79f;color:#221b09;box-shadow:0 0 20px rgba(252,207,67,.27)
+}
+.arx-purchase-yearly-highlight{
+ display:inline-flex;align-items:center;justify-content:center;border-radius:999px;
+ padding:5px 9px;background:#f6cf61;color:#2a220d;font-size:10px;
+ font-weight:900;letter-spacing:.025em;line-height:1.15;white-space:nowrap
+}
+.arx-purchase-yearly-choice[aria-pressed="true"] .arx-purchase-yearly-highlight{
+ background:#25251b;color:#ffe19a
+}
+.arx-purchase-grid .arx-purchase-saving:not([hidden]){
+ display:flex;align-items:center;gap:7px;min-height:28px;
+ margin:-3px 0 1px!important;padding:7px 10px;border-radius:9px;
+ background:rgba(63,180,112,.09);border:1px solid rgba(91,218,145,.32);
+ color:#9cf0b8!important;font-weight:850;font-size:12px!important;
+ line-height:1.4!important
+}
+.arx-purchase-grid .arx-purchase-saving:not([hidden])::before{
+ content:"✓";font-weight:900;color:#8ef1af
+}
+.arx-purchase-grid .is-diamond .arx-purchase-saving:not([hidden]){
+ background:rgba(82,169,237,.11);border-color:rgba(116,204,246,.37);color:#c2efff!important
+}
+.arx-purchase-grid .arx-purchase-saving[hidden]{display:none!important}
+/* Full 512 px animation rendered at useful sizes without blurred glow. */
+.server-premium-top-badge-v300164.lifetime-tier .premium-glass-tier-icon{
+ width:30px!important;height:30px!important;flex:0 0 30px!important;
+ object-fit:contain!important;object-position:center!important;
+ image-rendering:auto!important;filter:none!important;margin:-3px -6px -3px 0
+}
+.overview-v300153-plan.lifetime-tier .overview-v300153-plan-value img{
+ width:44px!important;height:44px!important;flex:0 0 44px!important;
+ object-fit:contain!important;image-rendering:auto!important;filter:none!important
+}
+@media(max-width:560px){
+ .arx-purchase-period .arx-purchase-yearly-choice{gap:6px}
+ .arx-purchase-yearly-highlight{padding:4px 7px}
+ .arx-purchase-grid .arx-purchase-saving:not([hidden]){font-size:11px!important}
+}

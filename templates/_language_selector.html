@@ -1,0 +1,1 @@
+<label class="app-language-control"><span>{{ tr('common.interface_language') }}</span><select id="app-language" aria-label="{{ tr('common.interface_language') }}">{% for code, label in ui_languages.items() %}<option value="{{ code }}" {{ 'selected' if code == ui_language else '' }}>{{ label }}</option>{% endfor %}</select></label>

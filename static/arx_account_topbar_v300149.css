@@ -1,0 +1,272 @@
+/* ARX V300.149 — floating account controls, no outer black header strip */
+
+body > main[data-arx-workspace-main]{
+  padding-top:18px!important;
+}
+
+.arx-account-topbar-v300149{
+  position:relative;
+  z-index:60;
+  min-height:50px;
+  margin:0 0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+
+  /* No full-width bar/background/border. */
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+.arx-account-topbar-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  min-width:0;
+  margin-left:auto;
+}
+
+.arx-buy-premium-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:164px;
+  height:40px;
+  flex:0 0 164px;
+  text-decoration:none;
+  transition:transform .15s ease,filter .15s ease;
+}
+.arx-buy-premium-link:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.06);
+}
+.arx-buy-premium-link img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:40px;
+  object-fit:contain;
+}
+
+/* Custom MEE6-like language selector */
+.arx-language-menu{
+  position:relative;
+  flex:0 0 auto;
+}
+.arx-language-menu>summary{
+  list-style:none;
+  width:84px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 10px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;
+  background:rgba(12,14,18,.84);
+  cursor:pointer;
+  user-select:none;
+  transition:border-color .15s ease,background .15s ease;
+}
+.arx-language-menu>summary::-webkit-details-marker{display:none}
+.arx-language-menu[open]>summary,
+.arx-language-menu>summary:hover{
+  border-color:rgba(245,197,24,.24);
+  background:rgba(17,19,24,.96);
+}
+.arx-language-current-flag{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  object-fit:contain;
+}
+.arx-language-menu summary strong{
+  color:#e8ebef;
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+.arx-language-chevron{
+  margin-left:auto;
+  color:#9ea5af;
+  font-size:16px;
+  line-height:1;
+  transition:transform .15s ease;
+}
+.arx-language-menu[open] .arx-language-chevron{transform:rotate(180deg)}
+
+.arx-language-dropdown{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  z-index:100;
+  width:205px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  background:#12141a;
+  box-shadow:0 22px 60px rgba(0,0,0,.5);
+}
+.arx-language-dropdown button{
+  width:100%;
+  min-height:40px;
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  align-items:center;
+  gap:10px;
+  padding:0 10px;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:#cbd0d8;
+  text-align:left;
+  font:inherit;
+  font-size:12px;
+  cursor:pointer;
+}
+.arx-language-dropdown button:hover{
+  background:rgba(245,197,24,.08);
+  color:#fff;
+}
+.arx-language-dropdown button.active{
+  background:rgba(245,197,24,.06);
+  color:#ffd84a;
+}
+.arx-language-dropdown button img{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+.arx-language-native-select{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+}
+
+/* Spacious selected-server control */
+.arx-server-account-menu{
+  position:relative;
+  flex:0 1 auto;
+  width:max-content;
+  max-width:min(520px,42vw);
+  min-width:0;
+}
+.arx-server-account-menu>summary{
+  list-style:none;
+  min-width:220px;
+  max-width:100%;
+  height:50px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:6px 13px 6px 7px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  background:rgba(12,14,18,.84);
+  cursor:pointer;
+  user-select:none;
+  transition:border-color .15s ease,background .15s ease;
+}
+.arx-server-account-menu>summary::-webkit-details-marker{display:none}
+.arx-server-account-menu>summary:hover,
+.arx-server-account-menu[open]>summary{
+  border-color:rgba(245,197,24,.24);
+  background:rgba(17,19,24,.96);
+}
+.arx-topbar-guild-icon,
+.arx-topbar-guild-fallback{
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  border-radius:11px;
+}
+.arx-topbar-guild-icon{
+  display:block;
+  object-fit:cover;
+}
+.arx-topbar-guild-fallback{
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(245,197,24,.24);
+  background:#17150c;
+  color:#f5c518;
+  font-weight:950;
+  font-size:14px;
+}
+.arx-server-account-menu summary strong{
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#eef0f3;
+  font-size:12.5px;
+  font-weight:850;
+}
+.arx-topbar-chevron{
+  margin-left:auto;
+  color:#9ea5af;
+  font-size:17px;
+  line-height:1;
+  transition:transform .15s ease;
+}
+.arx-server-account-menu[open] .arx-topbar-chevron{transform:rotate(180deg)}
+
+.arx-server-account-dropdown{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  z-index:100;
+  width:236px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  background:#12141a;
+  box-shadow:0 22px 60px rgba(0,0,0,.5);
+}
+.arx-server-account-dropdown a{
+  min-height:42px;
+  display:grid;
+  grid-template-columns:22px minmax(0,1fr);
+  align-items:center;
+  gap:9px;
+  padding:0 11px;
+  border-radius:9px;
+  color:#c9ced7;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:750;
+}
+.arx-server-account-dropdown a:hover{
+  background:rgba(245,197,24,.08);
+  color:#fff;
+}
+.arx-server-account-dropdown a:last-child{
+  margin-top:5px;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-radius:0 0 9px 9px;
+  color:#e3a5a5;
+}
+
+@media(max-width:1050px){
+  .arx-buy-premium-link{width:146px;flex-basis:146px}
+  .arx-server-account-menu{max-width:320px}
+  .arx-server-account-menu>summary{min-width:190px}
+}
+@media(max-width:720px){
+  body > main[data-arx-workspace-main]{padding-top:12px!important}
+  .arx-account-topbar-v300149{min-height:auto;margin-bottom:16px}
+  .arx-account-topbar-actions{width:100%;flex-wrap:wrap;gap:8px}
+  .arx-buy-premium-link{width:142px;flex-basis:142px}
+  .arx-server-account-menu{flex:1 1 190px;max-width:none;width:auto}
+  .arx-server-account-menu>summary{width:100%;min-width:0}
+  .arx-server-account-dropdown{width:min(260px,calc(100vw - 40px))}
+  .arx-language-dropdown{right:auto;left:0}
+}

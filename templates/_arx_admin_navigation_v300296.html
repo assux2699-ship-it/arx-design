@@ -1,0 +1,5 @@
+{# ARX V300.296: shared navigation for all local admin screens. #}
+{% for item in arx_admin_sidebar_menu %}{% set active = request.url.path == item.path or (item.path != '/admin' and request.url.path.startswith(item.path ~ '/')) or (item.path == '/admin/payments' and (request.url.path.startswith('/admin/code-activations') or request.url.path.startswith('/admin/manual-activations') or request.url.path.startswith('/admin/payment-audit'))) %}
+<a href="{{ item.href }}" class="{% if active %}active{% endif %}" {% if active %}aria-current="page"{% endif %}><span>{{ item.icon }}</span> {{ item.label }}</a>
+{% endfor %}
+<a href="{{ admin_back_url|default('https://panel.arxbot.dev/') }}"><span>←</span> Panele Dön</a>

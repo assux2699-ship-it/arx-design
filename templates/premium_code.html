@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ promo_language }}" dir="{{ 'rtl' if promo_language == 'ar' else 'ltr' }}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARX — {{ promo.title }}</title><link rel="stylesheet" href="/static/style.css?v=300204-branding-lock">
+<style>
+.arx-promo-page{min-height:100vh;background:radial-gradient(circle at 70% 5%,#493d0a 0,transparent 40%),#07090d;color:#f6f7f9;display:flex;align-items:center;justify-content:center;padding:24px}
+.arx-promo-card{width:min(580px,100%);border:1px solid #393622;border-radius:18px;background:#10131b;padding:30px;box-shadow:0 14px 55px #0008}
+.arx-promo-card a{color:#e7be1e;text-decoration:none}.arx-promo-card label{display:block;margin:20px 0 8px;color:#cfd3da}
+.arx-promo-card input{width:100%;background:#080b10;color:#fff;border:1px solid #353b46;border-radius:9px;padding:14px;font:600 17px monospace;letter-spacing:1px}
+.arx-promo-card button{margin-top:16px;border:0;background:#f5cc21;color:#0c0e11;font-weight:750;border-radius:9px;padding:13px 20px;cursor:pointer}
+.arx-promo-card .result{margin-top:18px;background:#1a221c;border:1px solid #476543;padding:13px;border-radius:9px;white-space:normal}
+.arx-promo-card .error{background:#281a1b;border-color:#794141}.arx-promo-card p{color:#b9c0cb}
+</style></head>
+<body class="arx-promo-page"><main class="arx-promo-card">
+<a href="/">← {{ promo.back }}</a>
+<p>ARX PREMIUM</p><h1>{{ promo.title }}</h1><h2>{{ guild_name }}</h2><p>ID {{ guild_id }}</p>
+{% if can_redeem %}
+<form method="post" action="/guild/{{ guild_id }}/premium-code" autocomplete="off">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label for="redeem-code">{{ promo.code_label }}</label>
+<input id="redeem-code" name="code" type="text" required maxlength="32" minlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ARX-XXXXX-XXXXX-XXXXX-XXXXX">
+<p>{{ promo.hint }}</p><p style="font-size:13px">{{ promo.billing_notice }}</p><button type="submit">{{ promo.submit }}</button>
+</form>
+{% endif %}
+{% if message %}<p role="status" class="result {{ 'error' if is_error else '' }}">{{ message }}</p>{% endif %}
+</main></body></html>

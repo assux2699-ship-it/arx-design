@@ -1,0 +1,29 @@
+/* V300.297 scoped financial audit styles; no global admin/sidebar styling changes */
+.ac-page .af-tabs{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 19px}
+.ac-page .af-link{display:inline-flex;border:1px solid #555064;border-radius:10px;color:#ffe4a3!important;font-size:12px;padding:11px 14px;background:#181e29;font-weight:750}
+.ac-page .af-link:hover{border-color:#d0aa41;background:#2a261e}
+.ac-page .af-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.ac-page .af-filter select,.ac-page .af-export input,.ac-page .af-export select{min-height:40px;border:1px solid #46536a;border-radius:9px;background:#0d121c;color:#fff;padding:8px 10px;font:inherit}
+.ac-page .af-filter label,.ac-page .af-export label{font-size:12px;font-weight:750;color:#bac7d8}
+.ac-page .af-export{display:flex;align-items:end;gap:11px;flex-wrap:wrap;margin:22px 0 12px}
+.ac-page .af-export>div{display:flex;flex-direction:column;gap:6px;min-width:130px}
+.ac-page .af-export .ac-action{min-height:40px}
+.ac-page .af-mono{font-family:ui-monospace,Consolas,monospace;font-size:11px;overflow-wrap:anywhere}
+.ac-page .af-env{font-weight:900;color:#ffe4aa}
+.ac-page .af-status{display:inline-block;border-radius:7px;padding:6px 8px;font-size:11px;border:1px solid #606677;background:#252b38;color:#f2f4ff;font-weight:780}
+.ac-page .af-status.good{background:#10372a;border-color:#397b61;color:#a2ffce}
+.ac-page .af-status.warn{background:#3f2d14;border-color:#92672c;color:#ffe0a5}
+.ac-page .af-status.bad{background:#411c25;border-color:#986075;color:#ffb8c4}
+.ac-page .af-empty{padding:24px;color:#aebbd0;text-align:center}
+.ac-page .ac-table th{white-space:nowrap}
+.ac-page .ac-table small{display:block;margin-top:5px;color:#9eadc1;font-size:11px}
+.ac-page .ac-panel{scroll-margin-top:16px}
+@media(max-width:720px){.ac-page .af-export>div{flex:1 1 100%}.ac-page .af-filter select{flex:1}.ac-page .af-tabs{gap:6px}}
+
+.ac-page .af-top-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+.ac-page .af-provider-totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.ac-page .af-provider-totals>div{background:#111925;border:1px solid #394052;padding:15px;border-radius:10px}
+.ac-page .af-provider-totals span{display:block;font-size:12px;color:#bec8d7}
+.ac-page .af-provider-totals strong{font-size:22px;color:#ffe3a4;display:block;margin-top:6px}
+@media(max-width:760px){.ac-page .af-provider-totals{grid-template-columns:repeat(2,minmax(0,1fr))}}

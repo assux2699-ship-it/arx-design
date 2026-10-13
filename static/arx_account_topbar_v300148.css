@@ -1,0 +1,88 @@
+/* ARX V300.148 — compact MEE6-like account/server top bar */
+body > main[data-arx-workspace-main]{padding-top:0!important}
+
+.arx-account-topbar-v300148{
+  position:sticky;top:0;z-index:60;min-height:66px;margin:0 0 24px;
+  display:flex;align-items:center;justify-content:flex-end;gap:14px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(180deg,rgba(8,10,13,.96),rgba(8,10,13,.86));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+.arx-account-topbar-spacer{flex:1 1 auto}
+.arx-account-topbar-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}
+
+.arx-buy-premium-link{
+  display:flex;align-items:center;justify-content:center;width:176px;height:42px;flex:0 0 176px;
+  text-decoration:none;transition:transform .15s ease,filter .15s ease
+}
+.arx-buy-premium-link:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.arx-buy-premium-link img{display:block;width:100%;height:auto;max-height:42px;object-fit:contain}
+
+.arx-topbar-language{
+  height:42px;display:flex;align-items:center;gap:6px;padding:0 8px 0 10px;
+  border:1px solid rgba(255,255,255,.08);border-radius:11px;
+  background:rgba(12,14,18,.82);color:#e8ebef
+}
+.arx-topbar-language-flag{font-size:16px;line-height:1}
+.arx-topbar-language select{
+  width:48px!important;min-width:48px!important;height:38px!important;
+  padding:0 18px 0 2px!important;border:0!important;background:transparent!important;
+  color:#d8dde5!important;box-shadow:none!important;font-size:11px!important;
+  font-weight:850!important;appearance:auto
+}
+
+.arx-server-account-menu{position:relative;flex:0 1 auto;min-width:0}
+.arx-server-account-menu>summary{
+  list-style:none;height:44px;min-width:188px;max-width:min(520px,42vw);
+  display:flex;align-items:center;justify-content:flex-start;gap:9px;
+  padding:5px 10px 5px 6px;border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;background:rgba(10,12,16,.86);cursor:pointer;user-select:none
+}
+.arx-server-account-menu>summary::-webkit-details-marker{display:none}
+.arx-server-account-menu[open]>summary{border-color:rgba(245,197,24,.28);background:rgba(15,17,21,.96)}
+.arx-topbar-guild-icon,.arx-topbar-guild-fallback{width:32px;height:32px;flex:0 0 32px;border-radius:10px}
+.arx-topbar-guild-icon{display:block;object-fit:cover}
+.arx-topbar-guild-fallback{
+  display:grid;place-items:center;border:1px solid rgba(245,197,24,.24);
+  background:#17150c;color:#f5c518;font-weight:950;font-size:13px
+}
+.arx-server-account-menu summary strong{
+  display:block;min-width:0;max-width:390px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;color:#eef0f3;font-size:12px;font-weight:850
+}
+.arx-topbar-chevron{margin-left:auto;color:#aeb4bd;font-size:17px;line-height:1;transition:transform .15s ease}
+.arx-server-account-menu[open] .arx-topbar-chevron{transform:rotate(180deg)}
+
+.arx-server-account-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;z-index:90;width:230px;padding:8px;
+  border:1px solid rgba(255,255,255,.09);border-radius:13px;background:#111319;
+  box-shadow:0 22px 60px rgba(0,0,0,.48)
+}
+.arx-server-account-dropdown a{
+  min-height:42px;display:grid;grid-template-columns:22px minmax(0,1fr);align-items:center;
+  gap:9px;padding:0 11px;border-radius:9px;color:#c9ced7;text-decoration:none;
+  font-size:11px;font-weight:750
+}
+.arx-server-account-dropdown a:hover{background:rgba(245,197,24,.08);color:#fff}
+.arx-server-account-dropdown a:last-child{
+  margin-top:5px;border-top:1px solid rgba(255,255,255,.06);
+  border-radius:0 0 9px 9px;color:#e3a5a5
+}
+
+/* The old duplicated sidebar server/plan/language card is intentionally gone. */
+.sidebar>.guild-switch{display:none!important}
+
+@media(max-width:1050px){
+  .arx-buy-premium-link{width:146px;flex-basis:146px}
+  .arx-server-account-menu>summary{min-width:160px;max-width:300px}
+  .arx-server-account-menu summary strong{max-width:180px}
+}
+@media(max-width:720px){
+  body > main[data-arx-workspace-main]{padding-top:0!important}
+  .arx-account-topbar-v300148{position:relative;min-height:auto;padding:10px 0;margin-bottom:18px}
+  .arx-account-topbar-actions{width:100%;flex-wrap:wrap}
+  .arx-buy-premium-link{width:142px;flex-basis:142px}
+  .arx-server-account-menu{flex:1 1 180px}
+  .arx-server-account-menu>summary{max-width:none;width:100%}
+  .arx-server-account-dropdown{width:min(260px,calc(100vw - 40px))}
+}
